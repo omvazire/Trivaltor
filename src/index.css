@@ -329,7 +329,7 @@ button {
 .nav-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background-color: rgba(247, 244, 235, 0.8);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -452,15 +452,15 @@ body.dark .nav-header {
 
 /* Mobile Menu Drawer */
 .mobile-drawer {
-  position: fixed;
-  top: 80px;
+  position: absolute;
+  top: 100%;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-color: var(--bg-primary);
+  height: auto;
+  background-color: #0c2d1c;
   border-top: 1px solid var(--border-color);
-  z-index: 99;
-  padding: 2rem;
+  z-index: 1005;
+  padding: 2rem 2rem 3rem 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -659,6 +659,7 @@ body.dark .leads-table tbody tr:hover {
 .nav-header {
   background-color: #0c2d1c !important; /* Premium Dark Forest Green */
   border-bottom: 1px solid var(--accent-gold) !important;
+  z-index: 1000 !important;
 }
 .nav-logo span {
   color: var(--accent-gold) !important;
@@ -1039,8 +1040,13 @@ body.dark .leads-table tbody tr:hover {
     font-size: 0.75rem !important;
   }
   .mobile-drawer {
-    top: 70px !important;
-    padding: 1.25rem 1.5rem !important;
+    position: absolute !important;
+    top: 100% !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: auto !important;
+    padding: 1.25rem 1.5rem 2.5rem 1.5rem !important;
     gap: 0.75rem !important;
     background-color: #0c2d1c !important; /* solid forest green */
     opacity: 0 !important;

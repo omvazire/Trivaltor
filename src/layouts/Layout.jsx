@@ -120,45 +120,45 @@ export const Layout = ({ children }) => {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
-          <NavLink 
-            to="/" 
-            className="mobile-drawer-link" 
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('home')}
-          </NavLink>
-          <NavLink 
-            to="/farmer" 
-            className="mobile-drawer-link" 
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('farmersPortal')}
-          </NavLink>
-          <NavLink 
-            to="/buyer" 
-            className="mobile-drawer-link" 
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('buyersPortal')}
-          </NavLink>
-          <NavLink 
-            to="/investor" 
-            className="mobile-drawer-link" 
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('investorsPortal')}
-          </NavLink>
-          <NavLink 
-            to="/admin" 
-            className="mobile-drawer-link" 
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('adminDashboard')}
-          </NavLink>
-        </div>
-      </header>
+      {/* Mobile Navigation Drawer */}
+      <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
+        <NavLink 
+          to="/" 
+          className="mobile-drawer-link" 
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {t('home')}
+        </NavLink>
+        <NavLink 
+          to="/farmer" 
+          className="mobile-drawer-link" 
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {t('farmersPortal')}
+        </NavLink>
+        <NavLink 
+          to="/buyer" 
+          className="mobile-drawer-link" 
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {t('buyersPortal')}
+        </NavLink>
+        <NavLink 
+          to="/investor" 
+          className="mobile-drawer-link" 
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {t('investorsPortal')}
+        </NavLink>
+        <NavLink 
+          to="/admin" 
+          className="mobile-drawer-link" 
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {t('adminDashboard')}
+        </NavLink>
+      </div>
+    </header>
 
       {/* Main Content Area */}
       <main style={{ flexGrow: 1 }}>
