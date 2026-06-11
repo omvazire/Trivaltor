@@ -1188,6 +1188,7 @@ body.dark .leads-table tbody tr:hover {
     font-size: 0.85rem !important;
     line-height: 1.4 !important;
     display: -webkit-box !important;
+    line-clamp: 2 !important;
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
