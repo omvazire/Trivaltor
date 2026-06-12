@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LeadPopup } from '../components/LeadPopup';
 import { Globe2, Menu, X, Phone, Mail, MapPin, MessageSquare } from 'lucide-react';
-import logoImg from '../assets/images/1006818.png'; // 1006818.png is the logo
+import logoImg from '../assets/images/company-logo.png'; // company-logo.png is the logo
 
 export const Layout = ({ children }) => {
   const { language, setLanguage, t } = useLanguage();
@@ -181,7 +181,7 @@ export const Layout = ({ children }) => {
         <div className="container footer-grid">
           <div className="footer-column">
             <Link to="/" className="nav-logo" style={{ marginBottom: '1.25rem' }}>
-              <img src={logoImg} alt="Trivaltor Logo" style={{ height: '36px' }} />
+              <img src={logoImg} alt="Trivaltor Logo" style={{ height: '48px' }} />
               <span style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>TRIVALTOR GROUP</span>
             </Link>
             <p className="footer-desc" style={{ fontSize: '0.875rem' }}>

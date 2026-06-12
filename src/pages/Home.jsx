@@ -10,11 +10,10 @@ import {
 } from 'lucide-react';
 
 // Import local assets
-import heroImg from '../assets/images/Screenshot 2026-06-10 080038.png';
-import imgAgri from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.43 PM.jpeg';
-import imgExport from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.45 PM.jpeg';
-import imgImport from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.38 PM.jpeg';
-import imgInvest from '../assets/images/WhatsApp Image 2026-06-09 at 7.41.53 PM.jpeg';
+import heroImg from '../assets/images/export-hero.png';
+import imgAgri from '../assets/images/deal-agriculture.jpg';
+import imgExport from '../assets/images/deal-export.jpeg';
+import imgInvest from '../assets/images/deal-invest.jpg';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -273,7 +272,7 @@ export const Home = () => {
             {/* Div 1 */}
             <div className="premium-card" style={{ padding: '0', overflow: 'hidden' }}>
               <div style={{ height: '180px', overflow: 'hidden' }}>
-                <img src={imgAgri} alt="Agriculture Division" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={imgAgri} alt="Agriculture Division" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
               </div>
               <div style={{ padding: '1.5rem 2rem 2rem 2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: 'var(--accent-gold)' }}>
@@ -300,23 +299,6 @@ export const Home = () => {
                 <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{t('div2Title')}</h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
                   {t('div2Desc')}
-                </p>
-              </div>
-            </div>
-
-            {/* Div 3 */}
-            <div className="premium-card" style={{ padding: '0', overflow: 'hidden' }}>
-              <div style={{ height: '180px', overflow: 'hidden' }}>
-                <img src={imgImport} alt="Import Division" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div style={{ padding: '1.5rem 2rem 2rem 2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: 'var(--accent-gold)' }}>
-                  <Globe2 size={18} />
-                  <strong style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('division3')}</strong>
-                </div>
-                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{t('div3Title')}</h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                  {t('div3Desc')}
                 </p>
               </div>
             </div>
