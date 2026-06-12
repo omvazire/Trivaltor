@@ -4,8 +4,9 @@ import imgPepper from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.31 PM 
 import imgTurmeric from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.31 PM (2).jpeg';
 
 // Import other available images for fruits and vegetables
-import imgFruitsBanner from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.43 PM (1).jpeg';
-import imgVegBanner from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.46 PM.jpeg';
+import imgFruitsBanner from '../assets/images/catagory-fruit.jpg';
+import imgVegBanner from '../assets/images/catagory-vegetable.jpeg';
+import imgSpicesBanner from '../assets/images/catagory-spices.png';
 import imgAgri from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.43 PM.jpeg';
 import imgExport from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.45 PM.jpeg';
 import imgImport from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.38 PM.jpeg';
@@ -159,8 +160,8 @@ export const categoriesData = [
       en: "Authentic, high-curcumin and rich essential oil spices sourced directly from the Western Ghats and major growing belts.",
       mr: "पश्चिम घाट आणि इतर महत्त्वाच्या उत्पादक भागांमधून थेट आणलेले मूळ, उच्च कुरकुमीन असलेले आणि सुगंधी मसाले."
     },
-    image: imgCardamom,
-    bannerImage: imgCardamom,
+    image: imgSpicesBanner,
+    bannerImage: imgSpicesBanner,
     products: [
       {
         id: "sp-1",
