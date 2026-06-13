@@ -1,16 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Shield, Activity, Package } from 'lucide-react';
 
 export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   const handleInquireBuyer = () => {
-    // Navigate to /buyer with product name in query params
     navigate(`/buyer?product=${encodeURIComponent(product.name)}`);
   };
 
   const handleInquireFarmer = () => {
-    // Navigate to /farmer with product name in query params
     navigate(`/farmer?product=${encodeURIComponent(product.name)}`);
   };
 
@@ -48,44 +45,14 @@ export const ProductCard = ({ product }) => {
       </div>
 
       {/* Product Information */}
-      <div className="product-card-body" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+      <div className="product-card-body" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
           {product.name}
         </h3>
         
-        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', flexGrow: 1 }}>
+        <p className="product-card-desc" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem', flexGrow: 1 }}>
           {product.description}
         </p>
-
-        {/* Specs Box */}
-        <div className="product-specs-box" style={{ 
-          backgroundColor: 'var(--bg-primary)', 
-          border: '1px solid var(--border-color)', 
-          borderRadius: '8px', 
-          padding: '1rem', 
-          marginBottom: '1.5rem', 
-          fontSize: '0.8rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.5rem'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <MapPin size={14} style={{ color: 'var(--accent-gold)' }} />
-            <strong>Origin:</strong> <span style={{ color: 'var(--text-secondary)' }}>{product.specs.origin}</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Shield size={14} style={{ color: 'var(--accent-gold)' }} />
-            <strong>Purity Grade:</strong> <span style={{ color: 'var(--text-secondary)' }}>{product.specs.purity}</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Activity size={14} style={{ color: 'var(--accent-gold)' }} />
-            <strong>Moisture Content:</strong> <span style={{ color: 'var(--text-secondary)' }}>{product.specs.moisture}</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Package size={14} style={{ color: 'var(--accent-gold)' }} />
-            <strong>Standard Packaging:</strong> <span style={{ color: 'var(--text-secondary)' }}>{product.specs.packaging}</span>
-          </div>
-        </div>
 
         {/* Action Buttons */}
         <div className="product-actions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: 'auto' }}>
@@ -109,3 +76,4 @@ export const ProductCard = ({ product }) => {
     </div>
   );
 };
+

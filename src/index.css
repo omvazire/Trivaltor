@@ -1214,41 +1214,34 @@ body.dark .leads-table tbody tr:hover {
     margin-bottom: 1.25rem !important;
   }
   .products-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.25rem !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
   }
   .product-card-image {
-    height: 140px !important;
+    height: 120px !important;
   }
   .product-card-body {
-    padding: 1rem !important;
+    padding: 0.75rem !important;
   }
   .product-card-body h3 {
-    font-size: 1.15rem !important;
-    margin-bottom: 0.5rem !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.25 !important;
   }
   .product-card-body p {
-    font-size: 0.8rem !important;
-    margin-bottom: 1rem !important;
-    line-height: 1.4 !important;
-  }
-  .product-specs-box {
-    padding: 0.75rem !important;
-    margin-bottom: 1rem !important;
-    font-size: 0.75rem !important;
-    gap: 0.4rem !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr; /* 2x2 grid for super easy scanning! */
-  }
-  .product-specs-box div {
-    gap: 0.4rem !important;
+    font-size: 0.775rem !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1.35 !important;
   }
   .product-actions-grid {
-    gap: 0.5rem !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.4rem !important;
+    margin-top: auto !important;
   }
   .product-actions-grid .btn {
-    padding: 0.6rem !important;
-    font-size: 0.75rem !important;
+    padding: 0.45rem !important;
+    font-size: 0.725rem !important;
+    font-weight: 700 !important;
   }
 
   /* Form & Portal Layout overrides */
@@ -1403,4 +1396,14 @@ body.dark .leads-table tbody tr:hover {
     margin: 0.5rem auto !important;
   }
 }
+
+/* Product Card Description Clamp to 2-3 lines */
+.product-card-desc {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
 

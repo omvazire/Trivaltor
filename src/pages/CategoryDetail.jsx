@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getCategoryById } from '../services/categoriesData';
 import { useLanguage } from '../context/LanguageContext';
-import { ArrowLeft, MapPin, Shield, Activity, Package } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export const CategoryDetail = () => {
   const { categoryId } = useParams();
@@ -60,19 +60,15 @@ export const CategoryDetail = () => {
           {t('productListTitle')}
         </h2>
 
-        <div className="products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '3rem' }}>
+        <div className="products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
           {category.products.map((product) => {
             const productName = product.name[language] || product.name['en'];
             const productDesc = product.description[language] || product.description['en'];
-            const specOrigin = product.specs.origin[language] || product.specs.origin['en'];
-            const specPurity = product.specs.purity[language] || product.specs.purity['en'];
-            const specMoisture = product.specs.moisture[language] || product.specs.moisture['en'];
-            const specPackaging = product.specs.packaging[language] || product.specs.packaging['en'];
 
             return (
               <div key={product.id} className="premium-card product-card animate-fade-in" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%' }}>
                 {/* Product Image */}
-                <div className="product-card-image" style={{ position: 'relative', width: '100%', height: '240px', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
+                <div className="product-card-image" style={{ position: 'relative', width: '100%', height: '200px', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
                   <img 
                     src={product.image} 
                     alt={productName} 
@@ -99,44 +95,14 @@ export const CategoryDetail = () => {
                 </div>
 
                 {/* Product Info */}
-                <div className="product-card-body" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                  <h3 style={{ fontSize: '1.35rem', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+                <div className="product-card-body" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                  <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
                     {productName}
                   </h3>
                   
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', flexGrow: 1, lineHeight: '1.5' }}>
+                  <p className="product-card-desc" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem', flexGrow: 1, lineHeight: '1.5' }}>
                     {productDesc}
                   </p>
-
-                  {/* Specs Box */}
-                  <div className="product-specs-box" style={{ 
-                    backgroundColor: 'var(--bg-primary)', 
-                    border: '1px solid var(--border-color)', 
-                    borderRadius: '8px', 
-                    padding: '1.25rem', 
-                    marginBottom: '1.75rem', 
-                    fontSize: '0.825rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.65rem'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                      <MapPin size={15} style={{ color: 'var(--accent-gold)' }} />
-                      <strong>{t('specOrigin')}:</strong> <span style={{ color: 'var(--text-secondary)' }}>{specOrigin}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                      <Shield size={15} style={{ color: 'var(--accent-gold)' }} />
-                      <strong>{t('specPurity')}:</strong> <span style={{ color: 'var(--text-secondary)' }}>{specPurity}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                      <Activity size={15} style={{ color: 'var(--accent-gold)' }} />
-                      <strong>{t('specMoisture')}:</strong> <span style={{ color: 'var(--text-secondary)' }}>{specMoisture}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                      <Package size={15} style={{ color: 'var(--accent-gold)' }} />
-                      <strong>{t('specPackaging')}:</strong> <span style={{ color: 'var(--text-secondary)' }}>{specPackaging}</span>
-                    </div>
-                  </div>
 
                   {/* Action Buttons */}
                   <div className="product-actions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: 'auto' }}>
