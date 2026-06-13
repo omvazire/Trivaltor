@@ -11,7 +11,7 @@ export const translations = {
 
     // Hero Section
     welcomeTag: "Welcome to Tirvaltor Group",
-    heroTitle: "Connecting Farmers, Global Buyers & Strategic Investors",
+    heroTitle: "Connecting Farmers, Global Buyers, Strategic Investors",
     heroDesc: "Building a transparent ecosystem for agriculture, exports, imports and investment opportunities.",
     iAmFarmer: "I Am A Farmer",
     iAmBuyer: "I Am A Buyer",
@@ -195,7 +195,20 @@ export const translations = {
     rightsReserved: "Trivaltor Group of Companies. All Rights Reserved.",
     privacyPolicy: "Privacy Policy",
     termsOfTrade: "Terms of Trade",
-    demoMode: "Client Demo Mode"
+    demoMode: "Client Demo Mode",
+
+    // Buyer Portal Refinements
+    phoneNoBuyer: "Phone Number (Include Country Code)",
+    productRequirementBuyer: "Product Requirement",
+    targetBudgetBuyer: "Estimated Budget",
+    requiredQuantity: "Required Quantity",
+    stateBuyer: "State / Province / Region",
+    districtBuyer: "County / District",
+    cityVillageBuyer: "City / Town",
+    pincodeBuyer: "Postal / ZIP Code",
+    inquirySpecsBuyer: "Message / Requirements",
+    inquirySpecsInvestor: "Message / Investment Requirements",
+    phoneNoInvestor: "Phone Number (Include Country Code)"
   },
   mr: {
     // Navigation
@@ -209,7 +222,7 @@ export const translations = {
 
     // Hero Section
     welcomeTag: "तिर्वाल्टर ग्रुपमध्ये आपले स्वागत आहे",
-    heroTitle: "शेतकरी, जागतिक खरेदीदार आणि धोरणात्मक गुंतवणूकदारांना जोडणे",
+    heroTitle: "शेतकरी, जागतिक खरेदीदार, धोरणात्मक गुंतवणूकदार यांना जोडणे",
     heroDesc: "कृषी, निर्यात, आयात आणि गुंतवणुकीच्या संधींसाठी पारदर्शक परिसंस्था निर्माण करणे.",
     iAmFarmer: "मी शेतकरी आहे",
     iAmBuyer: "मी खरेदीदार आहे",
@@ -393,6 +406,19 @@ export const translations = {
     rightsReserved: "तिर्वाल्टर ग्रुप ऑफ कंपनीज. सर्व हक्क राखीव.",
     privacyPolicy: "गोपनीयता धोरण",
     termsOfTrade: "व्यापार अटी",
-    demoMode: "ग्राहक डेमो मोड"
+    demoMode: "ग्राहक डेमो मोड",
+
+    // Buyer Portal Refinements
+    phoneNoBuyer: "फोन नंबर (देशाचा कोड समाविष्ट करा)",
+    productRequirementBuyer: "उत्पादनाची आवश्यकता",
+    targetBudgetBuyer: "अंदाजे बजेट",
+    requiredQuantity: "आवश्यक प्रमाण",
+    stateBuyer: "राज्य / प्रांत / विभाग",
+    districtBuyer: "काउंटी / जिल्हा",
+    cityVillageBuyer: "शहर / नगर",
+    pincodeBuyer: "पोस्टल / पिनकोड",
+    inquirySpecsBuyer: "संदेश / आवश्यकता",
+    inquirySpecsInvestor: "संदेश / गुंतवणूक आवश्यकता",
+    phoneNoInvestor: "फोन नंबर (देशाचा कोड समाविष्ट करा)"
   }
 };

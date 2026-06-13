@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
-import { LeadArchitectureAlert } from '../components/LeadArchitectureAlert';
 import { Leaf, CheckCircle2, ArrowLeft } from 'lucide-react';
 
 export const FarmerLead = () => {
@@ -285,9 +284,6 @@ export const FarmerLead = () => {
             </form>
           )}
         </div>
-
-        {/* Backend Pipeline Alert */}
-        <LeadArchitectureAlert />
 
       </div>
     </div>

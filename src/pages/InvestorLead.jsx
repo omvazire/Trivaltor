@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
 import { config } from '../services/config';
-import { LeadArchitectureAlert } from '../components/LeadArchitectureAlert';
 import { Landmark, CheckCircle2, ArrowLeft, Download, FileText } from 'lucide-react';
 
 // Import presentation PDF
@@ -17,7 +16,6 @@ export const InvestorLead = () => {
     name: '',
     phone: '',
     email: '',
-    investmentInterest: '',
     estimatedInvestmentAmount: '',
     currency: 'USD',
     state: '',
@@ -51,7 +49,6 @@ export const InvestorLead = () => {
         name: '',
         phone: '',
         email: '',
-        investmentInterest: '',
         estimatedInvestmentAmount: '',
         currency: 'USD',
         state: '',
@@ -188,7 +185,7 @@ export const InvestorLead = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="investorPhone">{t('phoneNo')}</label>
+                  <label className="form-label" htmlFor="investorPhone">{t('phoneNoInvestor')}</label>
                   <input 
                     type="tel" 
                     id="investorPhone"
@@ -196,44 +193,24 @@ export const InvestorLead = () => {
                     value={form.phone} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. +44 20 7946 0958" 
+                    placeholder="e.g. +91 9876543210, +44 20 7946 0958, +1 555 234 5678" 
                     className="form-input"
                   />
                 </div>
               </div>
 
-              <div className="form-grid">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="investorEmail">{t('formEmail')}</label>
-                  <input 
-                    type="email" 
-                    id="investorEmail"
-                    name="email" 
-                    value={form.email} 
-                    onChange={handleChange} 
-                    required 
-                    placeholder="investor@funds.com" 
-                    className="form-input"
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="investmentInterest">{t('investmentInterest')}</label>
-                  <select 
-                    id="investmentInterest"
-                    name="investmentInterest" 
-                    value={form.investmentInterest} 
-                    onChange={handleChange} 
-                    required 
-                    className="form-select"
-                  >
-                    <option value="">{t('selectInterest')}</option>
-                    <option value="Agri-Tech Supply Chain & Warehouse Expansion">Agri-Tech Supply Chain & Warehouse Expansion</option>
-                    <option value="Export-Import Logistics & Cold Storage Infrastructure">Export-Import Logistics & Cold Storage Infrastructure</option>
-                    <option value="Global Spices Marketplace Platform Development">Global Spices Marketplace Platform Development</option>
-                    <option value="Contract Farming & Organic Land Development">Contract Farming & Organic Land Development</option>
-                    <option value="Other / General Strategic Funding">Other / General Strategic Funding</option>
-                  </select>
-                </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="investorEmail">{t('formEmail')}</label>
+                <input 
+                  type="email" 
+                  id="investorEmail"
+                  name="email" 
+                  value={form.email} 
+                  onChange={handleChange} 
+                  required 
+                  placeholder="investor@funds.com" 
+                  className="form-input"
+                />
               </div>
 
               {/* Currency Selector & Dynamic Brackets */}
@@ -275,7 +252,7 @@ export const InvestorLead = () => {
               {/* Address Fields: State, District, City/Village, Pincode */}
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="state">{t('state')}</label>
+                  <label className="form-label" htmlFor="state">{t('stateBuyer')}</label>
                   <input 
                     type="text" 
                     id="state"
@@ -283,12 +260,12 @@ export const InvestorLead = () => {
                     value={form.state} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. London / Maharashtra" 
+                    placeholder="e.g. California, Maharashtra, Ontario" 
                     className="form-input"
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="district">{t('district')}</label>
+                  <label className="form-label" htmlFor="district">{t('districtBuyer')}</label>
                   <input 
                     type="text" 
                     id="district"
@@ -296,7 +273,7 @@ export const InvestorLead = () => {
                     value={form.district} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. Greater London / Pune" 
+                    placeholder="e.g. Los Angeles County, Ernakulam District" 
                     className="form-input"
                   />
                 </div>
@@ -304,7 +281,7 @@ export const InvestorLead = () => {
 
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="cityVillage">{t('cityVillage')}</label>
+                  <label className="form-label" htmlFor="cityVillage">{t('cityVillageBuyer')}</label>
                   <input 
                     type="text" 
                     id="cityVillage"
@@ -312,12 +289,12 @@ export const InvestorLead = () => {
                     value={form.cityVillage} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. Westminster" 
+                    placeholder="e.g. Pasadena, Kochi, Manchester" 
                     className="form-input"
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="pincode">{t('pincode')}</label>
+                  <label className="form-label" htmlFor="pincode">{t('pincodeBuyer')}</label>
                   <input 
                     type="text" 
                     id="pincode"
@@ -325,21 +302,21 @@ export const InvestorLead = () => {
                     value={form.pincode} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. SW1A 0AA" 
+                    placeholder="e.g. 91101, 400001" 
                     className="form-input"
                   />
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="form-label" htmlFor="investorMessage">{t('inquirySpecs')}</label>
+                <label className="form-label" htmlFor="investorMessage">{t('inquirySpecsInvestor')}</label>
                 <textarea 
                   id="investorMessage"
                   name="message" 
                   value={form.message} 
                   onChange={handleChange} 
                   required 
-                  placeholder="Detail your background, questions regarding warehousing logistics, expected ROI terms, or request a zoom scheduling details..." 
+                  placeholder="Describe your investment goals, partnership interests, expected ROI, strategic interests, infrastructure requirements, or any additional details." 
                   className="form-textarea"
                 ></textarea>
               </div>
@@ -355,10 +332,6 @@ export const InvestorLead = () => {
             </form>
           )}
         </div>
-
-        {/* Backend Pipeline Alert */}
-        <LeadArchitectureAlert />
-
       </div>
     </div>
   );

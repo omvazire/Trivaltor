@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
-import { LeadArchitectureAlert } from '../components/LeadArchitectureAlert';
 import { Ship, CheckCircle2, ArrowLeft } from 'lucide-react';
 
 export const BuyerLead = () => {
@@ -17,6 +16,7 @@ export const BuyerLead = () => {
     email: '',
     phone: '',
     productRequirement: '',
+    requiredQuantity: '',
     targetBudget: '',
     currency: 'USD', // Default to USD
     state: '',
@@ -54,6 +54,7 @@ export const BuyerLead = () => {
         email: '',
         phone: '',
         productRequirement: '',
+        requiredQuantity: '',
         targetBudget: '',
         currency: 'USD',
         state: '',
@@ -196,7 +197,7 @@ export const BuyerLead = () => {
 
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="buyerPhone">{t('phoneNo')}</label>
+                  <label className="form-label" htmlFor="buyerPhone">{t('phoneNoBuyer')}</label>
                   <input 
                     type="tel" 
                     id="buyerPhone"
@@ -204,12 +205,12 @@ export const BuyerLead = () => {
                     value={form.phone} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. +1 (555) 234-5678" 
+                    placeholder="e.g. +91 9876543210 or +1 555 234 5678" 
                     className="form-input"
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="productRequirement">{t('productRequirement')}</label>
+                  <label className="form-label" htmlFor="productRequirement">{t('productRequirementBuyer')}</label>
                   <input 
                     type="text" 
                     id="productRequirement"
@@ -217,7 +218,7 @@ export const BuyerLead = () => {
                     value={form.productRequirement} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. Green Cardamom 8mm bold" 
+                    placeholder="e.g. Alphonso Mango, Green Cardamom, Turmeric Finger" 
                     className="form-input"
                   />
                 </div>
@@ -240,7 +241,7 @@ export const BuyerLead = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="targetBudget">{t('targetBudget')}</label>
+                  <label className="form-label" htmlFor="targetBudget">{t('targetBudgetBuyer')}</label>
                   <div style={{ position: 'relative' }}>
                     <span style={{ 
                       position: 'absolute', 
@@ -267,10 +268,25 @@ export const BuyerLead = () => {
                 </div>
               </div>
 
+              {/* Required Quantity Field */}
+              <div className="form-group">
+                <label className="form-label" htmlFor="requiredQuantity">{t('requiredQuantity')}</label>
+                <input 
+                  type="text" 
+                  id="requiredQuantity"
+                  name="requiredQuantity" 
+                  value={form.requiredQuantity} 
+                  onChange={handleChange} 
+                  required 
+                  placeholder="e.g. 5 Tons, 2000 Kg, or 1 Container" 
+                  className="form-input"
+                />
+              </div>
+
               {/* Address Fields: State, District, City/Village, Pincode */}
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="state">{t('state')}</label>
+                  <label className="form-label" htmlFor="state">{t('stateBuyer')}</label>
                   <input 
                     type="text" 
                     id="state"
@@ -278,12 +294,12 @@ export const BuyerLead = () => {
                     value={form.state} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. California / Kerala" 
+                    placeholder="e.g. California, Maharashtra, Ontario" 
                     className="form-input"
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="district">{t('district')}</label>
+                  <label className="form-label" htmlFor="district">{t('districtBuyer')}</label>
                   <input 
                     type="text" 
                     id="district"
@@ -291,7 +307,7 @@ export const BuyerLead = () => {
                     value={form.district} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. Los Angeles / Kochi" 
+                    placeholder="e.g. Los Angeles County, Ernakulam District" 
                     className="form-input"
                   />
                 </div>
@@ -299,7 +315,7 @@ export const BuyerLead = () => {
 
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="cityVillage">{t('cityVillage')}</label>
+                  <label className="form-label" htmlFor="cityVillage">{t('cityVillageBuyer')}</label>
                   <input 
                     type="text" 
                     id="cityVillage"
@@ -307,12 +323,12 @@ export const BuyerLead = () => {
                     value={form.cityVillage} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. Pasadena" 
+                    placeholder="e.g. Pasadena, Kochi, Manchester" 
                     className="form-input"
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="pincode">{t('pincode')}</label>
+                  <label className="form-label" htmlFor="pincode">{t('pincodeBuyer')}</label>
                   <input 
                     type="text" 
                     id="pincode"
@@ -320,21 +336,21 @@ export const BuyerLead = () => {
                     value={form.pincode} 
                     onChange={handleChange} 
                     required 
-                    placeholder="e.g. 91101" 
+                    placeholder="e.g. 91101, 400001" 
                     className="form-input"
                   />
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="form-label" htmlFor="buyerMessage">{t('inquirySpecs')}</label>
+                <label className="form-label" htmlFor="buyerMessage">{t('inquirySpecsBuyer')}</label>
                 <textarea 
                   id="buyerMessage"
                   name="message" 
                   value={form.message} 
                   onChange={handleChange} 
                   required 
-                  placeholder="Detail your bulk volume requirements, certificate requirements (SGS, Phytosanitary), target price, or packaging specifications..." 
+                  placeholder="Describe quantity requirements, packaging preferences, quality expectations, certifications required, delivery requirements, or any additional details." 
                   className="form-textarea"
                 ></textarea>
               </div>
@@ -350,9 +366,6 @@ export const BuyerLead = () => {
             </form>
           )}
         </div>
-
-        {/* Backend Pipeline Alert */}
-        <LeadArchitectureAlert />
 
       </div>
     </div>

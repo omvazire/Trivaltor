@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLeads } from '../context/LeadContext';
-import { LeadArchitectureAlert } from '../components/LeadArchitectureAlert';
 import { 
   Users, Sprout, Ship, Landmark, Download, LogOut, Lock, 
   Search, ArrowUpDown, TrendingUp 
@@ -71,7 +70,7 @@ export const AdminDashboard = () => {
       ]);
       filename = 'trivaltor_farmer_leads.csv';
     } else if (activeTab === 'buyer') {
-      headers = ['ID', 'Name', 'Company Name', 'Country', 'Email', 'Phone', 'Product Requirement', 'Message', 'Date'];
+      headers = ['ID', 'Name', 'Company Name', 'Country', 'Email', 'Phone', 'Product Requirement', 'Required Quantity', 'Message', 'Date'];
       rows = buyerLeads.map(lead => [
         lead.id,
         `"${lead.name.replace(/"/g, '""')}"`,
@@ -80,6 +79,7 @@ export const AdminDashboard = () => {
         `"${lead.email}"`,
         `"${lead.phone}"`,
         `"${lead.productRequirement}"`,
+        `"${(lead.requiredQuantity || '').replace(/"/g, '""')}"`,
         `"${lead.message.replace(/"/g, '""')}"`,
         lead.date
       ]);
@@ -524,6 +524,7 @@ export const AdminDashboard = () => {
                       <th>Phone</th>
                       <th>Email</th>
                       <th>Product Requirement</th>
+                      <th>Qty Required</th>
                       <th>Message</th>
                       <th>Date</th>
                     </tr>
@@ -537,6 +538,7 @@ export const AdminDashboard = () => {
                         <td><span style={{ whiteSpace: 'nowrap' }}>{lead.phone}</span></td>
                         <td>{lead.email}</td>
                         <td><span className="badge badge-gold">{lead.productRequirement}</span></td>
+                        <td><strong>{lead.requiredQuantity || 'N/A'}</strong></td>
                         <td style={{ maxWidth: '240px', fontSize: '0.8rem' }}>{lead.message}</td>
                         <td><span style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>{new Date(lead.date).toLocaleDateString()}</span></td>
                       </tr>
@@ -580,9 +582,6 @@ export const AdminDashboard = () => {
             </div>
           )}
         </div>
-
-        {/* Backend Pipeline Alert */}
-        <LeadArchitectureAlert />
 
       </div>
     </div>

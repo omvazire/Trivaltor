@@ -48,6 +48,7 @@ const initialBuyerLeads = [
     email: 'dmiller@apexspices.com',
     phone: '+1 (555) 234-5678',
     productRequirement: 'Black Pepper & Cumin (Bulk)',
+    requiredQuantity: '3 Tons',
     message: 'Looking for a monthly supply of 2 tons of Black Pepper and 1 ton of Cumin Seeds. Need samples first.',
     date: '2026-06-01T16:20:00.000Z'
   },
@@ -59,6 +60,7 @@ const initialBuyerLeads = [
     email: 'y.tanaka@sakurafoods.co.jp',
     phone: '+81 3-5555-0143',
     productRequirement: 'Organic Turmeric Powder',
+    requiredQuantity: '500 Kg',
     message: 'Interested in organic turmeric powder with high curcumin levels. Please share price sheet and certifications.',
     date: '2026-06-04T11:05:00.000Z'
   },
@@ -70,6 +72,7 @@ const initialBuyerLeads = [
     email: 'm.dubois@euroagri.fr',
     phone: '+33 1 42 68 53 00',
     productRequirement: 'Cardamom & Cloves',
+    requiredQuantity: '2 Containers',
     message: 'Urgent requirement for green Cardamom (8mm size) and handpicked Cloves. Standard European import quality required.',
     date: '2026-06-07T18:30:00.000Z'
   }

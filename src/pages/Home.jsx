@@ -96,8 +96,8 @@ export const Home = () => {
               letterSpacing: '-0.03em'
             }}>
               {t('heroTitle').split(',')[0]}, <br />
-              <span style={{ color: 'var(--accent-gold)' }}>{t('heroTitle').split(',')[1]}</span> & <br />
-              {t('heroTitle').split(',')[2] || 'Strategic Investors'}
+              <span style={{ color: 'var(--accent-gold)' }}>{t('heroTitle').split(',')[1]}</span> {language === 'mr' ? 'आणि' : '&'} <br />
+              {t('heroTitle').split(',')[2] || (language === 'mr' ? 'धोरणात्मक गुंतवणूकदार' : 'Strategic Investors')}
             </h1>
             <p className="hero-desc-p" style={{ 
               fontSize: '1.25rem', 

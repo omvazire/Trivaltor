@@ -12,11 +12,11 @@ export const config = {
       { value: "$1,000,000+", label: "$1,000,000+" }
     ],
     INR: [
-      { value: "₹40 Lakhs - ₹80 Lakhs", label: "₹40 Lakhs - ₹80 Lakhs" },
-      { value: "₹80 Lakhs - ₹2 Crores", label: "₹80 Lakhs - ₹2 Crores" },
-      { value: "₹2 Crores - ₹4 Crores", label: "₹2 Crores - ₹4 Crores" },
-      { value: "₹4 Crores - ₹8 Crores", label: "₹4 Crores - ₹8 Crores" },
-      { value: "₹8 Crores+", label: "₹8 Crores+" }
+      { value: "₹10 Lakhs - ₹25 Lakhs", label: "₹10 Lakhs - ₹25 Lakhs" },
+      { value: "₹25 Lakhs - ₹50 Lakhs", label: "₹25 Lakhs - ₹50 Lakhs" },
+      { value: "₹50 Lakhs - ₹1 Crore", label: "₹50 Lakhs - ₹1 Crore" },
+      { value: "₹1 Crore - ₹5 Crores", label: "₹1 Crore - ₹5 Crores" },
+      { value: "₹5 Crores+", label: "₹5 Crores+" }
     ]
   }
 };
