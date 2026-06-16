@@ -8,7 +8,7 @@ export const LanguageProvider = ({ children }) => {
   const [language, setLanguageState] = useState(() => {
     const saved = localStorage.getItem('trivaltor-language');
     // Default to 'en' (English)
-    return saved === 'mr' ? 'mr' : 'en';
+    return (saved === 'mr' || saved === 'hi') ? saved : 'en';
   });
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const LanguageProvider = ({ children }) => {
   }, [language]);
 
   const setLanguage = (lang) => {
-    if (lang === 'en' || lang === 'mr') {
+    if (lang === 'en' || lang === 'mr' || lang === 'hi') {
       setLanguageState(lang);
     }
   };

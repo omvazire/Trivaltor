@@ -6,7 +6,7 @@ import { categoriesData } from '../services/categoriesData';
 import { config } from '../services/config';
 import { 
   Sprout, Globe2, TrendingUp, Shovel, Ship, Landmark, ArrowRight, 
-  Mail, Phone, MapPin, Send, CheckCircle2, Star, Download, FileText
+  Mail, Phone, MapPin, Send, CheckCircle2, Star, Download, FileText, X
 } from 'lucide-react';
 
 // Import local assets
@@ -14,14 +14,26 @@ import heroImg from '../assets/images/export-hero.png';
 import imgAgri from '../assets/images/deal-agriculture.jpg';
 import imgExport from '../assets/images/deal-export.jpeg';
 import imgInvest from '../assets/images/deal-invest.jpg';
+import udyamCertImg from '../assets/images/udyam certificate.jpeg';
+import fssaiCertImg from '../assets/images/certificate.jpeg';
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { submitContactLead, loading } = useLeads();
   const { language, t } = useLanguage();
   const contactSectionRef = useRef(null);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  // Review Form States
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewForm, setReviewForm] = useState({
+    name: '',
+    type: 'Farmer', // 'Farmer' | 'Buyer' | 'Investor'
+    rating: 5,
+    message: ''
+  });
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -32,16 +44,11 @@ export const Home = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Contact Form State with Address Fields
+  // Contact Form State simplified
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
-    subject: '',
-    message: '',
-    state: '',
-    district: '',
-    cityVillage: '',
-    pincode: ''
+    message: ''
   });
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -50,23 +57,43 @@ export const Home = () => {
     setContactForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleContactSubmit = async (e) => {
+  const handleContactSubmit = (e) => {
     e.preventDefault();
-    const res = await submitContactLead(contactForm);
-    if (res.success) {
-      setSubmitSuccess(true);
-      setContactForm({ 
-        name: '', 
-        email: '', 
-        subject: '', 
-        message: '',
-        state: '',
-        district: '',
-        cityVillage: '',
-        pincode: ''
-      });
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }
+    setSubmitSuccess(true);
+    setContactForm({ 
+      name: '', 
+      email: '', 
+      message: ''
+    });
+    setTimeout(() => setSubmitSuccess(false), 5000);
+  };
+
+  const handleReviewChange = (e) => {
+    const { name, value } = e.target;
+    setReviewForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    const saved = localStorage.getItem('trivaltor-pending-reviews');
+    const pending = saved ? JSON.parse(saved) : [];
+    
+    const newPendingReview = {
+      ...reviewForm,
+      date: new Date().toISOString()
+    };
+    pending.push(newPendingReview);
+    localStorage.setItem('trivaltor-pending-reviews', JSON.stringify(pending));
+    
+    console.log('%c[Review Submitted (Pending Verification)]', 'color: #c5a880; font-weight: bold;', newPendingReview);
+    
+    setReviewForm({
+      name: '',
+      type: 'Farmer',
+      rating: 5,
+      message: ''
+    });
+    setReviewSubmitted(true);
   };
 
   return (
@@ -384,10 +411,10 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* 6. Credibility & Achievements Section */}
+      {/* 6. Certifications & Registrations Section */}
       <section id="credibility" className="section credibility-section" style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem' }}>
             <span className="section-tag">{t('credibilityTag')}</span>
             <h2 className="section-title">{t('credibilityTitle')}</h2>
             <p className="section-desc">
@@ -395,79 +422,95 @@ export const Home = () => {
             </p>
           </div>
 
-          <div className="credibility-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
-            <div className="premium-card">
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-                {t('overviewTitle')}
-              </h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                {t('overviewText')}
-              </p>
+          <div className="credibility-grid" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+            gap: '2.5rem', 
+            alignItems: 'stretch'
+          }}>
+            {/* Card A: UDYAM */}
+            <div className="premium-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+              <div 
+                onClick={() => setPreviewImage(udyamCertImg)}
+                style={{ 
+                  cursor: 'pointer', 
+                  borderRadius: 'var(--border-radius-sm)', 
+                  overflow: 'hidden', 
+                  border: '1px solid var(--border-color)',
+                  backgroundColor: '#ffffff',
+                  height: '240px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                title="Click to preview certificate"
+              >
+                <img 
+                  src={udyamCertImg} 
+                  alt="Udyam Registration Certificate" 
+                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                />
+              </div>
+              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
+                  UDYAM REGISTRATION CERTIFICATE
+                </h3>
+                <p style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-gold-hover)', margin: 0 }}>
+                  Udyam Registered Enterprise
+                </p>
+                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0 }}>
+                  <strong>Registration No:</strong> <br />
+                  <code style={{ fontSize: '0.95rem', color: 'var(--text-primary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.4rem', borderRadius: '4px', display: 'inline-block', marginTop: '0.25rem' }}>
+                    UDYAM-MH-33-0703853
+                  </code>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto', margin: 0 }}>
+                  Government Recognized MSME
+                </p>
+              </div>
             </div>
-            <div className="premium-card">
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-                {t('achievementsTitle')}
-              </h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                {t('achievementsText')}
-              </p>
-            </div>
-            <div className="premium-card">
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
-                {t('exportCapTitle')}
-              </h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                {t('exportCapText')}
-              </p>
-            </div>
-          </div>
 
-          {/* Statistics */}
-          <div className="credibility-stats">
-            <div className="stat-card">
-              <div className="stat-number">{t('stat1Val')}</div>
-              <div className="stat-label">{t('stat1Lbl')}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">{t('stat2Val')}</div>
-              <div className="stat-label">{t('stat2Lbl')}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">{t('stat3Val')}</div>
-              <div className="stat-label">{t('stat3Lbl')}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">{t('stat4Val')}</div>
-              <div className="stat-label">{t('stat4Lbl')}</div>
-            </div>
-          </div>
-
-          {/* Document downloads */}
-          <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', marginTop: '4rem', marginBottom: '1.5rem', textAlign: 'center', color: 'var(--text-primary)' }}>
-            {t('downloadDocs')}
-          </h3>
-          <div className="download-grid">
-            <a href="#prospectus" className="download-card" onClick={(e) => { e.preventDefault(); alert("Simulated Download: Tirvaltor Business Prospectus"); }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <FileText size={24} style={{ color: 'var(--accent-gold)' }} />
-                <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{t('downloadProspectus')}</span>
+            {/* Card B: FSSAI */}
+            <div className="premium-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+              <div 
+                onClick={() => setPreviewImage(fssaiCertImg)}
+                style={{ 
+                  cursor: 'pointer', 
+                  borderRadius: 'var(--border-radius-sm)', 
+                  overflow: 'hidden', 
+                  border: '1px solid var(--border-color)',
+                  backgroundColor: '#ffffff',
+                  height: '240px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                title="Click to preview certificate"
+              >
+                <img 
+                  src={fssaiCertImg} 
+                  alt="FSSAI Registration" 
+                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                />
               </div>
-              <Download size={18} style={{ color: 'var(--text-muted)' }} />
-            </a>
-            <a href="#sales" className="download-card" onClick={(e) => { e.preventDefault(); alert("Simulated Download: Annual Sales Report"); }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <FileText size={24} style={{ color: 'var(--accent-gold)' }} />
-                <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{t('downloadReport')}</span>
+              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
+                  FSSAI REGISTRATION
+                </h3>
+                <p style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-gold-hover)', margin: 0 }}>
+                  FSSAI Registered Business
+                </p>
+                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0 }}>
+                  <strong>Registration No:</strong> <br />
+                  <code style={{ fontSize: '0.95rem', color: 'var(--text-primary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.4rem', borderRadius: '4px', display: 'inline-block', marginTop: '0.25rem' }}>
+                    21526022000048
+                  </code>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto', margin: 0 }}>
+                  <strong>Valid Until:</strong> 04-01-2027
+                </p>
               </div>
-              <Download size={18} style={{ color: 'var(--text-muted)' }} />
-            </a>
-            <a href="#certs" className="download-card" onClick={(e) => { e.preventDefault(); alert("Simulated Download: Export Standard Certificates"); }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <FileText size={24} style={{ color: 'var(--accent-gold)' }} />
-                <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{t('downloadCertificates')}</span>
-              </div>
-              <Download size={18} style={{ color: 'var(--text-muted)' }} />
-            </a>
+            </div>
           </div>
         </div>
       </section>
@@ -518,6 +561,15 @@ export const Home = () => {
               <p className="review-text">"{t('review3Text')}"</p>
               <div className="review-author">- {t('review3Name')}</div>
             </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+            <button 
+              onClick={() => setShowReviewModal(true)} 
+              className="btn btn-primary"
+              style={{ padding: '0.75rem 2.5rem', fontWeight: '700' }}
+            >
+              {t('leaveReviewBtn')}
+            </button>
           </div>
         </div>
       </section>
@@ -585,7 +637,7 @@ export const Home = () => {
                   <div>
                     <h4 style={{ fontSize: '1rem', fontFamily: 'var(--font-heading)' }}>{t('emailDesk')}</h4>
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                      <a href="mailto:info@trivaltor.com" style={{ textDecoration: 'underline' }}>info@trivaltor.com</a>
+                      <a href="mailto:trivaltorgoc@gmail.com" style={{ textDecoration: 'underline' }}>trivaltorgoc@gmail.com</a>
                     </p>
                   </div>
                 </div>
@@ -602,15 +654,16 @@ export const Home = () => {
                   </div>
                   <div>
                     <h4 style={{ fontSize: '1rem', fontFamily: 'var(--font-heading)' }}>{t('phoneNo')}</h4>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                      +91 (484) 285-9000
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                      <span>+91 92269 41613</span>
+                      <span>+91 93240 27876</span>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Contact Form with full Address fields (State, District, City/Village, Pincode) */}
+            {/* Contact Form - Simplified to Name, Email, Message */}
             <div className="form-container-card" style={{
               backgroundColor: 'var(--bg-primary)',
               border: '1px solid var(--border-color)',
@@ -638,106 +691,32 @@ export const Home = () => {
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit}>
-                  <div className="form-grid">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="contactName">{t('formName')}</label>
-                      <input 
-                        type="text" 
-                        id="contactName"
-                        name="name"
-                        value={contactForm.name}
-                        onChange={handleContactChange}
-                        required 
-                        placeholder="John Doe"
-                        className="form-input" 
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="contactEmail">{t('formEmail')}</label>
-                      <input 
-                        type="email" 
-                        id="contactEmail"
-                        name="email"
-                        value={contactForm.email}
-                        onChange={handleContactChange}
-                        required 
-                        placeholder="john@example.com"
-                        className="form-input" 
-                      />
-                    </div>
-                  </div>
-
                   <div className="form-group">
-                    <label className="form-label" htmlFor="contactSubject">{t('formSubject')}</label>
+                    <label className="form-label" htmlFor="contactName">{t('formName')}</label>
                     <input 
                       type="text" 
-                      id="contactSubject"
-                      name="subject"
-                      value={contactForm.subject}
+                      id="contactName"
+                      name="name"
+                      value={contactForm.name}
                       onChange={handleContactChange}
                       required 
-                      placeholder="e.g. Bulk Green Cardamom Price Inquiry"
+                      placeholder="John Doe"
                       className="form-input" 
                     />
                   </div>
-
-                  {/* Enhanced Address Fields Grid */}
-                  <div className="form-grid">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="contactState">{t('state')}</label>
-                      <input 
-                        type="text" 
-                        id="contactState"
-                        name="state"
-                        value={contactForm.state}
-                        onChange={handleContactChange}
-                        required 
-                        placeholder="e.g. Maharashtra"
-                        className="form-input" 
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="contactDistrict">{t('district')}</label>
-                      <input 
-                        type="text" 
-                        id="contactDistrict"
-                        name="district"
-                        value={contactForm.district}
-                        onChange={handleContactChange}
-                        required 
-                        placeholder="e.g. Nashik"
-                        className="form-input" 
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-grid">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="contactCity">{t('cityVillage')}</label>
-                      <input 
-                        type="text" 
-                        id="contactCity"
-                        name="cityVillage"
-                        value={contactForm.cityVillage}
-                        onChange={handleContactChange}
-                        required 
-                        placeholder="e.g. Yeola"
-                        className="form-input" 
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="contactPincode">{t('pincode')}</label>
-                      <input 
-                        type="text" 
-                        id="contactPincode"
-                        name="pincode"
-                        value={contactForm.pincode}
-                        onChange={handleContactChange}
-                        required 
-                        placeholder="e.g. 423401"
-                        className="form-input" 
-                      />
-                    </div>
+                  
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="contactEmail">{t('formEmail')}</label>
+                    <input 
+                      type="email" 
+                      id="contactEmail"
+                      name="email"
+                      value={contactForm.email}
+                      onChange={handleContactChange}
+                      required 
+                      placeholder="john@example.com"
+                      className="form-input" 
+                    />
                   </div>
 
                   <div className="form-group">
@@ -750,20 +729,16 @@ export const Home = () => {
                       required 
                       placeholder="Write your message here..."
                       className="form-textarea"
+                      rows="4"
                     ></textarea>
                   </div>
 
                   <button 
                     type="submit" 
-                    disabled={loading} 
                     className="btn btn-primary"
                     style={{ width: '100%', marginTop: '1rem', height: '52px' }}
                   >
-                    {loading ? t('formSubmitting') : (
-                      <>
-                        <Send size={16} /> {t('formSubmit')}
-                      </>
-                    )}
+                    <Send size={16} /> {t('formSubmit')}
                   </button>
                 </form>
               )}
@@ -771,6 +746,174 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Certificate Preview Modal */}
+      {previewImage && (
+        <div className="modal-overlay" onClick={() => setPreviewImage(null)}>
+          <div 
+            className="modal-container" 
+            style={{ 
+              maxWidth: '800px', 
+              padding: '1.5rem', 
+              backgroundColor: '#fff', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center',
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="modal-close" 
+              onClick={() => setPreviewImage(null)} 
+              aria-label="Close preview"
+              style={{ top: '1rem', right: '1rem', zIndex: 10 }}
+            >
+              <X size={24} />
+            </button>
+            <div style={{ width: '100%', maxHeight: '80vh', overflow: 'auto', display: 'flex', justifyContent: 'center' }}>
+              <img 
+                src={previewImage} 
+                alt="Certificate Preview" 
+                style={{ maxWidth: '100%', maxHeight: '75vh', objectFit: 'contain' }} 
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Leave Your Review Form Modal */}
+      {showReviewModal && (
+        <div className="modal-overlay" onClick={() => {
+          setShowReviewModal(false);
+          setReviewSubmitted(false);
+        }}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="modal-close" 
+              onClick={() => {
+                setShowReviewModal(false);
+                setReviewSubmitted(false);
+              }} 
+              aria-label="Close modal"
+            >
+              <X size={20} />
+            </button>
+
+            {reviewSubmitted ? (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                padding: '2rem 0',
+                gap: '1.5rem',
+                color: 'var(--success)'
+              }}>
+                <CheckCircle2 size={48} />
+                <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
+                  {t('formSuccess') || 'Submission Successful'}
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  {t('reviewSuccess') || 'Thank you for your review. It will be published after verification.'}
+                </p>
+                <button 
+                  onClick={() => {
+                    setShowReviewModal(false);
+                    setReviewSubmitted(false);
+                  }}
+                  className="btn btn-primary"
+                  style={{ marginTop: '1rem', padding: '0.6rem 2rem' }}
+                >
+                  Close
+                </button>
+              </div>
+            ) : (
+              <div>
+                <h2 style={{ fontSize: '1.75rem', color: 'var(--text-primary)', marginBottom: '1.5rem', fontFamily: 'var(--font-heading)' }}>
+                  {t('reviewFormTitle') || 'Submit Your Review'}
+                </h2>
+                
+                <form onSubmit={handleReviewSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <div className="form-group" style={{ marginBottom: '0' }}>
+                    <label className="form-label" htmlFor="reviewName">{t('formName') || 'Full Name'}</label>
+                    <input 
+                      type="text" 
+                      id="reviewName"
+                      name="name" 
+                      value={reviewForm.name} 
+                      onChange={handleReviewChange} 
+                      required 
+                      placeholder="e.g. John Doe" 
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '0' }}>
+                    <label className="form-label" htmlFor="reviewType">{t('reviewTypeName') || 'Review Type'}</label>
+                    <select 
+                      id="reviewType"
+                      name="type" 
+                      value={reviewForm.type} 
+                      onChange={handleReviewChange} 
+                      className="form-input"
+                      style={{ height: '48px', appearance: 'auto' }}
+                    >
+                      <option value="Farmer">{t('reviewTypeFarmer') || 'Farmer'}</option>
+                      <option value="Buyer">{t('reviewTypeBuyer') || 'Buyer'}</option>
+                      <option value="Investor">{t('reviewTypeInvestor') || 'Investor'}</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '0' }}>
+                    <label className="form-label" style={{ display: 'block', marginBottom: '0.5rem' }}>{t('reviewRating') || 'Rating'}</label>
+                    <div style={{ display: 'flex', gap: '0.35rem' }}>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setReviewForm(prev => ({ ...prev, rating: star }))}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '0.25rem',
+                            color: star <= reviewForm.rating ? '#e0a96d' : 'var(--text-muted)'
+                          }}
+                        >
+                          <Star size={24} fill={star <= reviewForm.rating ? 'currentColor' : 'none'} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '0' }}>
+                    <label className="form-label" htmlFor="reviewMessage">{t('reviewMessage') || 'Message'}</label>
+                    <textarea 
+                      id="reviewMessage"
+                      name="message" 
+                      value={reviewForm.message} 
+                      onChange={handleReviewChange} 
+                      required 
+                      placeholder="Share your experience working with us..." 
+                      className="form-textarea"
+                      rows="4"
+                    />
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary"
+                    style={{ width: '100%', marginTop: '1rem', height: '50px' }}
+                  >
+                    {t('reviewSubmit') || 'Submit'}
+                  </button>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

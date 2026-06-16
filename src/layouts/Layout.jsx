@@ -28,21 +28,7 @@ export const Layout = ({ children }) => {
 
   const handleWhatsAppClick = (e) => {
     e.preventDefault();
-    const phoneNumber = '919876543210'; // Client demo support number
-    const text = encodeURIComponent(
-      'Hello Trivaltor Group, I am interested in exploring business, trade, and investment opportunities. Please share more details.'
-    );
-    
-    // Check user agent for mobile
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-    
-    const url = isMobile
-      ? `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${text}`
-      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${text}`;
-    
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open('https://wa.me/917758863438', '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -78,7 +64,6 @@ export const Layout = ({ children }) => {
             <NavLink to="/farmer" className={activeStyle}>{t('farmersPortal')}</NavLink>
             <NavLink to="/buyer" className={activeStyle}>{t('buyersPortal')}</NavLink>
             <NavLink to="/investor" className={activeStyle}>{t('investorsPortal')}</NavLink>
-            <NavLink to="/admin" className={activeStyle}>{t('adminDashboard')}</NavLink>
           </nav>
 
           {/* Right Action buttons */}
@@ -92,7 +77,7 @@ export const Layout = ({ children }) => {
                 title={t('switchLanguage')}
               >
                 <Globe2 size={16} />
-                <span>{language === 'en' ? 'EN' : 'मराठी'}</span>
+                <span>{language === 'en' ? 'EN' : language === 'mr' ? 'मराठी' : 'हिंदी'}</span>
               </button>
 
               {langDropdownOpen && (
@@ -108,6 +93,12 @@ export const Layout = ({ children }) => {
                     className={`language-dropdown-item ${language === 'mr' ? 'active' : ''}`}
                   >
                     मराठी
+                  </button>
+                  <button 
+                    onClick={() => selectLanguage('hi')} 
+                    className={`language-dropdown-item ${language === 'hi' ? 'active' : ''}`}
+                  >
+                    हिंदी
                   </button>
                 </div>
               )}
@@ -149,13 +140,6 @@ export const Layout = ({ children }) => {
           onClick={() => setMobileMenuOpen(false)}
         >
           {t('investorsPortal')}
-        </NavLink>
-        <NavLink 
-          to="/admin" 
-          className="mobile-drawer-link" 
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          {t('adminDashboard')}
         </NavLink>
       </div>
     </header>
@@ -220,16 +204,23 @@ export const Layout = ({ children }) => {
             <div className="footer-contact-item">
               <Mail size={18} />
               <span style={{ fontSize: '0.875rem' }}>
-                <a href="mailto:info@trivaltor.com" style={{ textDecoration: 'underline' }}>
-                  info@trivaltor.com
+                <a href="mailto:trivaltorgoc@gmail.com" style={{ textDecoration: 'underline' }}>
+                  trivaltorgoc@gmail.com
                 </a>
               </span>
             </div>
-            <div className="footer-contact-item">
-              <Phone size={18} />
-              <span style={{ fontSize: '0.875rem' }}>
-                +91 (484) 285-9000
-              </span>
+            <div className="footer-contact-item" style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <Phone size={18} />
+                <span style={{ fontSize: '0.875rem' }}>
+                  +91 92269 41613
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingLeft: '2.1rem' }}>
+                <span style={{ fontSize: '0.875rem' }}>
+                  +91 93240 27876
+                </span>
+              </div>
             </div>
           </div>
         </div>

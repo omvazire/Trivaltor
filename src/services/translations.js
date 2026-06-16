@@ -59,9 +59,9 @@ export const translations = {
     videoDesc: "Watch how we bridge the gap between rural Indian farms and international shipping ports using clean sorting plants and temperature-controlled logistics.",
 
     // Credibility Section
-    credibilityTag: "Credibility & Achievements",
+    credibilityTag: "Certifications & Registrations",
     credibilityTitle: "Trust & Export Infrastructure",
-    credibilityDesc: "Our verified performance metrics, certification badges, and operational downloads.",
+    credibilityDesc: "Our verified performance metrics, certification badges, and operational registrations.",
     overviewTitle: "Company Overview",
     overviewText: "Tirvaltor Group connects local Indian farming groups with global buyers. We own processing machinery, sorting plants, and warehouse facilities that guarantee product quality and export grade compliance.",
     achievementsTitle: "Business Achievements",
@@ -101,7 +101,7 @@ export const translations = {
     headquarters: "Trivaltor Group Headquarters",
     hqDesc: "Reach out to us directly for urgent shipments, customized sorting requirements, or investment presentation questions.",
     officeAddress: "Office Address",
-    addressText: "Trivaltor Tower, Suite 402, Agri-Business District, Kochi, Kerala - 682021, India",
+    addressText: "305 B WING DHARA RESIDENCY, VISHWANATH CHOWK, PALEGAON, AMBERNATH(E), AMBARNATH(M CL), AMBARNATH, THANE, 421501",
     emailDesk: "Email Desk",
     phoneNo: "Phone Number",
     formName: "Full Name",
@@ -111,7 +111,7 @@ export const translations = {
     formSubmit: "Send Message",
     formSubmitting: "Sending Message...",
     formSuccess: "Message Sent Successfully",
-    formSuccessDesc: "Thank you. Your message has been logged in our demo system and simulated backend.",
+    formSuccessDesc: "Thank you. Your message has been sent successfully.",
 
     // Lead Popup
     popupTitle: "Connect With Tirvaltor Group",
@@ -208,7 +208,21 @@ export const translations = {
     pincodeBuyer: "Postal / ZIP Code",
     inquirySpecsBuyer: "Message / Requirements",
     inquirySpecsInvestor: "Message / Investment Requirements",
-    phoneNoInvestor: "Phone Number (Include Country Code)"
+    phoneNoInvestor: "Phone Number (Include Country Code)",
+
+    // Reviews & Additional
+    leaveReviewBtn: "Leave Your Review",
+    reviewFormTitle: "Submit Your Review",
+    reviewTypeName: "Review Type",
+    reviewTypeFarmer: "Farmer",
+    reviewTypeBuyer: "Buyer",
+    reviewTypeInvestor: "Investor",
+    reviewRating: "Rating",
+    reviewMessage: "Message",
+    reviewSubmit: "Submit",
+    reviewSuccess: "Thank you for your review. It will be published after verification.",
+    quickLinks: "Quick Links",
+    businessPortals: "Business Portals"
   },
   mr: {
     // Navigation
@@ -270,10 +284,10 @@ export const translations = {
     videoDesc: "आम्ही आधुनिक सॉर्टिंग प्लांट आणि नियंत्रित तापमानाच्या कोल्ड चेनद्वारे भारतातील ग्रामीण शेतकरी आणि आंतरराष्ट्रीय जहाजे कशी जोडतो ते पहा.",
 
     // Credibility Section
-    credibilityTag: "विश्वसनीयता आणि यश",
+    credibilityTag: "प्रमाणपत्रे आणि नोंदणी",
     credibilityTitle: "विश्वास आणि निर्यात पायाभूत सुविधा",
-    credibilityDesc: "आमची प्रमाणित कामगिरी आणि महत्त्वाचे डाउनलोड दस्तऐवज.",
-    overviewTitle: "कंपनीची माहिती",
+    credibilityDesc: "आमची प्रमाणित कामगिरी आणि अधिकृत सरकारी नोंदणी.",
+    overviewTitle: "company-logo",
     overviewText: "तिर्वाल्टर ग्रुप स्थानिक भारतीय शेतकरी गटांना जागतिक खरेदीदारांशी जोडतो. उत्पादनाचा दर्जा आणि निर्यात मानके सुनिश्चित करण्यासाठी आमचे स्वतःचे प्रक्रिया केंद्र आणि गोदामे आहेत.",
     achievementsTitle: "व्यावसायिक यश",
     achievementsText: "गेल्या काही वर्षांत, आम्ही करार शेतीचे क्षेत्र वाढवले आहे, मसाल्यांच्या व्यापाराचे प्रमाण वाढवले आहे आणि जागतिक कृषी मानकांनुसार प्रमाणित दर्जा मिळवला आहे.",
@@ -281,7 +295,7 @@ export const translations = {
     exportCapText: "आम्ही सागरी मालवाहतूक, हवाई मालवाहतूक, कस्टम पॅकेजिंग, फायटोसॅनिटरी प्रमाणपत्रे आणि सॉर्टेक्स सॉर्टिंग (९९.५%+ शुद्धता) पुरवतो.",
     growthTitle: "विकास आणि पायाभूत सुविधा",
     growthText: "शीतगृहे आणि सॉफ्टवेअर कनेक्टिव्हिटीचा विस्तार करून, आम्ही पुढील वर्षी व्यापारात ४०% वाढीचे उद्दिष्ट ठेवत आहोत.",
-    downloadDocs: "महत्त्वाचे दस्तऐवज डाउनलोड",
+    downloadDocs: "दस्तऐवज डाउनलोड",
     downloadProspectus: "माहितीपत्रक डाउनलोड करा (PDF)",
     downloadReport: "विक्री अहवाल डाउनलोड करा (PDF)",
     downloadCertificates: "निर्यात मानके आणि प्रमाणपत्रे (PDF)",
@@ -312,7 +326,7 @@ export const translations = {
     headquarters: "तिर्वाल्टर ग्रुप मुख्यालय",
     hqDesc: "तातडीची शिपमेंट, विशिष्ट सॉर्टिंग किंवा गुंतवणूक सादरीकरणाच्या प्रश्नांसाठी आमच्याशी थेट संपर्क साधा.",
     officeAddress: "कार्यालयाचा पत्ता",
-    addressText: "तिर्वाल्टर टॉवर, सूट ४०२, अ‍ॅग्री-बिझनेस जिल्हा, कोची, केरळ - ६८२०२१, भारत",
+    addressText: "३०५ बी विंग धारा रेसिडेन्सी, विश्वनाथ चौक, पालेगाव, अंबरनाथ (पूर्व), अंबरनाथ (एम सीएल), अंबरनाथ, ठाणे, ४२१५०१",
     emailDesk: "ईमेल डेस्क",
     phoneNo: "फोन नंबर",
     formName: "पूर्ण नाव",
@@ -322,7 +336,7 @@ export const translations = {
     formSubmit: "संदेश पाठवा",
     formSubmitting: "संदेश पाठवत आहे...",
     formSuccess: "संदेश यशस्वीरित्या पाठवला गेला",
-    formSuccessDesc: "धन्यवाद. आपला संदेश आमच्या डेमो प्रणालीत नोंदवला गेला आहे.",
+    formSuccessDesc: "धन्यवाद. आपला संदेश यशस्वीरित्या पाठवला गेला आहे.",
 
     // Lead Popup
     popupTitle: "तिर्वाल्टर ग्रुपशी संपर्क साधा",
@@ -359,7 +373,7 @@ export const translations = {
     inquirySpecs: "चौकशी आणि तपशील",
     cropSpecs: "पीक तपशील / संदेश",
     financialCurrency: "चलन निवडा",
-    targetBudget: "अंदाजे मासिक बजेट",
+    targetBudget: "अंदाजे मासिक बजट",
 
     // Farmer Form Specific
     farmerHeader: "शेतकरी आणि उत्पादक पोर्टल",
@@ -419,6 +433,245 @@ export const translations = {
     pincodeBuyer: "पोस्टल / पिनकोड",
     inquirySpecsBuyer: "संदेश / आवश्यकता",
     inquirySpecsInvestor: "संदेश / गुंतवणूक आवश्यकता",
-    phoneNoInvestor: "फोन नंबर (देशाचा कोड समाविष्ट करा)"
+    phoneNoInvestor: "फोन नंबर (देशाचा कोड समाविष्ट करा)",
+
+    // Reviews & Additional
+    leaveReviewBtn: "तुमचा अभिप्राय लिहा",
+    reviewFormTitle: "तुमचा अभिप्राय सबमिट करा",
+    reviewTypeName: "अभिप्राय देणाऱ्याचा प्रकार",
+    reviewTypeFarmer: "शेतकरी",
+    reviewTypeBuyer: "खरेदीदार",
+    reviewTypeInvestor: "गुंतवणूकदार",
+    reviewRating: "रेटिंग",
+    reviewMessage: "संदेश",
+    reviewSubmit: "सबमिट करा",
+    reviewSuccess: "समीक्षाबद्दल धन्यवाद. पडताळणीनंतर ते प्रकाशित केले जाईल.",
+    quickLinks: "त्वरित लिंक्स",
+    businessPortals: "व्यावसायिक पोर्टल्स"
+  },
+  hi: {
+    // Navigation
+    home: "मुख्यपृष्ठ",
+    farmersPortal: "किसान पोर्टल",
+    buyersPortal: "खरीदार पोर्टल",
+    investorsPortal: "निवेशक पोर्टल",
+    adminDashboard: "एडमिन डैशबोर्ड",
+    inquireButton: "पूछताछ करें",
+    switchLanguage: "भाषा बदलें",
+
+    // Hero Section
+    welcomeTag: "तिर्वाल्टर ग्रुप में आपका स्वागत है",
+    heroTitle: "किसानों, वैश्विक खरीदारों, रणनीतिक निवेशकों को जोड़ना",
+    heroDesc: "कृषि, निर्यात, आयात और निवेश के अवसरों के लिए एक पारदर्शी पारिस्थितिकी तंत्र का निर्माण।",
+    iAmFarmer: "मैं किसान हूँ",
+    iAmBuyer: "मैं खरीदार हूँ",
+    iAmInvestor: "मैं निवेशक हूँ",
+    tradeEcosystem: "तिर्वाल्टर ट्रेड इकोसिस्टम",
+    tradeEcosystemDesc: "वैश्विक आपूर्ति श्रृंखला लॉजिस्टिक्स में सत्यापन योग्य पारदर्शकता।",
+
+    // Pillars Section
+    corePrinciples: "मुख्य सिद्धांत",
+    threePillars: "तिर्वाल्टर के तीन स्तंभ",
+    pillarsDesc: "हम टिकाऊ खेती, विश्वसनीय वैश्विक वितरण और ठोस रणनीतिक बुनियादी ढांचे को सुनिश्चित करने के लिए तीन प्रमुख स्तंभों के साथ काम करते हैं।",
+    pillar1Title: "हम उगाते हैं",
+    pillar1Desc: "हम किसानों को प्रशिक्षण, गुणवत्तापूर्ण जैविक इनपुट और आधुनिक तकनीकों के साथ सशक्त बनाते हैं। समृद्ध स्थानीय मिट्टी में सीधे प्रीमियम, निर्यात-गुणवत्ता वाले मसालों की खेती करके, हम टिकाऊ आजीविका और असाधारण उपज सुनिश्चित करते हैं।",
+    pillar2Title: "हम व्यापार करते हैं",
+    pillar2Desc: "किसानों और अंतरराष्ट्रीय खरीदारों के बीच एक सेतु के रूप में काम करते हुए, हम शिपिंग, वेयरहाउसिंग और सीमा शुल्क का प्रबंधन करते हैं। हम महत्वपूर्ण कृषि मशीनरी का आयात करते हैं और वैश्विक खरीदारों को सत्यापित मसालों का निर्यात करते हैं।",
+    pillar3Title: "हम निर्माण करते हैं",
+    pillar3Desc: "हम रणनीतिक कोल्ड स्टोरेज सुविधाओं, सॉर्टेक्स ग्रेडिंग प्लांट और डिजिटल मार्केटप्लेस प्लेटफॉर्म विकसित करते हैं। ये संपत्ति दक्षता में सुधार करती हैं और रणनीतिक निवेशकों के लिए आकर्षक रिटर्न प्रदान करती हैं।",
+
+    // Divisions Section
+    operationalScope: "परिचालन दायरा",
+    diverseActivities: "विविध व्यावसायिक गतिविधियाँ",
+    divisionsDesc: "तिर्वाल्टर जोखिम-मुक्त कृषि उद्यम बनाने के लिए चार मुख्य विभागों का समन्वय करता है।",
+    division1: "विभाग 01",
+    div1Title: "कृषि",
+    div1Desc: "अनुबंध खेती के माध्यम से प्रमाणित, कीटनाशक मुक्त उत्पादों को उगाने के लिए किसानों के साथ साझेदारी करना।",
+    division2: "विभाग 02",
+    div2Title: "निर्यात",
+    div2Desc: "यूरोपीय, अमेरिकी और पूर्वी एशियाई खाद्य निर्माताओं को भारतीय मसाले, दालें और सूखे मेवे भेजना।",
+    division3: "विभाग 03",
+    div3Title: "आयात",
+    div3Desc: "घरेलू खेती को अपग्रेड करने के लिए उच्च-उपज वाले उर्वरक प्रौद्योगिकियों, बीजों और उन्नत प्रसंस्करण घटकों का आयात करना।",
+    division4: "विभाग 04",
+    div4Title: "निवेश",
+    div4Desc: "वैश्विक निवेशकों के लिए कोल्ड स्टोरेज और कृषि बुनियादी ढांचे में सुरक्षित संपत्ति-समर्थित परतावे की पेशकश।",
+
+    // Product Categories Section (Homepage)
+    categoriesTitle: "उत्पाद श्रेणियां",
+    categoriesDesc: "हम तीन प्राथमिक कृषि श्रेणियों में व्यापार करते हैं। विशिष्ट वस्तुओं और विशिष्टताओं को देखने के लिए एक्सप्लोर करें पर क्लिक करें।",
+    exploreBtn: "श्रेणी एक्सप्लोर करें",
+    exploreProducts: "उत्पाद एक्सप्लोर करें",
+
+    // Video Section
+    videoTag: "कॉर्पोरेट शोकेस",
+    videoTitle: "तिर्वाल्टर ग्रुप कंपनी वीडियो",
+    videoDesc: "देखें कि हम सॉर्टिंग प्लांट और नियंत्रित तापमान वाली कोल्ड चेन का उपयोग करके ग्रामीण भारतीय खेतों और अंतरराष्ट्रीय शिपिंग पोर्ट को कैसे जोड़ते हैं।",
+
+    // Credibility Section
+    credibilityTag: "प्रमाणपत्र और पंजीकरण",
+    credibilityTitle: "विश्वास और निर्यात बुनियादी ढांचा",
+    credibilityDesc: "हमारी प्रमाणित उपलब्धियां और आधिकारिक सरकारी पंजीकरण।",
+    overviewTitle: "कंपनी अवलोकन",
+    overviewText: "तिर्वाल्टर ग्रुप स्थानीय भारतीय कृषि समूहों को वैश्विक खरीदारों से जोड़ता है। हमारे पास प्रसंस्करण मशीनरी, सॉर्टिंग प्लांट और वेयरहाउस सुविधाएं हैं जो उत्पाद की गुणवत्ता और निर्यात मानकों का अनुपालन सुनिश्चित करती हैं।",
+    achievementsTitle: "व्यावसायिक उपलब्धियां",
+    achievementsText: "पिछले वर्षों में, हमने अनुबंध खेती के खेतों का विस्तार किया है, मसालों के व्यापार की मात्रा बढ़ाई है और वैश्विक कृषि नियामक मानकों के तहत प्रमाणित दर्जा प्राप्त किया है।",
+    exportCapTitle: "निर्यात क्षमता",
+    exportCapText: "हम समुद्री माल ढुलाई, हवाई माल ढुलाई, कस्टम पैकेजिंग, फाइटोसैनिटरी प्रमाणपत्र और सॉर्टेक्स सॉर्टिंग (99.5%+ शुद्धता) का समर्थन करते हैं।",
+    growthTitle: "विकास और बुनियादी ढांचा",
+    growthText: "कोल्ड चेन स्टोरेज और सॉफ्टवेयर कनेक्टिविटी का विस्तार करते हुए, हम अगले वर्ष व्यापार की मात्रा में 40% वृद्धि का लक्ष्य रख रहे हैं।",
+    downloadDocs: "दस्तावेज़ डाउनलोड",
+    downloadProspectus: "व्यावसायिक विवरणिका डाउनलोड करें (PDF)",
+    downloadReport: "वार्षिक बिक्री रिपोर्ट डाउनलोड करें (PDF)",
+    downloadCertificates: "निर्यात मानक प्रमाणपत्र (PDF)",
+    stat1Val: "5,000+",
+    stat1Lbl: "सक्रिय किसान जुड़े",
+    stat2Val: "15+",
+    stat2Lbl: "वैश्विक निर्यात गंतव्य",
+    stat3Val: "10,000+",
+    stat3Lbl: "वार्षिक रूप से व्यापारिक टन",
+    stat4Val: "100%",
+    stat4Lbl: "जैविक और ट्रेस करने योग्य उपज",
+
+    // Reviews Section
+    reviewsTag: "अभिप्राय",
+    reviewsTitle: "ग्राहक और भागीदार प्रतिक्रिया",
+    reviewsDesc: "तिर्वाल्टर के साथ उनकी साझेदारी के संबंध में हमारे खरीदारों, किसानों और रणनीतिक निवेशकों की टिप्पणियां पढ़ें।",
+    review1Name: "माइकल चांग (आयातक)",
+    review1Text: "हरी इलायची के लिए तिर्वाल्टर हमारा सबसे भरोसेमंद आपूर्तिकर्ता है। उनकी नमी और शुद्धता विशिष्टताएं हमेशा वादे के अनुसार होती हैं। सॉर्टेक्स ग्रेडिंग उत्कृष्ट है।",
+    review2Name: "ज्ञानेश्वर पाटिल (किसान)",
+    review2Text: "जब से मैं तिर्वाल्टर अनुबंध खेती कार्यक्रम में शामिल हुआ हूँ, मुझे सीधा मार्गदर्शन, जैविक इनपुट मिलते हैं और तुरंत भुगतान किया जाता है। वे उचित बाजार दरें देते हैं।",
+    review3Name: "एमिली वॉटसन (निवेशक)",
+    review3Text: "तिर्वाल्टर के कोल्ड स्टोरेज बुनियादी ढांचे में निवेश करने से स्थिर संपत्ति-समर्थित रिटर्न मिला है। उनके नियमित प्रगति अपडेट और पारदर्शी वित्तीय जानकारी प्रभावशाली हैं।",
+
+    // Contact Section
+    getInTouch: "संपर्क करें",
+    contactDesk: "हमारे ट्रेड डेस्क से संपर्क करें",
+    contactDesc: "सामान्य पूछताछ या साझेदारी का प्रस्ताव है? नीचे दिया गया संपर्क फ़ॉर्म भरें और हमारा एक प्रतिनिधि आपसे संपर्क करेगा।",
+    headquarters: "तिर्वाल्टर ग्रुप मुख्यालय",
+    hqDesc: "तत्काल शिपमेंट, अनुकूलित सॉर्टिंग आवश्यकताओं, या निवेश प्रस्तुति के प्रश्नों के लिए हमसे सीधे संपर्क करें।",
+    officeAddress: "कार्यालय का पता",
+    addressText: "305 बी विंग धारा रेसीडेंसी, विश्वनाथ चौक, पालेगांव, अंबरनाथ (पूर्व), अंबरनाथ (एम CL), अंबरनाथ, ठाणे, महाराष्ट्र, 421501, भारत",
+    emailDesk: "ईमेल डेस्क",
+    phoneNo: "फ़ोन नंबर",
+    formName: "पूरा नाम",
+    formEmail: "ईमेल पता",
+    formSubject: "विषय",
+    formMessage: "संदेश",
+    formSubmit: "संदेश भेजें",
+    formSubmitting: "संदेश भेजा जा रहा है...",
+    formSuccess: "संदेश सफलतापूर्वक भेजा गया",
+    formSuccessDesc: "धन्यवाद। आपका संदेश सफलतापूर्वक पंजीकृत कर लिया गया है।",
+
+    // Lead Popup
+    popupTitle: "तिर्वाल्टर ग्रुप से जुड़ें",
+    popupDesc: "आपूर्ति समझौतों, वैश्विक आयात दरों, या रणनीतिक निवेश के अवसरों का पता लगाने के लिए अपने विवरण प्रदान करें। एक प्रतिनिधि आपसे संपर्क करेगा।",
+    popupSubmit: "जारी रखें",
+    popupSubmitting: "जमा किया जा रहा है...",
+
+    // Category Detail View
+    backToHome: "मुख्यपृष्ठ पर वापस जाएँ",
+    categoryBannerAlt: "श्रेणी बैनर",
+    productListTitle: "उत्पाद सूची",
+    productDetailTitle: "उत्पाद विवरण और विशिष्टताएँ",
+    specOrigin: "उत्पत्ति स्थान",
+    specPurity: "शुद्धता ग्रेड",
+    specMoisture: "नमी की मात्रा",
+    specPackaging: "मानक पैकेजिंग",
+    inquireBuyer: "खरीदार के रूप में पूछताछ",
+    inquireFarmer: "किसान के रूप में पूछताछ",
+
+    // Portal Form Fields
+    state: "राज्य",
+    district: "ज़िला",
+    cityVillage: "शहर / गाँव",
+    pincode: "पिनकोड",
+    companyName: "कंपनी का नाम",
+    country: "गंतव्य देश",
+    productRequirement: "उत्पाद की आवश्यकता / ग्रेड",
+    productName: "उत्पाद का नाम / मसाला",
+    quantity: "अनुमानित मात्रा (किग्रा/टन)",
+    estimatedInvestment: "अनुमानित निवेश राशि",
+    selectInvestment: "-- निवेश कोष्ठक चुनें --",
+    investmentInterest: "निवेश रुचि क्षेत्र",
+    selectInterest: "-- रुचि क्षेत्र चुनें --",
+    inquirySpecs: "पूछताछ और विशिष्टताएँ",
+    cropSpecs: "फसल विशिष्टता / संदेश",
+    financialCurrency: "मुद्रा चुनें",
+    targetBudget: "अनुमानित मासिक बजट",
+
+    // Farmer Form Specific
+    farmerHeader: "किसान और उत्पादक पोर्टल",
+    farmerSub: "अपनी फसलों, सूखे मसालों या कच्चे कृषि उत्पादों को पंजीकृत करें। हम सीधी खरीद, निष्पक्ष मूल्य निर्धारण और पारदर्शी वजन की पेशकश करते हैं।",
+    farmerSubmit: "किसान पूछताछ दर्ज करें",
+    farmerSuccess: "पूछताछ सफलतापूर्वक दर्ज की गई!",
+    farmerSuccessDesc: "आपकी आपूर्ति का विवरण सफलतापूर्वक पंजीकृत कर लिया गया है। आप इस पूछताछ को एडमिन डैशबोर्ड डेमो के अंदर सत्यापित कर सकते हैं।",
+    submitAnother: "एक और पूछताछ दर्ज करें",
+    suppliersDesk: "आपूर्तिकर्ता डेस्क",
+
+    // Buyer Form Specific
+    buyerHeader: "खरीदार और आयातक पूछताछ",
+    buyerSub: "हमारे प्रीमियम मसालों और कृषि निर्यातों के लिए उद्धरण, विशिष्टता पत्रक, packaging विकल्प या थोक नमूना शिपमेंट का अनुरोध करें।",
+    buyerSubmit: "खरीदार पूछताछ दर्ज करें",
+    buyerSuccess: "आवश्यकता सफलतापूर्वक दर्ज की गई!",
+    buyerSuccessDesc: "आपकी खरीदार की विनती सफलतापूर्वक पंजीकृत की गई है। आप इसे एडमिन डैशबोर्ड डेमो के अंदर देख सकते हैं।",
+    globalTradeDesk: "वैश्विक व्यापार डेस्क",
+
+    // Investor Form Specific
+    investorHeader: "रणनीतिक निवेशक पोर्टल",
+    investorSub: "इक्विटी वित्तपोषण, कोल्ड स्टोरेज बुनियादी ढांचे, या अंतरराष्ट्रीय निर्यात शिपिंग रिटर्न के बारे में पूछताछ करें। कृपया नीचे हमारी विवरणिका डाउनलोड करें।",
+    investorSubmit: "निवेशक पूछताछ दर्ज करें",
+    investorSuccess: "निवेश पूछताछ सफलतापूर्वक दर्ज की गई!",
+    investorSuccessDesc: "आपका निवेशक प्रोफ़ाइल सफलतापूर्वक पंजीकृत कर लिया गया है। आप इसे एडमिन डैशबोर्ड डेमो के अंदर देख सकते हैं।",
+    strategicFinancing: "रणनीतिक वित्तपोषण",
+    presentationTitle: "तिर्वाल्टर ग्रुप प्रस्तुति",
+    presentationDesc: "कॉर्पोरेट अवलोकन, व्यावसायिक कार्यप्रवाह और विस्तार योजनाएं (PDF, 8MB)।",
+    downloadPresentation: "प्रस्तुति डाउनलोड करें",
+
+    // Admin Dashboard
+    backendAlertTitle: "MERN + गूगल शीट्स लीड आर्किटेक्चर पाइपलाइन",
+    backendAlertDesc: "उत्पादन रिलीज के लिए, फ़ॉर्म एक्सप्रेस बैकएंड से जुड़े हैं। प्रस्तुतियाँ तुरंत मोंगोडीबी एटलस में सहेजी जाती हैं और वास्तविक समय में गूगल शीट्स में प्रतिबिंबित होती हैं।",
+    backendStep1Title: "रिएक्ट फ्रंटएंड",
+    backendStep1Desc: "फ़ॉर्म सत्यापन और Axios POST",
+    backendStep2Title: "Node.js / Express",
+    backendStep2Desc: "सुरक्षित API रूट हैंडलर",
+    backendStep3Title: "MongoDB Atlas",
+    backendStep3Desc: "दस्तावेज़ स्टोर (प्राथमिक)",
+    backendStep4Title: "Google Sheets API",
+    backendStep4Desc: "लाइव बैकअप स्प्रेडशीट",
+    backendConsoleNote: "💡 नोट: वर्तमान में डेमो मोड में चल रहा है। सिम्युलेटेड API पेलोड और लॉग देखने के लिए सबमिशन के दौरान ब्राउज़र डेवलपर कन्सोल (F12) खोलें।",
+
+    // Footer bottom
+    rightsReserved: "तिर्वाल्टर ग्रुप ऑफ कंपनीज। सर्वाधिकार सुरक्षित।",
+    privacyPolicy: "गोपनीयता नीति",
+    termsOfTrade: "व्यापार की शर्तें",
+    demoMode: "ग्राहक डेमो मोड",
+
+    // Buyer Portal Refinements
+    phoneNoBuyer: "फ़ोन नंबर (देश कोड शामिल करें)",
+    productRequirementBuyer: "उत्पाद की आवश्यकता",
+    targetBudgetBuyer: "अनुमानित बजट",
+    requiredQuantity: "आवश्यक मात्रा",
+    stateBuyer: "राज्य / प्रांत / क्षेत्र",
+    districtBuyer: "काउंटी / ज़िला",
+    cityVillageBuyer: "शहर / कस्बा",
+    pincodeBuyer: "पोस्टल / पिनकोड",
+    inquirySpecsBuyer: "संदेश / आवश्यकताएं",
+    inquirySpecsInvestor: "संदेश / निवेश आवश्यकताएं",
+    phoneNoInvestor: "फ़ोन नंबर (देश कोड शामिल करें)",
+
+    // Reviews & Additional
+    leaveReviewBtn: "अपनी समीक्षा लिखें",
+    reviewFormTitle: "अपनी समीक्षा सबमिट करें",
+    reviewTypeName: "समीक्षक का प्रकार",
+    reviewTypeFarmer: "किसान",
+    reviewTypeBuyer: "खरीदार",
+    reviewTypeInvestor: "निवेशक",
+    reviewRating: "रेटिंग",
+    reviewMessage: "आपका संदेश",
+    reviewSubmit: "समीक्षा सबमिट करें",
+    reviewSuccess: "समीक्षा के लिए धन्यवाद। सत्यापन के बाद इसे प्रकाशित किया जाएगा।",
+    quickLinks: "त्वरित कड़ियाँ",
+    businessPortals: "व्यापार पोर्टल"
   }
 };
