@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useReviews } from '../context/ReviewContext';
-import { categoriesData } from '../services/categoriesData';
+import { categoriesData } from '../config/categories';
 import { config } from '../services/config';
 import { 
   Sprout, Globe2, TrendingUp, Shovel, Ship, Landmark, ArrowRight, 

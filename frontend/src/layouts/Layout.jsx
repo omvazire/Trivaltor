@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LeadPopup } from '../components/LeadPopup';
+import { VisitorTracker } from '../components/VisitorTracker';
 import { Globe2, Menu, X, Phone, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import logoImg from '../assets/images/company-logo.png'; // company-logo.png is the logo
@@ -240,6 +241,7 @@ export const Layout = ({ children }) => {
 
       {/* Render Lead Capture Popup */}
       <LeadPopup />
+      <VisitorTracker />
     </div>
   );
 };

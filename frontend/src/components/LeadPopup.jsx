@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { X, User, Phone, Mail } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useLeads } from '../context/LeadContext';
 
 export const LeadPopup = () => {
   const t = useLanguage().t;
+  const { submitPopupLead } = useLeads();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
@@ -71,19 +73,19 @@ export const LeadPopup = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate backend response
-    setTimeout(() => {
+    const res = await submitPopupLead(form);
+    if (res.success) {
       console.group('%c[Lead Capture Popup Submission] SUCCESS', 'color: #3A7D44; font-weight: bold; font-size: 12px;');
       console.log('Timestamp:', new Date().toISOString());
       console.log('Session ID:', sessionStorage.getItem('trivaltor-session-id'));
       console.log('Name:', form.name);
       console.log('Phone:', form.phone);
       console.log('Email:', form.email);
-      console.log('Status: Logged to console successfully. Database integration pending (Phase 2).');
+      console.log('Status: Saved to MongoDB Atlas successfully.');
       console.groupEnd();
 
       // Store in localStorage for prefilling and blocking subsequent overlays
@@ -95,7 +97,10 @@ export const LeadPopup = () => {
       setIsSubmitting(false);
       setIsOpen(false);
       sessionStorage.setItem('trivaltor-lead-popup-shown', 'true');
-    }, 800);
+    } else {
+      setIsSubmitting(false);
+      alert('Error submitting lead details: ' + (res.error || 'Validation or Server Error'));
+    }
   };
 
   if (!isOpen) return null;

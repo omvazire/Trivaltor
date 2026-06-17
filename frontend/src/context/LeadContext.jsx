@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
+import { api } from '../services/api';
 
 const LeadContext = createContext();
 
@@ -161,85 +162,150 @@ export const LeadProvider = ({ children }) => {
     localStorage.setItem('trivaltor-contact-leads', JSON.stringify(contactLeads));
   }, [contactLeads]);
 
-  // Log simulation of backend pipeline
-  const simulateBackendPipeline = (leadType, data) => {
-    console.group(`%c[Lead Pipeline Simulation] New ${leadType} Inquiry Submitted`, 'color: #c5a880; font-weight: bold; font-size: 11px;');
-    console.log('1. Client Validation: SUCCESS');
-    console.log('2. Request dispatched via Axios POST: /api/leads/' + leadType.toLowerCase());
-    console.log('3. Route Handler parsed payload: ', data);
-    console.log('4. MongoDB Mongoose Model instantiated');
-    console.log('%c5. Saved to MongoDB Atlas (Production Cluster: trivaltor-db-shard-0)', 'color: #4eaf61; font-weight: bold;');
-    console.log('%c6. Dispatched webhook. Google Sheets Backup API triggered.', 'color: #3e8ed7; font-weight: bold;');
-    console.log('7. Pipeline status: COMPLETE (201 Created)');
-    console.groupEnd();
+  const submitPopupLead = async (lead) => {
+    try {
+      await api.popupLead.create({
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email
+      });
+      return { success: true };
+    } catch (err) {
+      console.error('[Popup Lead Submission Error]', err);
+      return { success: false, error: err.message || 'Validation or Server Error' };
+    }
   };
 
-  const submitFarmerLead = (lead) => {
+  const submitFarmerLead = async (lead) => {
     setLoading(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const newLead = {
-          id: `f-${Date.now()}`,
-          ...lead,
-          date: new Date().toISOString()
-        };
-        setFarmerLeads((prev) => [newLead, ...prev]);
-        simulateBackendPipeline('Farmer', newLead);
-        setLoading(false);
-        resolve({ success: true });
-      }, 800);
-    });
+    try {
+      // 1. Submit to Real Backend API
+      await api.enquiry.create({
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email,
+        enquiryType: 'farmer',
+        category: lead.productName || 'N/A',
+        state: lead.state,
+        district: lead.district,
+        cityVillage: lead.cityVillage || 'N/A',
+        pincode: lead.pincode,
+        message: `Quantity: ${lead.quantity || 'N/A'}. specs: ${lead.message || ''}`
+      });
+
+      // 2. Sync to Local State for Demo Dashboard
+      const newLead = {
+        id: `f-${Date.now()}`,
+        ...lead,
+        date: new Date().toISOString()
+      };
+      setFarmerLeads((prev) => [newLead, ...prev]);
+      setLoading(false);
+      return { success: true };
+    } catch (err) {
+      console.error('[Farmer Enquiry Submission Error]', err);
+      setLoading(false);
+      return { success: false, error: err.message || 'Validation or Server Error' };
+    }
   };
 
-  const submitBuyerLead = (lead) => {
+  const submitBuyerLead = async (lead) => {
     setLoading(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const newLead = {
-          id: `b-${Date.now()}`,
-          ...lead,
-          date: new Date().toISOString()
-        };
-        setBuyerLeads((prev) => [newLead, ...prev]);
-        simulateBackendPipeline('Buyer', newLead);
-        setLoading(false);
-        resolve({ success: true });
-      }, 800);
-    });
+    try {
+      // 1. Submit to Real Backend API
+      await api.enquiry.create({
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email,
+        enquiryType: 'buyer',
+        category: lead.productRequirement || 'N/A',
+        state: lead.state,
+        district: lead.district,
+        cityVillage: lead.cityVillage || 'N/A',
+        pincode: lead.pincode,
+        message: `Company: ${lead.companyName || 'N/A'}. Country: ${lead.country || 'N/A'}. Quantity: ${lead.requiredQuantity || 'N/A'}. Budget: ${lead.targetBudget || ''} ${lead.currency || 'USD'}. Message: ${lead.message || ''}`
+      });
+
+      // 2. Sync to Local State for Demo Dashboard
+      const newLead = {
+        id: `b-${Date.now()}`,
+        ...lead,
+        date: new Date().toISOString()
+      };
+      setBuyerLeads((prev) => [newLead, ...prev]);
+      setLoading(false);
+      return { success: true };
+    } catch (err) {
+      console.error('[Buyer Enquiry Submission Error]', err);
+      setLoading(false);
+      return { success: false, error: err.message || 'Validation or Server Error' };
+    }
   };
 
-  const submitInvestorLead = (lead) => {
+  const submitInvestorLead = async (lead) => {
     setLoading(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const newLead = {
-          id: `i-${Date.now()}`,
-          ...lead,
-          date: new Date().toISOString()
-        };
-        setInvestorLeads((prev) => [newLead, ...prev]);
-        simulateBackendPipeline('Investor', newLead);
-        setLoading(false);
-        resolve({ success: true });
-      }, 800);
-    });
+    try {
+      // 1. Submit to Real Backend API
+      await api.enquiry.create({
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email,
+        enquiryType: 'investor',
+        category: lead.investmentInterest || 'N/A',
+        state: lead.state,
+        district: lead.district,
+        cityVillage: lead.cityVillage || 'N/A',
+        pincode: lead.pincode,
+        message: `Estimated Investment: ${lead.estimatedInvestmentAmount || 'N/A'} ${lead.currency || 'USD'}. Message: ${lead.message || ''}`
+      });
+
+      // 2. Sync to Local State for Demo Dashboard
+      const newLead = {
+        id: `i-${Date.now()}`,
+        ...lead,
+        date: new Date().toISOString()
+      };
+      setInvestorLeads((prev) => [newLead, ...prev]);
+      setLoading(false);
+      return { success: true };
+    } catch (err) {
+      console.error('[Investor Enquiry Submission Error]', err);
+      setLoading(false);
+      return { success: false, error: err.message || 'Validation or Server Error' };
+    }
   };
 
-  const submitContactLead = (lead) => {
+  const submitContactLead = async (lead) => {
     setLoading(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const newLead = {
-          id: `c-${Date.now()}`,
-          ...lead,
-          date: new Date().toISOString()
-        };
-        setContactLeads((prev) => [newLead, ...prev]);
-        simulateBackendPipeline('Contact', newLead);
-        setLoading(false);
-        resolve({ success: true });
-      }, 800);
-    });
+    try {
+      // 1. Submit to Real Backend API
+      await api.enquiry.create({
+        name: lead.name,
+        phone: 'N/A',
+        email: lead.email,
+        enquiryType: 'contact',
+        category: 'General Contact',
+        state: 'N/A',
+        district: 'N/A',
+        cityVillage: 'N/A',
+        pincode: 'N/A',
+        message: lead.message || ''
+      });
+
+      // 2. Sync to Local State for Demo Dashboard
+      const newLead = {
+        id: `c-${Date.now()}`,
+        ...lead,
+        date: new Date().toISOString()
+      };
+      setContactLeads((prev) => [newLead, ...prev]);
+      setLoading(false);
+      return { success: true };
+    } catch (err) {
+      console.error('[Contact Enquiry Submission Error]', err);
+      setLoading(false);
+      return { success: false, error: err.message || 'Validation or Server Error' };
+    }
   };
 
   const deleteLead = (leadType, id) => {
@@ -276,6 +342,7 @@ export const LeadProvider = ({ children }) => {
       investorLeads,
       contactLeads,
       loading,
+      submitPopupLead,
       submitFarmerLead,
       submitBuyerLead,
       submitInvestorLead,

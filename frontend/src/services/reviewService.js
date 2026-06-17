@@ -1,4 +1,4 @@
-import { initialReviews } from '../data/mockReviews';
+import { initialReviews } from '../config/reviews';
 
 const LOCAL_STORAGE_KEY = 'trivaltor_reviews';
 
