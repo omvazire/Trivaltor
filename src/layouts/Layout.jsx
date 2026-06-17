@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LeadPopup } from '../components/LeadPopup';
 import { Globe2, Menu, X, Phone, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import logoImg from '../assets/images/company-logo.png'; // company-logo.png is the logo
 
 export const Layout = ({ children }) => {
@@ -157,7 +158,7 @@ export const Layout = ({ children }) => {
         aria-label="Contact Trivaltor via WhatsApp"
         title="Chat on WhatsApp"
       >
-        <MessageSquare size={28} fill="currentColor" stroke="none" />
+        <FaWhatsapp size={28} />
       </a>
 
       {/* Footer */}
@@ -209,18 +210,16 @@ export const Layout = ({ children }) => {
                 </a>
               </span>
             </div>
-            <div className="footer-contact-item" style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <Phone size={18} />
-                <span style={{ fontSize: '0.875rem' }}>
+            <div className="footer-contact-item">
+              <Phone size={18} />
+              <span style={{ fontSize: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                <a href="tel:+919226941613" style={{ textDecoration: 'underline' }}>
                   +91 92269 41613
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingLeft: '2.1rem' }}>
-                <span style={{ fontSize: '0.875rem' }}>
+                </a>
+                <a href="tel:+919324027876" style={{ textDecoration: 'underline' }}>
                   +91 93240 27876
-                </span>
-              </div>
+                </a>
+              </span>
             </div>
           </div>
         </div>

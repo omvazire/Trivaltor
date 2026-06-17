@@ -227,7 +227,7 @@ export const AdminDashboard = () => {
   // Render Stars
   const renderStars = (rating) => {
     return (
-      <div style={{ display: 'flex', gap: '0.15rem', color: '#0c2d1c' }}>
+      <div style={{ display: 'flex', gap: '0.15rem', color: '#e0a96d' }}>
         {[...Array(5)].map((_, i) => (
           <span key={i} style={{ fontSize: '1rem' }}>
             {i < rating ? '★' : '☆'}

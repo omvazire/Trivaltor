@@ -952,7 +952,7 @@ body.dark .leads-table tbody tr:hover {
 .stars-container {
   display: flex;
   gap: 0.25rem;
-  color: #0c2d1c;
+  color: #FFC107;
 }
 .review-text {
   font-size: 0.95rem;

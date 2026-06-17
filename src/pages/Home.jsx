@@ -632,7 +632,8 @@ export const Home = () => {
                     height: '44px', 
                     borderRadius: '8px', 
                     backgroundColor: 'var(--accent-gold-light)', 
-                    color: 'var(--accent-gold-hover)'
+                    color: 'var(--accent-gold-hover)',
+                    flexShrink: 0
                   }} className="flex-center">
                     <MapPin size={20} />
                   </div>
@@ -650,7 +651,8 @@ export const Home = () => {
                     height: '44px', 
                     borderRadius: '8px', 
                     backgroundColor: 'var(--accent-gold-light)', 
-                    color: 'var(--accent-gold-hover)'
+                    color: 'var(--accent-gold-hover)',
+                    flexShrink: 0
                   }} className="flex-center">
                     <Mail size={20} />
                   </div>
@@ -668,15 +670,16 @@ export const Home = () => {
                     height: '44px', 
                     borderRadius: '8px', 
                     backgroundColor: 'var(--accent-gold-light)', 
-                    color: 'var(--accent-gold-hover)'
+                    color: 'var(--accent-gold-hover)',
+                    flexShrink: 0
                   }} className="flex-center">
                     <Phone size={20} />
                   </div>
                   <div>
                     <h4 style={{ fontSize: '1rem', fontFamily: 'var(--font-heading)' }}>{t('phoneNo')}</h4>
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                      <span>+91 92269 41613</span>
-                      <span>+91 93240 27876</span>
+                      <a href="tel:+919226941613" style={{ textDecoration: 'underline' }}>+91 92269 41613</a>
+                      <a href="tel:+919324027876" style={{ textDecoration: 'underline' }}>+91 93240 27876</a>
                     </p>
                   </div>
                 </div>
@@ -898,7 +901,7 @@ export const Home = () => {
                             border: 'none',
                             cursor: 'pointer',
                             padding: '0.25rem',
-                            color: star <= reviewForm.rating ? '#0c2d1c' : 'var(--text-muted)'
+                            color: star <= reviewForm.rating ? '#e0a96d' : 'var(--text-muted)'
                           }}
                         >
                           <Star size={24} fill={star <= reviewForm.rating ? 'currentColor' : 'none'} />
