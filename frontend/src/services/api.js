@@ -7,6 +7,20 @@ const API = axios.create({
   }
 });
 
+// Request interceptor to automatically attach the JWT Bearer Token if available
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('trivaltor-admin-token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Response interceptor to extract data payload or forward clean errors
 API.interceptors.response.use(
   (response) => {
@@ -31,5 +45,9 @@ export const api = {
   },
   enquiry: {
     create: (data) => API.post('/enquiries', data)
+  },
+  admin: {
+    login: (credentials) => API.post('/admin/login', credentials),
+    profile: () => API.get('/admin/profile')
   }
 };

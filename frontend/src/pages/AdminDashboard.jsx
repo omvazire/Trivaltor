@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useReviews } from '../context/ReviewContext';
 import { 
@@ -24,8 +25,10 @@ export const AdminDashboard = () => {
     deleteReview 
   } = useReviews();
 
+  const navigate = useNavigate();
+
   // Auth state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState(false);
 
@@ -56,8 +59,9 @@ export const AdminDashboard = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('trivaltor-admin-token');
     setIsLoggedIn(false);
-    setCredentials({ username: '', password: '' });
+    navigate('/admin/login');
   };
 
   // CSV Exporter helper

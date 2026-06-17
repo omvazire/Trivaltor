@@ -6,6 +6,8 @@ import { BuyerLead } from './pages/BuyerLead';
 import { InvestorLead } from './pages/InvestorLead';
 import { CategoryDetail } from './pages/CategoryDetail';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AdminLogin } from './pages/AdminLogin';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -16,7 +18,12 @@ function App() {
         <Route path="/buyer" element={<BuyerLead />} />
         <Route path="/investor" element={<InvestorLead />} />
         <Route path="/category/:categoryId" element={<CategoryDetail />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
         <Route path="*" element={<Home />} /> {/* Fallback route */}
       </Routes>
     </Layout>
