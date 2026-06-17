@@ -1,38 +1,48 @@
 import { useState } from 'react';
 import { useLeads } from '../context/LeadContext';
+import { useReviews } from '../context/ReviewContext';
 import { 
-  Users, Sprout, Ship, Landmark, Download, LogOut, Lock, 
-  Search, ArrowUpDown, TrendingUp 
+  Users, Download, LogOut, Lock, 
+  Search, ArrowUpDown, Eye, Check, X,
+  MessageSquare, Landmark, Calendar, ThumbsUp, ThumbsDown
 } from 'lucide-react';
-import { 
-  ResponsiveContainer, LineChart, Line, XAxis, YAxis, 
-  CartesianGrid, Tooltip as ChartTooltip, Legend 
-} from 'recharts';
-
-// Mock Reporting Chart Data
-const monthlyGrowthData = [
-  { month: 'Jan', FarmerLeads: 2, BuyerLeads: 1, InvestorLeads: 1 },
-  { month: 'Feb', FarmerLeads: 5, BuyerLeads: 3, InvestorLeads: 2 },
-  { month: 'Mar', FarmerLeads: 8, BuyerLeads: 5, InvestorLeads: 3 },
-  { month: 'Apr', FarmerLeads: 12, BuyerLeads: 8, InvestorLeads: 4 },
-  { month: 'May', FarmerLeads: 18, BuyerLeads: 12, InvestorLeads: 7 },
-  { month: 'Jun', FarmerLeads: 26, BuyerLeads: 18, InvestorLeads: 11 }
-];
 
 export const AdminDashboard = () => {
-  const { farmerLeads, buyerLeads, investorLeads } = useLeads();
-  
+  const { 
+    farmerLeads, 
+    buyerLeads, 
+    investorLeads, 
+    deleteLead, 
+    markLeadContacted 
+  } = useLeads();
+
+  const { 
+    reviews, 
+    approveReview, 
+    rejectReview, 
+    deleteReview 
+  } = useReviews();
+
   // Auth state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState(false);
 
-  // Tab State: 'farmer' | 'buyer' | 'investor'
-  const [activeTab, setActiveTab] = useState('farmer');
+  // Main navigation tab: 'enquiries' | 'reviews'
+  const [activeSection, setActiveSection] = useState('enquiries');
 
-  // Search & Filter & Sort State
+  // Enquiries sub-tab: 'farmer' | 'buyer' | 'investor'
+  const [activeEnquiryTab, setActiveEnquiryTab] = useState('farmer');
+
+  // Review status filter: 'all' | 'pending' | 'approved' | 'rejected'
+  const [reviewFilter, setReviewFilter] = useState('all');
+
+  // Search & Sorting States
   const [searchQuery, setSearchQuery] = useState('');
   const [sortByDateOrder, setSortByDateOrder] = useState('desc'); // 'asc' | 'desc'
+
+  const [selectedEnquiry, setSelectedEnquiry] = useState(null);
+  const [selectedEnquiryType, setSelectedEnquiryType] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -55,8 +65,8 @@ export const AdminDashboard = () => {
     let rows;
     let filename;
 
-    if (activeTab === 'farmer') {
-      headers = ['ID', 'Name', 'Phone', 'Email', 'Location', 'Product Name', 'Quantity', 'Message', 'Date'];
+    if (activeEnquiryTab === 'farmer') {
+      headers = ['ID', 'Name', 'Phone', 'Email', 'Location', 'Product Name', 'Quantity', 'Message', 'Date', 'Contacted'];
       rows = farmerLeads.map(lead => [
         lead.id,
         `"${lead.name.replace(/"/g, '""')}"`,
@@ -66,26 +76,34 @@ export const AdminDashboard = () => {
         `"${lead.productName}"`,
         `"${lead.quantity}"`,
         `"${lead.message.replace(/"/g, '""')}"`,
-        lead.date
+        lead.date,
+        lead.contacted ? 'Yes' : 'No'
       ]);
       filename = 'trivaltor_farmer_leads.csv';
-    } else if (activeTab === 'buyer') {
-      headers = ['ID', 'Name', 'Company Name', 'Country', 'Email', 'Phone', 'Product Requirement', 'Required Quantity', 'Message', 'Date'];
+    } else if (activeEnquiryTab === 'buyer') {
+      headers = ['ID', 'Name', 'Company Name', 'Country', 'Email', 'Phone', 'Product Requirement', 'Required Quantity', 'Budget', 'Currency', 'State', 'District', 'City/Village', 'Pincode', 'Message', 'Date', 'Contacted'];
       rows = buyerLeads.map(lead => [
         lead.id,
         `"${lead.name.replace(/"/g, '""')}"`,
-        `"${lead.companyName.replace(/"/g, '""')}"`,
+        `"${(lead.companyName || '').replace(/"/g, '""')}"`,
         `"${lead.country}"`,
         `"${lead.email}"`,
         `"${lead.phone}"`,
         `"${lead.productRequirement}"`,
         `"${(lead.requiredQuantity || '').replace(/"/g, '""')}"`,
+        `"${lead.targetBudget || ''}"`,
+        `"${lead.currency || 'USD'}"`,
+        `"${lead.state || ''}"`,
+        `"${lead.district || ''}"`,
+        `"${lead.cityVillage || ''}"`,
+        `"${lead.pincode || ''}"`,
         `"${lead.message.replace(/"/g, '""')}"`,
-        lead.date
+        lead.date,
+        lead.contacted ? 'Yes' : 'No'
       ]);
       filename = 'trivaltor_buyer_leads.csv';
     } else {
-      headers = ['ID', 'Name', 'Phone', 'Email', 'Investment Interest', 'Investment Amount', 'Message', 'Date'];
+      headers = ['ID', 'Name', 'Phone', 'Email', 'Investment Interest', 'Investment Amount', 'Message', 'Date', 'Contacted'];
       rows = investorLeads.map(lead => [
         lead.id,
         `"${lead.name.replace(/"/g, '""')}"`,
@@ -94,7 +112,8 @@ export const AdminDashboard = () => {
         `"${lead.investmentInterest}"`,
         `"${lead.estimatedInvestmentAmount}"`,
         `"${lead.message.replace(/"/g, '""')}"`,
-        lead.date
+        lead.date,
+        lead.contacted ? 'Yes' : 'No'
       ]);
       filename = 'trivaltor_investor_leads.csv';
     }
@@ -115,27 +134,27 @@ export const AdminDashboard = () => {
     document.body.removeChild(link);
   };
 
-  // Helper to filter/sort leads
-  const getProcessedLeads = () => {
+  // Helper to filter/sort enquiries
+  const getProcessedEnquiries = () => {
     let currentLeads;
-    if (activeTab === 'farmer') currentLeads = [...farmerLeads];
-    else if (activeTab === 'buyer') currentLeads = [...buyerLeads];
+    if (activeEnquiryTab === 'farmer') currentLeads = [...farmerLeads];
+    else if (activeEnquiryTab === 'buyer') currentLeads = [...buyerLeads];
     else currentLeads = [...investorLeads];
 
     // Search filter
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
       currentLeads = currentLeads.filter(lead => {
-        if (activeTab === 'farmer') {
+        if (activeEnquiryTab === 'farmer') {
           return lead.name.toLowerCase().includes(q) || 
                  lead.email.toLowerCase().includes(q) || 
                  lead.productName.toLowerCase().includes(q) || 
                  lead.location.toLowerCase().includes(q);
-        } else if (activeTab === 'buyer') {
+        } else if (activeEnquiryTab === 'buyer') {
           return lead.name.toLowerCase().includes(q) || 
                  lead.email.toLowerCase().includes(q) || 
                  lead.productRequirement.toLowerCase().includes(q) || 
-                 lead.companyName.toLowerCase().includes(q) ||
+                 (lead.companyName && lead.companyName.toLowerCase().includes(q)) ||
                  lead.country.toLowerCase().includes(q);
         } else {
           return lead.name.toLowerCase().includes(q) || 
@@ -155,7 +174,49 @@ export const AdminDashboard = () => {
     return currentLeads;
   };
 
-  const processedLeads = getProcessedLeads();
+  // Helper to filter/sort reviews
+  const getProcessedReviews = () => {
+    let currentReviews = [...reviews];
+    
+    // Status Filter
+    if (reviewFilter !== 'all') {
+      currentReviews = currentReviews.filter(r => r.status === reviewFilter);
+    }
+
+    // Search filter
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase();
+      currentReviews = currentReviews.filter(r => 
+        r.customerName.toLowerCase().includes(q) || 
+        r.reviewText.toLowerCase().includes(q)
+      );
+    }
+
+    // Sort by Date
+    currentReviews.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return sortByDateOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+
+    return currentReviews;
+  };
+
+  const processedEnquiries = getProcessedEnquiries();
+  const processedReviews = getProcessedReviews();
+
+  // Render Stars
+  const renderStars = (rating) => {
+    return (
+      <div style={{ display: 'flex', gap: '0.15rem', color: '#e0a96d' }}>
+        {[...Array(5)].map((_, i) => (
+          <span key={i} style={{ fontSize: '1rem' }}>
+            {i < rating ? '★' : '☆'}
+          </span>
+        ))}
+      </div>
+    );
+  };
 
   // Login view
   if (!isLoggedIn) {
@@ -217,7 +278,7 @@ export const AdminDashboard = () => {
 
             {loginError && (
               <p style={{ color: 'red', fontSize: '0.8rem', margin: '0.5rem 0 1rem 0' }}>
-                Incorrect username or password. Please use standard demo credentials.
+                Incorrect username or password. Please use standard credentials.
               </p>
             )}
 
@@ -246,7 +307,6 @@ export const AdminDashboard = () => {
     );
   }
 
-  // Dashboard View
   return (
     <div className="section" style={{ backgroundColor: 'var(--bg-primary)', minHeight: '90vh' }}>
       <div className="container">
@@ -277,313 +337,597 @@ export const AdminDashboard = () => {
           </button>
         </div>
 
-        {/* 12. Reporting System (Widgets & Chart) */}
+        {/* Executive Widgets / Summary */}
         <div className="admin-stats-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '1.5rem',
           marginBottom: '2.5rem'
         }}>
-          {/* Card Total */}
+          {/* Card Enquiries */}
           <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--accent-gold-hover)' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Total Inquiries</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Total Enquiries</span>
               <Users size={20} />
             </div>
             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
               {farmerLeads.length + buyerLeads.length + investorLeads.length}
             </h2>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <TrendingUp size={12} style={{ color: 'var(--success)' }} />
-              +22% growth this month
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Registered leads
             </span>
           </div>
 
-          {/* Card Farmers */}
+          {/* Card Pending Reviews */}
           <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--success)' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Farmer Leads</span>
-              <Sprout size={20} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--accent-gold)' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Pending Reviews</span>
+              <MessageSquare size={20} />
             </div>
             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
-              {farmerLeads.length}
+              {reviews.filter(r => r.status === 'pending').length}
             </h2>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Registered cultivators</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Requires moderation
+            </span>
           </div>
 
-          {/* Card Buyers */}
+          {/* Card Approved Reviews */}
           <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--info)' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Buyer Leads</span>
-              <Ship size={20} />
-            </div>
-            <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
-              {buyerLeads.length}
-            </h2>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Global food importers</span>
-          </div>
-
-          {/* Card Investors */}
-          <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--accent-gold-hover)' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Investor Leads</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Public Reviews</span>
               <Landmark size={20} />
             </div>
             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
-              {investorLeads.length}
+              {reviews.filter(r => r.status === 'approved').length}
             </h2>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Strategic asset partners</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Approved testimonials
+            </span>
           </div>
         </div>
 
-        {/* Growth Chart */}
+        {/* Navigation Tabs for Two Main Sections */}
         <div style={{
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: 'var(--border-radius-md)',
-          padding: '2rem',
-          boxShadow: 'var(--shadow-sm)',
-          marginBottom: '3rem'
+          display: 'flex',
+          gap: '1rem',
+          borderBottom: '1px solid var(--border-color)',
+          marginBottom: '2rem',
+          paddingBottom: '0.5rem'
         }}>
-          <h3 style={{
-            fontSize: '1.15rem',
-            fontFamily: 'var(--font-heading)',
-            marginBottom: '1.5rem',
-            color: 'var(--text-primary)'
-          }}>
-            Leads Performance & Monthly Growth
-          </h3>
-          <div style={{ width: '100%', height: 300 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={monthlyGrowthData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
-                <XAxis dataKey="month" stroke="var(--text-secondary)" fontSize={12} />
-                <YAxis stroke="var(--text-secondary)" fontSize={12} />
-                <ChartTooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'var(--bg-secondary)', 
-                    border: '1px solid var(--border-color)',
-                    color: 'var(--text-primary)' 
-                  }} 
-                />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Line type="monotone" dataKey="FarmerLeads" name="Farmer Inquiries" stroke="#4eaf61" strokeWidth={2.5} activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="BuyerLeads" name="Buyer Orders" stroke="#3e8ed7" strokeWidth={2.5} />
-                <Line type="monotone" dataKey="InvestorLeads" name="Investments" stroke="#c5a880" strokeWidth={2.5} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <button 
+            onClick={() => { setActiveSection('enquiries'); setSearchQuery(''); }}
+            style={{
+              padding: '0.75rem 1.5rem',
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+              color: activeSection === 'enquiries' ? 'var(--accent-gold-hover)' : 'var(--text-secondary)',
+              borderBottom: activeSection === 'enquiries' ? '3px solid var(--accent-gold-hover)' : 'none',
+              marginBottom: '-0.65rem'
+            }}
+          >
+            Enquiries Desk
+          </button>
+          <button 
+            onClick={() => { setActiveSection('reviews'); setSearchQuery(''); }}
+            style={{
+              padding: '0.75rem 1.5rem',
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+              color: activeSection === 'reviews' ? 'var(--accent-gold-hover)' : 'var(--text-secondary)',
+              borderBottom: activeSection === 'reviews' ? '3px solid var(--accent-gold-hover)' : 'none',
+              marginBottom: '-0.65rem'
+            }}
+          >
+            Review Moderation
+          </button>
         </div>
 
-        {/* Leads Table Management */}
-        <div style={{ marginBottom: '1.5rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', marginBottom: '1rem' }}>
-            Inquiry Records Log
-          </h2>
+        {/* SECTION 1: ENQUIRIES */}
+        {activeSection === 'enquiries' && (
+          <div>
+            {/* Enquiry Header & CSV */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div className="admin-controls-bar" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '1rem',
+                backgroundColor: 'var(--bg-secondary)',
+                border: '1px solid var(--border-color)',
+                padding: '1rem 1.5rem',
+                borderRadius: '8px'
+              }}>
+                {/* Sub tabs */}
+                <div className="admin-tabs-wrapper" style={{ display: 'flex', gap: '0.25rem', backgroundColor: 'var(--bg-primary)', padding: '0.25rem', borderRadius: '6px' }}>
+                  <button 
+                    onClick={() => { setActiveEnquiryTab('farmer'); setSearchQuery(''); }}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      backgroundColor: activeEnquiryTab === 'farmer' ? 'var(--bg-secondary)' : 'transparent',
+                      color: activeEnquiryTab === 'farmer' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Farmers ({farmerLeads.length})
+                  </button>
+                  <button 
+                    onClick={() => { setActiveEnquiryTab('buyer'); setSearchQuery(''); }}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      backgroundColor: activeEnquiryTab === 'buyer' ? 'var(--bg-secondary)' : 'transparent',
+                      color: activeEnquiryTab === 'buyer' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Buyers ({buyerLeads.length})
+                  </button>
+                  <button 
+                    onClick={() => { setActiveEnquiryTab('investor'); setSearchQuery(''); }}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      backgroundColor: activeEnquiryTab === 'investor' ? 'var(--bg-secondary)' : 'transparent',
+                      color: activeEnquiryTab === 'investor' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Investors ({investorLeads.length})
+                  </button>
+                </div>
 
-          {/* Controls Bar */}
-          <div className="admin-controls-bar" style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            marginBottom: '1.5rem',
-            backgroundColor: 'var(--bg-secondary)',
-            border: '1px solid var(--border-color)',
-            padding: '1rem 1.5rem',
-            borderRadius: '8px'
-          }}>
-            {/* Tabs */}
-            <div className="admin-tabs-wrapper" style={{ display: 'flex', gap: '0.25rem', backgroundColor: 'var(--bg-primary)', padding: '0.25rem', borderRadius: '6px' }}>
-              <button 
-                onClick={() => { setActiveTab('farmer'); setSearchQuery(''); }}
-                style={{
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.85rem',
-                  fontWeight: '600',
-                  borderRadius: '4px',
-                  backgroundColor: activeTab === 'farmer' ? 'var(--bg-secondary)' : 'transparent',
-                  color: activeTab === 'farmer' ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  boxShadow: activeTab === 'farmer' ? 'var(--shadow-sm)' : 'none'
-                }}
-              >
-                Farmers ({farmerLeads.length})
-              </button>
-              <button 
-                onClick={() => { setActiveTab('buyer'); setSearchQuery(''); }}
-                style={{
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.85rem',
-                  fontWeight: '600',
-                  borderRadius: '4px',
-                  backgroundColor: activeTab === 'buyer' ? 'var(--bg-secondary)' : 'transparent',
-                  color: activeTab === 'buyer' ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  boxShadow: activeTab === 'buyer' ? 'var(--shadow-sm)' : 'none'
-                }}
-              >
-                Buyers ({buyerLeads.length})
-              </button>
-              <button 
-                onClick={() => { setActiveTab('investor'); setSearchQuery(''); }}
-                style={{
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.85rem',
-                  fontWeight: '600',
-                  borderRadius: '4px',
-                  backgroundColor: activeTab === 'investor' ? 'var(--bg-secondary)' : 'transparent',
-                  color: activeTab === 'investor' ? 'var(--text-primary)' : 'var(--text-secondary)',
-                  boxShadow: activeTab === 'investor' ? 'var(--shadow-sm)' : 'none'
-                }}
-              >
-                Investors ({investorLeads.length})
-              </button>
+                {/* Query filters */}
+                <div className="admin-actions-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '200px' }}>
+                    <input 
+                      type="text" 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search inquiries..."
+                      className="form-input"
+                      style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
+                    />
+                    <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                  </div>
+
+                  <button
+                    onClick={() => setSortByDateOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
+                    className="btn btn-secondary btn-sm"
+                    style={{ height: '36px', padding: '0 0.75rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                  >
+                    <ArrowUpDown size={14} /> 
+                    Date ({sortByDateOrder === 'desc' ? 'Newest' : 'Oldest'})
+                  </button>
+
+                  <button
+                    onClick={exportToCSV}
+                    className="btn btn-primary btn-sm"
+                    style={{ height: '36px', padding: '0 1rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                  >
+                    <Download size={14} /> Export CSV
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Search, Sort, Export Actions */}
-            <div className="admin-actions-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-              
-              {/* Search */}
-              <div style={{ position: 'relative', width: '220px' }}>
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search table..."
-                  className="form-input"
-                  style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
-                />
-                <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+            {/* Simplified Leads Data Table */}
+            <div className="table-container">
+              {processedEnquiries.length > 0 ? (
+                <table className="leads-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Enquiry Type</th>
+                      <th>Product</th>
+                      <th>Status</th>
+                      <th style={{ textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activeEnquiryTab === 'farmer' && processedEnquiries.map(lead => (
+                      <tr key={lead.id}>
+                        <td><strong>{lead.name}</strong></td>
+                        <td>Farmer</td>
+                        <td><span className="badge badge-gold">{lead.productName}</span></td>
+                        <td>
+                          <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
+                            {lead.contacted ? 'Contacted' : 'New'}
+                          </span>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                            <button 
+                              title="View Details"
+                              onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('farmer'); }}
+                              className="btn btn-secondary btn-sm"
+                              style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                            >
+                              <Eye size={14} /> View
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+
+                    {activeEnquiryTab === 'buyer' && processedEnquiries.map(lead => (
+                      <tr key={lead.id}>
+                        <td><strong>{lead.name}</strong></td>
+                        <td>Buyer</td>
+                        <td><span className="badge badge-gold">{lead.productRequirement}</span></td>
+                        <td>
+                          <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
+                            {lead.contacted ? 'Contacted' : 'New'}
+                          </span>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                            <button 
+                              title="View Details"
+                              onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('buyer'); }}
+                              className="btn btn-secondary btn-sm"
+                              style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                            >
+                              <Eye size={14} /> View
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+
+                    {activeEnquiryTab === 'investor' && processedEnquiries.map(lead => (
+                      <tr key={lead.id}>
+                        <td><strong>{lead.name}</strong></td>
+                        <td>Investor</td>
+                        <td><span className="badge badge-gold">{selectedEnquiry?.investmentInterest || lead.investmentInterest}</span></td>
+                        <td>
+                          <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
+                            {lead.contacted ? 'Contacted' : 'New'}
+                          </span>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                            <button 
+                              title="View Details"
+                              onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('investor'); }}
+                              className="btn btn-secondary btn-sm"
+                              style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                            >
+                              <Eye size={14} /> View
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '3rem 2rem', color: 'var(--text-secondary)' }}>
+                  No enquiries matching filters.
+                </div>
+              )}
+            </div>
+          </div>
+          )}
+
+        {/* SECTION 3: REVIEW MODERATION */}
+        {activeSection === 'reviews' && (
+          <div>
+            <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', margin: 0 }}>
+                  Testimonial Submissions
+                </h2>
+                {/* Status Tabs */}
+                <div style={{ display: 'inline-flex', marginLeft: '1rem', backgroundColor: 'var(--bg-secondary)', padding: '0.25rem', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
+                  <button 
+                    onClick={() => setReviewFilter('all')}
+                    style={{
+                      padding: '0.35rem 0.75rem',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: reviewFilter === 'all' ? 'var(--bg-primary)' : 'transparent',
+                      color: reviewFilter === 'all' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                  >
+                    All ({reviews.length})
+                  </button>
+                  <button 
+                    onClick={() => setReviewFilter('pending')}
+                    style={{
+                      padding: '0.35rem 0.75rem',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: reviewFilter === 'pending' ? 'var(--bg-primary)' : 'transparent',
+                      color: reviewFilter === 'pending' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                  >
+                    Pending ({reviews.filter(r => r.status === 'pending').length})
+                  </button>
+                  <button 
+                    onClick={() => setReviewFilter('approved')}
+                    style={{
+                      padding: '0.35rem 0.75rem',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: reviewFilter === 'approved' ? 'var(--bg-primary)' : 'transparent',
+                      color: reviewFilter === 'approved' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                  >
+                    Approved ({reviews.filter(r => r.status === 'approved').length})
+                  </button>
+                  <button 
+                    onClick={() => setReviewFilter('rejected')}
+                    style={{
+                      padding: '0.35rem 0.75rem',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      borderRadius: '4px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: reviewFilter === 'rejected' ? 'var(--bg-primary)' : 'transparent',
+                      color: reviewFilter === 'rejected' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                  >
+                    Rejected ({reviews.filter(r => r.status === 'rejected').length})
+                  </button>
+                </div>
               </div>
 
-              {/* Sort Date */}
-              <button
-                onClick={() => setSortByDateOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
-                className="btn btn-secondary btn-sm"
-                style={{ height: '36px', padding: '0 0.75rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                title="Sort by Submission Date"
-              >
-                <ArrowUpDown size={14} /> 
-                Date ({sortByDateOrder === 'desc' ? 'Newest' : 'Oldest'})
-              </button>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div style={{ position: 'relative', width: '200px' }}>
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search reviews..."
+                    className="form-input"
+                    style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
+                  />
+                  <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                </div>
+                <button
+                  onClick={() => setSortByDateOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
+                  className="btn btn-secondary btn-sm"
+                  style={{ height: '36px', padding: '0 0.75rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                >
+                  <ArrowUpDown size={14} /> 
+                  Date ({sortByDateOrder === 'desc' ? 'Newest' : 'Oldest'})
+                </button>
+              </div>
+            </div>
 
-              {/* CSV Export */}
-              <button
-                onClick={exportToCSV}
-                className="btn btn-primary btn-sm"
-                style={{ height: '36px', padding: '0 1rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+            <div className="table-container">
+              {processedReviews.length > 0 ? (
+                <table className="leads-table">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Rating</th>
+                      <th>Review Text</th>
+                      <th>Date Submitted</th>
+                      <th>Status</th>
+                      <th style={{ textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {processedReviews.map(review => (
+                      <tr key={review.id}>
+                        <td><strong>{review.customerName}</strong></td>
+                        <td>{renderStars(review.rating)}</td>
+                        <td style={{ maxWidth: '300px', fontSize: '0.85rem', lineHeight: '1.4' }}>
+                          "{review.reviewText}"
+                        </td>
+                        <td><span style={{ fontSize: '0.75rem' }}>{new Date(review.createdAt).toLocaleDateString()}</span></td>
+                        <td>
+                          <span className={`badge ${
+                            review.status === 'approved' ? 'badge-success' : 
+                            review.status === 'rejected' ? 'badge-dark' : 'badge-gold'
+                          }`} style={{ 
+                            color: 
+                              review.status === 'approved' ? 'green' : 
+                              review.status === 'rejected' ? '#dc3545' : 'inherit' 
+                          }}>
+                            {review.status.toUpperCase()}
+                          </span>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                            {review.status !== 'approved' && (
+                              <button 
+                                title="Approve Review"
+                                onClick={() => approveReview(review.id)}
+                                className="btn btn-secondary btn-sm"
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: 'var(--success-light)', borderColor: 'var(--success)', color: 'green' }}
+                              >
+                                <ThumbsUp size={14} /> Approve
+                              </button>
+                            )}
+                            {review.status !== 'rejected' && (
+                              <button 
+                                title="Reject Review"
+                                onClick={() => rejectReview(review.id)}
+                                className="btn btn-secondary btn-sm"
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f8d7da', borderColor: '#f5c6cb', color: '#721c24' }}
+                              >
+                                <ThumbsDown size={14} /> Reject
+                              </button>
+                            )}
+                            <button 
+                              title="Delete Review"
+                              onClick={() => deleteReview(review.id)}
+                              className="btn btn-dark btn-sm"
+                              style={{ padding: '0.25rem 0.5rem', backgroundColor: '#dc3545', border: 'none', color: '#fff' }}
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '3rem 2rem', color: 'var(--text-secondary)' }}>
+                  No reviews match filters.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      </div>
+
+
+
+      {/* Simplified Enquiry Details Modal */}
+      {selectedEnquiry && (
+        <div className="modal-overlay" onClick={() => setSelectedEnquiry(null)}>
+          <div className="modal-container" style={{ maxWidth: '600px', width: '100%', padding: '2.5rem' }} onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelectedEnquiry(null)} aria-label="Close details">
+              <X size={20} />
+            </button>
+
+            <span className="section-tag" style={{ margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>
+              ENQUIRY DETAIL PANEL
+            </span>
+            <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span>{selectedEnquiry.name}</span>
+              <span className={`badge ${selectedEnquiry.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: selectedEnquiry.contacted ? 'green' : 'inherit', fontSize: '0.85rem' }}>
+                {selectedEnquiry.contacted ? 'Contacted' : 'New'}
+              </span>
+            </h2>
+
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+              gap: '1.25rem',
+              backgroundColor: 'var(--bg-secondary)', 
+              padding: '1.5rem', 
+              borderRadius: '8px',
+              border: '1px solid var(--border-color)',
+              marginBottom: '1.5rem'
+            }}>
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Phone</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.phone || 'N/A'}</span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Email</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.email}</span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>State</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                  {selectedEnquiry.state || selectedEnquiry.location || 'N/A'}
+                </span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>District</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.district || 'N/A'}</span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>City/Village</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.cityVillage || 'N/A'}</span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Product</label>
+                <span className="badge badge-gold" style={{ marginTop: '0.25rem', display: 'inline-block' }}>
+                  {selectedEnquiry.productName || selectedEnquiry.productRequirement || selectedEnquiry.investmentInterest || selectedEnquiry.subject || 'General Inquiry'}
+                </span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Quantity</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 700 }}>
+                  {selectedEnquiry.quantity || selectedEnquiry.requiredQuantity || 'N/A'}
+                </span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Timestamp</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                  <Calendar size={14} />
+                  <span>{new Date(selectedEnquiry.date).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600, marginBottom: '0.25rem' }}>Message</label>
+              <div style={{ 
+                fontSize: '0.95rem', 
+                color: 'var(--text-primary)', 
+                lineHeight: '1.6', 
+                backgroundColor: 'var(--bg-primary)', 
+                padding: '1.25rem', 
+                borderRadius: '6px', 
+                border: '1px solid var(--border-color)',
+                whiteSpace: 'pre-wrap'
+              }}>
+                {selectedEnquiry.message}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button 
+                type="button" 
+                onClick={() => {
+                  markLeadContacted(selectedEnquiryType, selectedEnquiry.id);
+                  setSelectedEnquiry(prev => ({ ...prev, contacted: !prev.contacted }));
+                }} 
+                className="btn btn-secondary" 
+                style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
               >
-                <Download size={14} /> Export CSV
+                <Check size={16} /> {selectedEnquiry.contacted ? 'Mark as New' : 'Mark Contacted'}
+              </button>
+              
+              <button 
+                type="button" 
+                onClick={() => {
+                  deleteLead(selectedEnquiryType, selectedEnquiry.id);
+                  setSelectedEnquiry(null);
+                }} 
+                className="btn btn-dark" 
+                style={{ flex: 1, backgroundColor: '#dc3545', border: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+              >
+                <Trash2 size={16} /> Delete Enquiry
               </button>
             </div>
           </div>
         </div>
-
-        {/* Data Table */}
-        <div className="table-container">
-          {processedLeads.length > 0 ? (
-            <table className="leads-table">
-              {activeTab === 'farmer' && (
-                <>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Location</th>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Message</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {processedLeads.map(lead => (
-                      <tr key={lead.id}>
-                        <td><strong>{lead.name}</strong></td>
-                        <td><span style={{ whiteSpace: 'nowrap' }}>{lead.phone}</span></td>
-                        <td>{lead.email}</td>
-                        <td>{lead.location}</td>
-                        <td><span className="badge badge-gold">{lead.productName}</span></td>
-                        <td><strong>{lead.quantity}</strong></td>
-                        <td style={{ maxWidth: '240px', fontSize: '0.8rem' }}>{lead.message}</td>
-                        <td><span style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>{new Date(lead.date).toLocaleDateString()}</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </>
-              )}
-
-              {activeTab === 'buyer' && (
-                <>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Company</th>
-                      <th>Country</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Product Requirement</th>
-                      <th>Qty Required</th>
-                      <th>Message</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {processedLeads.map(lead => (
-                      <tr key={lead.id}>
-                        <td><strong>{lead.name}</strong></td>
-                        <td>{lead.companyName}</td>
-                        <td><strong>{lead.country}</strong></td>
-                        <td><span style={{ whiteSpace: 'nowrap' }}>{lead.phone}</span></td>
-                        <td>{lead.email}</td>
-                        <td><span className="badge badge-gold">{lead.productRequirement}</span></td>
-                        <td><strong>{lead.requiredQuantity || 'N/A'}</strong></td>
-                        <td style={{ maxWidth: '240px', fontSize: '0.8rem' }}>{lead.message}</td>
-                        <td><span style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>{new Date(lead.date).toLocaleDateString()}</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </>
-              )}
-
-              {activeTab === 'investor' && (
-                <>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Interest Area</th>
-                      <th>Amount</th>
-                      <th>Message</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {processedLeads.map(lead => (
-                      <tr key={lead.id}>
-                        <td><strong>{lead.name}</strong></td>
-                        <td><span style={{ whiteSpace: 'nowrap' }}>{lead.phone}</span></td>
-                        <td>{lead.email}</td>
-                        <td style={{ maxWidth: '180px' }}>{lead.investmentInterest}</td>
-                        <td><span style={{ color: 'var(--accent-gold-hover)', fontWeight: '700' }}>{lead.estimatedInvestmentAmount}</span></td>
-                        <td style={{ maxWidth: '240px', fontSize: '0.8rem' }}>{lead.message}</td>
-                        <td><span style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>{new Date(lead.date).toLocaleDateString()}</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </>
-              )}
-            </table>
-          ) : (
-            <div style={{ textAlign: 'center', padding: '3rem 2rem', color: 'var(--text-secondary)' }}>
-              No leads match the query filter/search.
-            </div>
-          )}
-        </div>
-
-      </div>
+      )}
     </div>
   );
 };

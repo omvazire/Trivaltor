@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useReviews } from '../context/ReviewContext';
 import { categoriesData } from '../services/categoriesData';
 import { config } from '../services/config';
 import { 
@@ -20,6 +21,7 @@ import fssaiCertImg from '../assets/images/certificate.jpeg';
 export const Home = () => {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
+  const { reviews, addReview } = useReviews();
   const contactSectionRef = useRef(null);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -73,27 +75,27 @@ export const Home = () => {
     setReviewForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    const saved = localStorage.getItem('trivaltor-pending-reviews');
-    const pending = saved ? JSON.parse(saved) : [];
-    
-    const newPendingReview = {
-      ...reviewForm,
-      date: new Date().toISOString()
-    };
-    pending.push(newPendingReview);
-    localStorage.setItem('trivaltor-pending-reviews', JSON.stringify(pending));
-    
-    console.log('%c[Review Submitted (Pending Verification)]', 'color: #c5a880; font-weight: bold;', newPendingReview);
-    
-    setReviewForm({
-      name: '',
-      type: 'Farmer',
-      rating: 5,
-      message: ''
-    });
-    setReviewSubmitted(true);
+    try {
+      await addReview({
+        customerName: reviewForm.name,
+        rating: reviewForm.rating,
+        reviewText: reviewForm.message,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      });
+      
+      setReviewForm({
+        name: '',
+        type: 'Farmer',
+        rating: 5,
+        message: ''
+      });
+      setReviewSubmitted(true);
+    } catch (err) {
+      console.error('Failed to submit review:', err);
+    }
   };
 
   return (
@@ -514,7 +516,6 @@ export const Home = () => {
           </div>
         </div>
       </section>
-
       {/* 7. Reviews Section */}
       <section id="testimonials" className="section reviews-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
@@ -524,42 +525,44 @@ export const Home = () => {
             <p className="section-desc">{t('reviewsDesc')}</p>
           </div>
 
-          <div className="reviews-grid">
-            {/* Review 1 */}
-            <div className="review-card">
-              <div className="stars-container">
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
+          <div className="reviews-marquee-container">
+            <div className="reviews-marquee-track">
+              <div className="reviews-marquee-content">
+                {reviews.filter(r => r.status === 'approved').map(review => (
+                  <div key={review.id} className="review-card">
+                    <div className="stars-container">
+                      {[...Array(5)].map((_, idx) => (
+                        <Star 
+                          key={idx} 
+                          size={16} 
+                          fill={idx < review.rating ? "currentColor" : "none"} 
+                          stroke={idx < review.rating ? "none" : "currentColor"} 
+                        />
+                      ))}
+                    </div>
+                    <p className="review-text">"{review.reviewText}"</p>
+                    <div className="review-author">- {review.customerName}</div>
+                  </div>
+                ))}
               </div>
-              <p className="review-text">"{t('review1Text')}"</p>
-              <div className="review-author">- {t('review1Name')}</div>
-            </div>
-            {/* Review 2 */}
-            <div className="review-card">
-              <div className="stars-container">
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
+              <div className="reviews-marquee-content" aria-hidden="true">
+                {reviews.filter(r => r.status === 'approved').map(review => (
+                  <div key={`dup-${review.id}`} className="review-card">
+                    <div className="stars-container">
+                      {[...Array(5)].map((_, idx) => (
+                        <Star 
+                          key={idx} 
+                          size={16} 
+                          fill={idx < review.rating ? "currentColor" : "none"} 
+                          stroke={idx < review.rating ? "none" : "currentColor"} 
+                        />
+                      ))}
+                    </div>
+                    <p className="review-text">"{review.reviewText}"</p>
+                    <div className="review-author">- {review.customerName}</div>
+                  </div>
+                ))}
               </div>
-              <p className="review-text">"{t('review2Text')}"</p>
-              <div className="review-author">- {t('review2Name')}</div>
-            </div>
-            {/* Review 3 */}
-            <div className="review-card">
-              <div className="stars-container">
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-                <Star size={16} fill="currentColor" stroke="none" />
-              </div>
-              <p className="review-text">"{t('review3Text')}"</p>
-              <div className="review-author">- {t('review3Name')}</div>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
@@ -815,7 +818,7 @@ export const Home = () => {
                   {t('formSuccess') || 'Submission Successful'}
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  {t('reviewSuccess') || 'Thank you for your review. It will be published after verification.'}
+                  Thank you. Your review has been submitted and will be published after verification.
                 </p>
                 <button 
                   onClick={() => {

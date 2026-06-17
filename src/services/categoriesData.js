@@ -2,6 +2,7 @@
 import imgCardamom from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.31 PM.jpeg';
 import imgPepper from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.31 PM (1).jpeg';
 import imgTurmeric from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.31 PM (2).jpeg';
+import imgCumin from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.31 PM (3).jpeg';
 
 // Import other available images for fruits and vegetables
 import imgFruitsBanner from '../assets/images/catagory-fruit.jpg';
@@ -10,6 +11,9 @@ import imgSpicesBanner from '../assets/images/catagory-spices.png';
 import imgAgri from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.43 PM.jpeg';
 import imgExport from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.45 PM.jpeg';
 import imgImport from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.38 PM.jpeg';
+import imgGrapes from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.39 PM.jpeg';
+import imgGarlic from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.41 PM.jpeg';
+import imgGinger from '../assets/images/WhatsApp Image 2026-06-09 at 7.43.37 PM (2).jpeg';
 
 export const categoriesData = [
   {
@@ -20,7 +24,7 @@ export const categoriesData = [
     },
     description: {
       en: "Premium organic fresh fruits harvested from select orchards, cooled immediately, and packaged for long-transit ocean cargo.",
-      mr: "निवडक बागांमधून काढलेली प्रीमियम सेंद्रिय ताजी फळे, त्वरित थंड करून आंतरराष्ट्रीय वाहतुकीसाठी पॅक केली जातात."
+      mr: "निवडक बागांमधून काढलेली सेंद्रिय ताजी फळे, त्वरित थंड करून आंतरराष्ट्रीय वाहतुकीसाठी पॅक केली जातात."
     },
     image: imgFruitsBanner,
     bannerImage: imgFruitsBanner,
@@ -28,8 +32,8 @@ export const categoriesData = [
       {
         id: "fr-1",
         name: {
-          en: "Premium Alphonso Mango (Demo)",
-          mr: "प्रीमियम हापूस आंबा (डेमो)"
+          en: "Premium Alphonso Mango",
+          mr: "प्रीमियम हापूस आंबा"
         },
         description: {
           en: "Grade-A export quality mangoes sourced from Devgad & Ratnagiri. Rich aroma and fiber-less sweet pulp.",
@@ -46,8 +50,8 @@ export const categoriesData = [
       {
         id: "fr-2",
         name: {
-          en: "Fresh Pomegranate Bhagwa (Demo)",
-          mr: "ताजे डाळिंब भगवा (डेमो)"
+          en: "Fresh Bhagwa Pomegranate",
+          mr: "ताजे भगवे डाळिंब"
         },
         description: {
           en: "Glossy red skin and soft ruby-red arils. Highly valued for high juice content and long shelf life.",
@@ -64,8 +68,8 @@ export const categoriesData = [
       {
         id: "fr-3",
         name: {
-          en: "Organic Cavendish Banana (Demo)",
-          mr: "सेंद्रिय ग्रँड नैन केळी (डेमो)"
+          en: "Organic Cavendish Banana",
+          mr: "सेंद्रिय ग्रँड नैन केळी"
         },
         description: {
           en: "Premium Cavendish bananas harvested at optimal green mature stage, washed and padded.",
@@ -77,6 +81,24 @@ export const categoriesData = [
           purity: { en: "Grade A", mr: "श्रेणी अ" },
           moisture: { en: "N/A (Fresh Fruit)", mr: "लागू नाही (ताजी फळे)" },
           packaging: { en: "13.5kg / 18kg cartons", mr: "१३.५ किलो / १८ किलो कार्टन" }
+        }
+      },
+      {
+        id: "fr-4",
+        name: {
+          en: "Grade-A Red Globe Grapes",
+          mr: "श्रेणी-अ लाल द्राक्षे"
+        },
+        description: {
+          en: "Sweet and crisp export-grade red globe grapes, carefully selected and cold-chain cooled.",
+          mr: "गोड आणि कडक निर्यात-दर्जाची लाल द्राक्षे, काळजीपूर्वक निवडलेली आणि कोल्ड-चेन थंड केलेली."
+        },
+        image: imgGrapes,
+        specs: {
+          origin: { en: "Nashik, India", mr: "नाशिक, भारत" },
+          purity: { en: "Export Grade A", mr: "निर्यात श्रेणी अ" },
+          moisture: { en: "N/A (Fresh Fruit)", mr: "लागू नाही (ताजी फळे)" },
+          packaging: { en: "5kg EPS boxes with carry bags", mr: "५ किलो ईपीएस बॉक्स" }
         }
       }
     ]
@@ -97,8 +119,8 @@ export const categoriesData = [
       {
         id: "vg-1",
         name: {
-          en: "Fresh Red Onion (Demo)",
-          mr: "ताजा लाल कांदा (डेमो)"
+          en: "Fresh Nashik Red Onion",
+          mr: "ताजा नाशिक लाल कांदा"
         },
         description: {
           en: "Nashik region red onions. Well-dried outer skin, cured, sorted, and graded to 55mm+ size.",
@@ -115,8 +137,8 @@ export const categoriesData = [
       {
         id: "vg-2",
         name: {
-          en: "G4 Green Chilli (Demo)",
-          mr: "जी४ हिरवी मिरची (डेमो)"
+          en: "G4 Green Chilli",
+          mr: "जी४ हिरवी मिरची"
         },
         description: {
           en: "Highly pungent green chillies with bright green color. Slender shape, sorted for export.",
@@ -133,19 +155,37 @@ export const categoriesData = [
       {
         id: "vg-3",
         name: {
-          en: "Fresh Ginger Rhizome (Demo)",
-          mr: "ताजे आले (डेमो)"
+          en: "Fresh Ginger Rhizome",
+          mr: "ताजे आले"
         },
         description: {
           en: "Bold size washed fresh ginger. Free from soil or rot, possessing a sharp spicy taste.",
           mr: "मोठ्या आकाराचे धुतलेले ताजे आले. माती किंवा कुजण्यापासून मुक्त, तिखट चवदार आले."
         },
-        image: imgImport,
+        image: imgGinger,
         specs: {
           origin: { en: "Karnataka, India", mr: "कर्नाटक, भारत" },
           purity: { en: "98% Cleaned", mr: "९८% स्वच्छ" },
           moisture: { en: "Fresh", mr: "ताजे" },
           packaging: { en: "25kg mesh bags", mr: "२५ किलो मेश बॅग" }
+        }
+      },
+      {
+        id: "vg-4",
+        name: {
+          en: "Premium Garlic Bulbs",
+          mr: "प्रीमियम लसूण"
+        },
+        description: {
+          en: "White and clean garlic bulbs sourced from MP. Well-cured with tight cloves, excellent shelf life.",
+          mr: "मध्य प्रदेशमधून आणलेला पांढरा आणि स्वच्छ लसूण. क्युअर केलेला, उत्कृष्ट टिकवण क्षमता."
+        },
+        image: imgGarlic,
+        specs: {
+          origin: { en: "Madhya Pradesh, India", mr: "मध्य प्रदेश, भारत" },
+          purity: { en: "Grade A sorted", mr: "श्रेणी अ सॉर्टेड" },
+          moisture: { en: "Cured Dry", mr: "सुका (क्युअर केलेला)" },
+          packaging: { en: "25kg net mesh bags", mr: "२५ किलो मेश बॅग" }
         }
       }
     ]
@@ -166,8 +206,8 @@ export const categoriesData = [
       {
         id: "sp-1",
         name: {
-          en: "Premium Green Cardamom (Demo)",
-          mr: "प्रीमियम हिरवी वेलची (डेमो)"
+          en: "Premium Green Cardamom",
+          mr: "प्रीमियम हिरवी वेलची"
         },
         description: {
           en: "Handpicked green cardamom capsules (sizes 7mm to 8mm+), sourcing directly from local Kerala estates.",
@@ -184,8 +224,8 @@ export const categoriesData = [
       {
         id: "sp-2",
         name: {
-          en: "Malabar Black Pepper (Demo)",
-          mr: "मलबार काळी मिरी (डेमो)"
+          en: "Malabar Black Pepper",
+          mr: "मलबार काळी मिरी"
         },
         description: {
           en: "Premium bold black pepper (550 G/L to 580 G/L) sourced from Malabar region. Sun-dried and cleaned.",
@@ -202,8 +242,8 @@ export const categoriesData = [
       {
         id: "sp-3",
         name: {
-          en: "Polished Turmeric Fingers (Demo)",
-          mr: "पॉलिश केलेली हळद (डेमो)"
+          en: "Polished Turmeric Fingers",
+          mr: "पॉलिश केलेली हळद"
         },
         description: {
           en: "High curcumin (3.5%+) finger rhizomes polished and sorted. Known for intense color and therapeutic value.",
@@ -216,9 +256,28 @@ export const categoriesData = [
           moisture: { en: "10% max", mr: "१०% कमाल" },
           packaging: { en: "25kg Double-layered Gunny bags", mr: "२५ किलो दुहेरी पोते" }
         }
+      },
+      {
+        id: "sp-4",
+        name: {
+          en: "Aromatic Cumin Seeds",
+          mr: "सुगंधी जिरे"
+        },
+        description: {
+          en: "Machine cleaned Singapore quality 99% purity cumin seeds. Excellent earthy flavor and pungent aroma.",
+          mr: "मशीनने स्वच्छ केलेले सिंगापूर दर्जाचे ९९% शुद्ध जिरे. उत्कृष्ट मातीचा स्वाद आणि तीव्र सुगंध."
+        },
+        image: imgCumin,
+        specs: {
+          origin: { en: "Gujarat / Rajasthan, India", mr: "गुजरात / राजस्थान, भारत" },
+          purity: { en: "99% min", mr: "९९% किमान" },
+          moisture: { en: "9% max", mr: "९% कमाल" },
+          packaging: { en: "25kg Kraft Paper bags", mr: "२५ किलो क्राफ्ट पेपर बॅग" }
+        }
       }
     ]
   }
 ];
 
 export const getCategoryById = (id) => categoriesData.find((c) => c.id === id);
+

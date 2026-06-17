@@ -242,6 +242,33 @@ export const LeadProvider = ({ children }) => {
     });
   };
 
+  const deleteLead = (leadType, id) => {
+    if (leadType === 'farmer') {
+      setFarmerLeads(prev => prev.filter(lead => lead.id !== id));
+    } else if (leadType === 'buyer') {
+      setBuyerLeads(prev => prev.filter(lead => lead.id !== id));
+    } else if (leadType === 'investor') {
+      setInvestorLeads(prev => prev.filter(lead => lead.id !== id));
+    } else if (leadType === 'contact') {
+      setContactLeads(prev => prev.filter(lead => lead.id !== id));
+    }
+  };
+
+  const markLeadContacted = (leadType, id) => {
+    const toggleContacted = (leads) => 
+      leads.map(lead => lead.id === id ? { ...lead, contacted: !lead.contacted } : lead);
+
+    if (leadType === 'farmer') {
+      setFarmerLeads(prev => toggleContacted(prev));
+    } else if (leadType === 'buyer') {
+      setBuyerLeads(prev => toggleContacted(prev));
+    } else if (leadType === 'investor') {
+      setInvestorLeads(prev => toggleContacted(prev));
+    } else if (leadType === 'contact') {
+      setContactLeads(prev => toggleContacted(prev));
+    }
+  };
+
   return (
     <LeadContext.Provider value={{
       farmerLeads,
@@ -252,7 +279,9 @@ export const LeadProvider = ({ children }) => {
       submitFarmerLead,
       submitBuyerLead,
       submitInvestorLead,
-      submitContactLead
+      submitContactLead,
+      deleteLead,
+      markLeadContacted
     }}>
       {children}
     </LeadContext.Provider>

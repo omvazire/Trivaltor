@@ -10,6 +10,8 @@ export const CategoryDetail = () => {
   const navigate = useNavigate();
   const category = getCategoryById(categoryId);
 
+  const categoryProducts = category ? (category.products || []) : [];
+
   // Scroll to top on load
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,15 +62,16 @@ export const CategoryDetail = () => {
           {t('productListTitle')}
         </h2>
 
-        <div className="products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-          {category.products.map((product) => {
-            const productName = product.name[language] || product.name['en'];
-            const productDesc = product.description[language] || product.description['en'];
+        <div className="category-products-grid">
+          {categoryProducts.map((product) => {
+            const productName = typeof product.name === 'object' 
+              ? (product.name[language] || product.name['en']) 
+              : product.name;
 
             return (
               <div key={product.id} className="premium-card product-card animate-fade-in" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%' }}>
                 {/* Product Image */}
-                <div className="product-card-image" style={{ position: 'relative', width: '100%', height: '200px', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
+                <div className="product-card-image" style={{ position: 'relative', width: '100%', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
                   <img 
                     src={product.image} 
                     alt={productName} 
@@ -76,52 +79,22 @@ export const CategoryDetail = () => {
                     onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.08)'; }}
                     onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1.0)'; }}
                   />
-                  <div style={{ 
-                    position: 'absolute', 
-                    top: '1rem', 
-                    right: '1rem', 
-                    backgroundColor: 'rgba(12, 45, 28, 0.85)', 
-                    color: 'var(--accent-gold)', 
-                    padding: '0.25rem 0.75rem', 
-                    fontSize: '0.75rem', 
-                    fontWeight: '700', 
-                    borderRadius: '4px',
-                    letterSpacing: '0.05em',
-                    textTransform: 'uppercase',
-                    border: '1px solid var(--accent-gold)'
-                  }}>
-                    {categoryName}
-                  </div>
                 </div>
 
                 {/* Product Info */}
-                <div className="product-card-body" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                  <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+                <div className="product-card-body" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-between', gap: '1.25rem' }}>
+                  <h3 className="product-card-title">
                     {productName}
                   </h3>
-                  
-                  <p className="product-card-desc" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem', flexGrow: 1, lineHeight: '1.5' }}>
-                    {productDesc}
-                  </p>
 
-                  {/* Action Buttons */}
-                  <div className="product-actions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: 'auto' }}>
-                    <button 
-                      onClick={() => navigate(`/buyer?product=${encodeURIComponent(productName)}`)} 
-                      className="btn btn-primary btn-sm" 
-                      style={{ padding: '0.75rem', fontSize: '0.8rem', fontWeight: '700' }}
-                    >
-                      {t('inquireBuyer')}
-                    </button>
-                    
-                    <button 
-                      onClick={() => navigate(`/farmer?product=${encodeURIComponent(productName)}`)} 
-                      className="btn btn-secondary btn-sm" 
-                      style={{ padding: '0.75rem', fontSize: '0.8rem', fontWeight: '700' }}
-                    >
-                      {t('inquireFarmer')}
-                    </button>
-                  </div>
+                  {/* Single Enquire Button */}
+                  <button 
+                    onClick={() => navigate(`/buyer?product=${encodeURIComponent(productName)}`)} 
+                    className="btn btn-primary btn-sm" 
+                    style={{ padding: '0.75rem', fontSize: '0.85rem', fontWeight: '700', width: '100%', marginTop: 'auto' }}
+                  >
+                    Enquire Now
+                  </button>
                 </div>
               </div>
             );
