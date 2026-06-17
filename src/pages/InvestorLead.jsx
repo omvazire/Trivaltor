@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -25,6 +25,20 @@ export const InvestorLead = () => {
     message: ''
   });
   const [success, setSuccess] = useState(false);
+
+  // Pre-fill details from localStorage
+  useEffect(() => {
+    const storedName = localStorage.getItem('trivaltor-lead-name') || '';
+    const storedPhone = localStorage.getItem('trivaltor-lead-phone') || '';
+    const storedEmail = localStorage.getItem('trivaltor-lead-email') || '';
+
+    setForm((prev) => ({
+      ...prev,
+      name: prev.name || storedName,
+      phone: prev.phone || storedPhone,
+      email: prev.email || storedEmail
+    }));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

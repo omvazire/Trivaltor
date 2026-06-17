@@ -58,7 +58,7 @@ export const CategoryDetail = () => {
 
       {/* Product Listing */}
       <div className="container" style={{ marginTop: '4rem' }}>
-        <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', marginBottom: '2.5rem', color: 'var(--text-primary)', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.5rem', display: 'inline-block' }}>
+        <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', marginBottom: '2.5rem', color: 'var(--text-primary)', borderBottom: '2px solid #0c2d1c', paddingBottom: '0.5rem', display: 'inline-block' }}>
           {t('productListTitle')}
         </h2>
 

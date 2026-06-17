@@ -27,14 +27,21 @@ export const BuyerLead = () => {
   });
   const [success, setSuccess] = useState(false);
 
-  // Check URL query parameters to pre-fill product
+  // Check URL query parameters to pre-fill product and pre-fill details from localStorage
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const prodParam = params.get('product');
-    if (prodParam) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setForm((prev) => ({ ...prev, productRequirement: prodParam }));
-    }
+    const storedName = localStorage.getItem('trivaltor-lead-name') || '';
+    const storedPhone = localStorage.getItem('trivaltor-lead-phone') || '';
+    const storedEmail = localStorage.getItem('trivaltor-lead-email') || '';
+
+    setForm((prev) => ({
+      ...prev,
+      productRequirement: prodParam || prev.productRequirement,
+      name: prev.name || storedName,
+      phone: prev.phone || storedPhone,
+      email: prev.email || storedEmail
+    }));
   }, [location]);
 
   const handleChange = (e) => {

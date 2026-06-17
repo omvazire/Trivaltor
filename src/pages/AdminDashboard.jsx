@@ -227,7 +227,7 @@ export const AdminDashboard = () => {
   // Render Stars
   const renderStars = (rating) => {
     return (
-      <div style={{ display: 'flex', gap: '0.15rem', color: '#e0a96d' }}>
+      <div style={{ display: 'flex', gap: '0.15rem', color: '#0c2d1c' }}>
         {[...Array(5)].map((_, i) => (
           <span key={i} style={{ fontSize: '1rem' }}>
             {i < rating ? '★' : '☆'}
@@ -757,6 +757,7 @@ export const AdminDashboard = () => {
                   <thead>
                     <tr>
                       <th>Customer Name</th>
+                      <th>Type</th>
                       <th>Rating</th>
                       <th>Review Text</th>
                       <th>Date Submitted</th>
@@ -766,14 +767,17 @@ export const AdminDashboard = () => {
                   </thead>
                   <tbody>
                     {processedReviews.map(review => {
-                      const name = review?.customerName || 'N/A';
-                      const text = review?.reviewText || '';
-                      const rating = review?.rating || 5;
-                      const status = review?.status || 'pending';
+                      if (!review) return null;
+                      const name = review.customerName || 'N/A';
+                      const type = review.reviewerType || 'Customer';
+                      const text = review.reviewText || '';
+                      const rating = review.rating || 5;
+                      const status = review.status || 'pending';
                       
                       return (
-                        <tr key={review.id}>
+                        <tr key={review.id || Math.random().toString()}>
                           <td><strong>{name}</strong></td>
+                          <td><span className="badge badge-gold">{type}</span></td>
                           <td>{renderStars(rating)}</td>
                           <td style={{ maxWidth: '300px', fontSize: '0.85rem', lineHeight: '1.4' }}>
                             "{text}"

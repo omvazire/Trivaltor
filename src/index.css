@@ -952,7 +952,7 @@ body.dark .leads-table tbody tr:hover {
 .stars-container {
   display: flex;
   gap: 0.25rem;
-  color: #FFC107;
+  color: #0c2d1c;
 }
 .review-text {
   font-size: 0.95rem;
@@ -1534,7 +1534,7 @@ body.dark .leads-table tbody tr:hover {
 }
 
 .reviews-marquee-content .review-card {
-  width: 380px;
+  width: 440px;
   flex-shrink: 0;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -1574,6 +1574,209 @@ body.dark .leads-table tbody tr:hover {
   .reviews-marquee-track {
     animation-duration: 25s; /* Slightly faster scroll speed on mobile devices */
   }
+}
+
+/* ==========================================================
+   GLOBAL MOBILE POLISH, WHITESPACE, & DENSITY OPTIMIZATION
+   ========================================================== */
+@media (max-width: 768px) {
+  /* 1. Spacing, Padding, Margins & Section Gaps */
+  .section {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Optimize section title and description layout/gaps */
+  .section-title {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .section-desc {
+    font-size: 0.95rem !important;
+    margin-bottom: 2rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .section-tag {
+    margin-bottom: 0.5rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* 2. Typography Adjustments */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.01em !important;
+  }
+
+  .hero-title {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero-desc-p {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .lead-page-header {
+    margin-bottom: 1.75rem !important;
+    text-align: center;
+  }
+
+  .lead-page-header h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .lead-page-header p {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* 3. Spacing/Padding Inside Mobile Cards (Without Aggressively Shrinking) */
+  .premium-card {
+    padding: 1.5rem 1.25rem !important;
+  }
+
+  .category-card {
+    margin-bottom: 0 !important;
+  }
+
+  .category-image-container {
+    height: 145px !important; /* Compact but highly visual category header */
+  }
+
+  .category-card-content {
+    padding: 1.25rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .category-card-title {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .category-card-desc {
+    font-size: 0.875rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Compact Product Cards */
+  .category-products-grid {
+    gap: 0.85rem !important;
+  }
+
+  .category-products-grid .product-card-image {
+    height: 140px !important; /* Optimized image height for mobile grid */
+  }
+
+  .category-products-grid .product-card-body {
+    padding: 0.85rem !important;
+    gap: 0.6rem !important;
+  }
+
+  .category-products-grid .product-card-title {
+    font-size: 0.875rem !important;
+    height: 2.7em !important;
+  }
+
+  /* Credibility Cards & Stats */
+  .stat-card {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .stat-number {
+    font-size: 1.85rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .stat-label {
+    font-size: 0.75rem !important;
+  }
+
+  /* 4. Spacing Around Form Fields (Maintain Touch Targets) */
+  .form-container-card {
+    padding: 1.5rem 1.25rem !important;
+  }
+
+  .form-group {
+    margin-bottom: 1.15rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .form-label {
+    font-size: 0.85rem !important;
+  }
+
+  /* Keep input padding and heights matching touch target specifications */
+  .form-input, .form-textarea, .form-select {
+    padding: 0.75rem 0.85rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .form-textarea {
+    min-height: 100px !important;
+  }
+
+  /* Button usability remains comfortable */
+  .btn {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .download-docs-banner {
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* 5. Footer Layout Optimization */
+  .footer-main {
+    padding: 3rem 0 2rem 0 !important;
+  }
+
+  .footer-grid {
+    gap: 1.75rem !important;
+  }
+}
+
+/* ==========================================================
+   BRAND GREEN ACCENT PASS (GLOBAL ACCENTS)
+   ========================================================== */
+
+/* Form focus border and ring matching the dark green brand color */
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: #0c2d1c !important;
+  box-shadow: 0 0 0 4px rgba(12, 45, 28, 0.15) !important;
+}
+
+/* Secondary button hover state matching brand green with light tint */
+.btn-secondary:hover {
+  background-color: #e6f0eb !important; /* light brand green tint */
+  border-color: #0c2d1c !important;
+  color: #0c2d1c !important;
+}
+
+/* Large metric numbers styled in authoritative forest green */
+.stat-number {
+  color: #0c2d1c !important;
+}
+
+/* Product cards on category page get brand green border on hover */
+.product-card:hover {
+  border-color: #0c2d1c !important;
+}
+
+/* Product card titles change to brand green on hover */
+.product-card:hover .product-card-title {
+  color: #0c2d1c !important;
 }
 
 

@@ -2,6 +2,7 @@ export const initialReviews = [
   {
     id: "r-1",
     customerName: "Michael Chang (Importer)",
+    reviewerType: "Buyer",
     rating: 5,
     reviewText: "Trivaltor is our most trusted supplier for green cardamom. Their moisture and purity specs are always exactly as promised. The sortex grading is excellent.",
     status: "approved",
@@ -10,6 +11,7 @@ export const initialReviews = [
   {
     id: "r-2",
     customerName: "Dnyaneshwar Patil (Farmer)",
+    reviewerType: "Farmer",
     rating: 5,
     reviewText: "Since joining the Tirvaltor contract farming program, we receive direct guidance, organic inputs, and get paid immediately. They offer fair market rates.",
     status: "approved",
@@ -18,6 +20,7 @@ export const initialReviews = [
   {
     id: "r-3",
     customerName: "Emily Watson (Investor)",
+    reviewerType: "Investor",
     rating: 5,
     reviewText: "Investing in Tirvaltor's cold storage infrastructure has delivered stable asset-backed yields. Their regular progress updates and transparent financials are impressive.",
     status: "approved",

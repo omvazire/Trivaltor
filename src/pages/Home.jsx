@@ -80,6 +80,7 @@ export const Home = () => {
     try {
       await addReview({
         customerName: reviewForm.name,
+        reviewerType: reviewForm.type,
         rating: reviewForm.rating,
         reviewText: reviewForm.message,
         status: 'pending',
@@ -522,49 +523,65 @@ export const Home = () => {
           <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span className="section-tag">{t('reviewsTag')}</span>
             <h2 className="section-title">{t('reviewsTitle')}</h2>
-            <p className="section-desc">{t('reviewsDesc')}</p>
+            <p className="section-desc" style={{ marginBottom: '1.5rem' }}>{t('reviewsDesc')}</p>
           </div>
+        </div>
 
-          <div className="reviews-marquee-container">
-            <div className="reviews-marquee-track">
-              <div className="reviews-marquee-content">
-                {reviews.filter(r => r.status === 'approved').map(review => (
-                  <div key={review.id} className="review-card">
-                    <div className="stars-container">
-                      {[...Array(5)].map((_, idx) => (
-                        <Star 
-                          key={idx} 
-                          size={16} 
-                          fill={idx < review.rating ? "currentColor" : "none"} 
-                          stroke={idx < review.rating ? "none" : "currentColor"} 
-                        />
-                      ))}
-                    </div>
-                    <p className="review-text">"{review.reviewText}"</p>
-                    <div className="review-author">- {review.customerName}</div>
+        <div className="reviews-marquee-container">
+          <div className="reviews-marquee-track">
+            <div className="reviews-marquee-content">
+              {reviews.filter(r => r.status === 'approved').map(review => (
+                <div key={review.id} className="review-card">
+                  <div className="stars-container">
+                    {[...Array(5)].map((_, idx) => (
+                      <Star 
+                        key={idx} 
+                        size={16} 
+                        fill={idx < review.rating ? "currentColor" : "none"} 
+                        stroke={idx < review.rating ? "none" : "currentColor"} 
+                      />
+                    ))}
                   </div>
-                ))}
-              </div>
-              <div className="reviews-marquee-content" aria-hidden="true">
-                {reviews.filter(r => r.status === 'approved').map(review => (
-                  <div key={`dup-${review.id}`} className="review-card">
-                    <div className="stars-container">
-                      {[...Array(5)].map((_, idx) => (
-                        <Star 
-                          key={idx} 
-                          size={16} 
-                          fill={idx < review.rating ? "currentColor" : "none"} 
-                          stroke={idx < review.rating ? "none" : "currentColor"} 
-                        />
-                      ))}
-                    </div>
-                    <p className="review-text">"{review.reviewText}"</p>
-                    <div className="review-author">- {review.customerName}</div>
+                  <div className="review-author" style={{ fontWeight: 'bold', fontSize: '1.05rem', color: 'var(--text-primary)', marginBottom: '0.1rem' }}>
+                    {review.customerName}
                   </div>
-                ))}
-              </div>
+                  {review.reviewerType && review.reviewerType !== "Customer" && (
+                    <div className="review-type" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: '500' }}>
+                      {review.reviewerType}
+                    </div>
+                  )}
+                  <p className="review-text" style={{ fontStyle: 'italic', margin: '0' }}>"{review.reviewText}"</p>
+                </div>
+              ))}
+            </div>
+            <div className="reviews-marquee-content" aria-hidden="true">
+              {reviews.filter(r => r.status === 'approved').map(review => (
+                <div key={`dup-${review.id}`} className="review-card">
+                  <div className="stars-container">
+                    {[...Array(5)].map((_, idx) => (
+                      <Star 
+                        key={idx} 
+                        size={16} 
+                        fill={idx < review.rating ? "currentColor" : "none"} 
+                        stroke={idx < review.rating ? "none" : "currentColor"} 
+                      />
+                    ))}
+                  </div>
+                  <div className="review-author" style={{ fontWeight: 'bold', fontSize: '1.05rem', color: 'var(--text-primary)', marginBottom: '0.1rem' }}>
+                    {review.customerName}
+                  </div>
+                  {review.reviewerType && review.reviewerType !== "Customer" && (
+                    <div className="review-type" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontWeight: '500' }}>
+                      {review.reviewerType}
+                    </div>
+                  )}
+                  <p className="review-text" style={{ fontStyle: 'italic', margin: '0' }}>"{review.reviewText}"</p>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+        <div className="container">
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
             <button 
               onClick={() => setShowReviewModal(true)} 
@@ -881,7 +898,7 @@ export const Home = () => {
                             border: 'none',
                             cursor: 'pointer',
                             padding: '0.25rem',
-                            color: star <= reviewForm.rating ? '#e0a96d' : 'var(--text-muted)'
+                            color: star <= reviewForm.rating ? '#0c2d1c' : 'var(--text-muted)'
                           }}
                         >
                           <Star size={24} fill={star <= reviewForm.rating ? 'currentColor' : 'none'} />

@@ -9,6 +9,7 @@ export const LeadPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isProductAccessMode, setIsProductAccessMode] = useState(false);
 
   // Setup unique session ID if not exists
   useEffect(() => {
@@ -17,32 +18,48 @@ export const LeadPopup = () => {
     }
   }, []);
 
+  // Mode A: Show after 20 seconds on general pages
   useEffect(() => {
-    // Check if popup was already shown in this session
+    const submitted = localStorage.getItem('trivaltor-lead-submitted') === 'true';
+    if (submitted) return;
+
     const shown = sessionStorage.getItem('trivaltor-lead-popup-shown');
     if (shown) return;
 
-    // Rule 1: Show after 20 seconds on the website
     const timer = setTimeout(() => {
+      const stillNotSubmitted = localStorage.getItem('trivaltor-lead-submitted') !== 'true';
       const stillNotShown = !sessionStorage.getItem('trivaltor-lead-popup-shown');
-      if (stillNotShown) {
+      const isOnCategoryPage = window.location.pathname.startsWith('/category/');
+
+      if (stillNotSubmitted && stillNotShown && !isOnCategoryPage) {
+        setIsProductAccessMode(false);
         setIsOpen(true);
       }
     }, 20000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.pathname]);
 
+  // Mode B: Show immediately on category pages (Mandatory)
   useEffect(() => {
-    // Rule 2: Show immediately if user opens a category page before 20s
-    const shown = sessionStorage.getItem('trivaltor-lead-popup-shown');
-    if (shown) return;
+    const submitted = localStorage.getItem('trivaltor-lead-submitted') === 'true';
+    if (submitted) {
+      setIsOpen(false);
+      return;
+    }
 
     if (location.pathname.startsWith('/category/')) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsProductAccessMode(true);
       setIsOpen(true);
+    } else {
+      // If navigating away from category page before submission, toggle back to normal state
+      setIsProductAccessMode(false);
+      const shown = sessionStorage.getItem('trivaltor-lead-popup-shown');
+      if (shown) {
+        setIsOpen(false);
+      }
     }
-  }, [location]);
+  }, [location.pathname]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -60,7 +77,6 @@ export const LeadPopup = () => {
 
     // Simulate backend response
     setTimeout(() => {
-      // Log to browser console as requested by Phase 1 revisions
       console.group('%c[Lead Capture Popup Submission] SUCCESS', 'color: #3A7D44; font-weight: bold; font-size: 12px;');
       console.log('Timestamp:', new Date().toISOString());
       console.log('Session ID:', sessionStorage.getItem('trivaltor-session-id'));
@@ -69,6 +85,12 @@ export const LeadPopup = () => {
       console.log('Email:', form.email);
       console.log('Status: Logged to console successfully. Database integration pending (Phase 2).');
       console.groupEnd();
+
+      // Store in localStorage for prefilling and blocking subsequent overlays
+      localStorage.setItem('trivaltor-lead-submitted', 'true');
+      localStorage.setItem('trivaltor-lead-name', form.name);
+      localStorage.setItem('trivaltor-lead-phone', form.phone);
+      localStorage.setItem('trivaltor-lead-email', form.email);
 
       setIsSubmitting(false);
       setIsOpen(false);
@@ -79,17 +101,19 @@ export const LeadPopup = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-container">
-        <button className="modal-close" onClick={handleClose} aria-label="Close modal">
-          <X size={20} />
-        </button>
+    <div className="modal-overlay" onClick={isProductAccessMode ? undefined : handleClose}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        {!isProductAccessMode && (
+          <button className="modal-close" onClick={handleClose} aria-label="Close modal">
+            <X size={20} />
+          </button>
+        )}
         
         <h2 style={{ fontSize: '1.75rem', color: 'var(--text-primary)', marginBottom: '0.75rem', fontFamily: 'var(--font-heading)' }}>
-          {t('popupTitle')}
+          {isProductAccessMode ? "Access Product Catalog" : t('popupTitle')}
         </h2>
         <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '2rem', lineHeight: '1.5' }}>
-          {t('popupDesc')}
+          {isProductAccessMode ? "Please provide your details to access our product catalog and submit enquiries." : t('popupDesc')}
         </p>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
