@@ -4,20 +4,21 @@ import { useReviews } from '../context/ReviewContext';
 import { 
   Users, Download, LogOut, Lock, 
   Search, ArrowUpDown, Eye, Check, X,
-  MessageSquare, Landmark, Calendar, ThumbsUp, ThumbsDown
+  MessageSquare, Landmark, Calendar, ThumbsUp, ThumbsDown,
+  Trash2
 } from 'lucide-react';
 
 export const AdminDashboard = () => {
   const { 
-    farmerLeads, 
-    buyerLeads, 
-    investorLeads, 
+    farmerLeads = [], 
+    buyerLeads = [], 
+    investorLeads = [], 
     deleteLead, 
     markLeadContacted 
   } = useLeads();
 
   const { 
-    reviews, 
+    reviews = [], 
     approveReview, 
     rejectReview, 
     deleteReview 
@@ -136,38 +137,40 @@ export const AdminDashboard = () => {
 
   // Helper to filter/sort enquiries
   const getProcessedEnquiries = () => {
-    let currentLeads;
-    if (activeEnquiryTab === 'farmer') currentLeads = [...farmerLeads];
-    else if (activeEnquiryTab === 'buyer') currentLeads = [...buyerLeads];
-    else currentLeads = [...investorLeads];
+    let currentLeads = [];
+    if (activeEnquiryTab === 'farmer') currentLeads = [...(farmerLeads || [])];
+    else if (activeEnquiryTab === 'buyer') currentLeads = [...(buyerLeads || [])];
+    else currentLeads = [...(investorLeads || [])];
 
     // Search filter
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
       currentLeads = currentLeads.filter(lead => {
+        if (!lead) return false;
         if (activeEnquiryTab === 'farmer') {
-          return lead.name.toLowerCase().includes(q) || 
-                 lead.email.toLowerCase().includes(q) || 
-                 lead.productName.toLowerCase().includes(q) || 
-                 lead.location.toLowerCase().includes(q);
+          return (lead.name || '').toLowerCase().includes(q) || 
+                 (lead.email || '').toLowerCase().includes(q) || 
+                 (lead.productName || '').toLowerCase().includes(q) || 
+                 (lead.location || '').toLowerCase().includes(q);
         } else if (activeEnquiryTab === 'buyer') {
-          return lead.name.toLowerCase().includes(q) || 
-                 lead.email.toLowerCase().includes(q) || 
-                 lead.productRequirement.toLowerCase().includes(q) || 
+          return (lead.name || '').toLowerCase().includes(q) || 
+                 (lead.email || '').toLowerCase().includes(q) || 
+                 (lead.productRequirement || '').toLowerCase().includes(q) || 
                  (lead.companyName && lead.companyName.toLowerCase().includes(q)) ||
-                 lead.country.toLowerCase().includes(q);
+                 (lead.country || '').toLowerCase().includes(q);
         } else {
-          return lead.name.toLowerCase().includes(q) || 
-                 lead.email.toLowerCase().includes(q) || 
-                 lead.investmentInterest.toLowerCase().includes(q);
+          return (lead.name || '').toLowerCase().includes(q) || 
+                 (lead.email || '').toLowerCase().includes(q) || 
+                 (lead.investmentInterest || '').toLowerCase().includes(q);
         }
       });
     }
 
     // Sort by Date
     currentLeads.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
+      if (!a || !b) return 0;
+      const dateA = new Date(a.date || 0);
+      const dateB = new Date(b.date || 0);
       return sortByDateOrder === 'asc' ? dateA - dateB : dateB - dateA;
     });
 
@@ -176,26 +179,29 @@ export const AdminDashboard = () => {
 
   // Helper to filter/sort reviews
   const getProcessedReviews = () => {
-    let currentReviews = [...reviews];
+    let currentReviews = [...(reviews || [])];
     
     // Status Filter
     if (reviewFilter !== 'all') {
-      currentReviews = currentReviews.filter(r => r.status === reviewFilter);
+      currentReviews = currentReviews.filter(r => r && r.status === reviewFilter);
     }
 
     // Search filter
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
       currentReviews = currentReviews.filter(r => 
-        r.customerName.toLowerCase().includes(q) || 
-        r.reviewText.toLowerCase().includes(q)
+        r && (
+          (r.customerName || '').toLowerCase().includes(q) || 
+          (r.reviewText || '').toLowerCase().includes(q)
+        )
       );
     }
 
     // Sort by Date
     currentReviews.sort((a, b) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
+      if (!a || !b) return 0;
+      const dateA = new Date(a.createdAt || 0);
+      const dateB = new Date(b.createdAt || 0);
       return sortByDateOrder === 'asc' ? dateA - dateB : dateB - dateA;
     });
 
@@ -204,6 +210,19 @@ export const AdminDashboard = () => {
 
   const processedEnquiries = getProcessedEnquiries();
   const processedReviews = getProcessedReviews();
+
+  // Safe date formatting helpers
+  const formatDate = (dateStr) => {
+    if (!dateStr) return 'N/A';
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? 'N/A' : d.toLocaleString();
+  };
+
+  const formatDateOnly = (dateStr) => {
+    if (!dateStr) return 'N/A';
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? 'N/A' : d.toLocaleDateString();
+  };
 
   // Render Stars
   const renderStars = (rating) => {
@@ -542,80 +561,89 @@ export const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {activeEnquiryTab === 'farmer' && processedEnquiries.map(lead => (
-                      <tr key={lead.id}>
-                        <td><strong>{lead.name}</strong></td>
-                        <td>Farmer</td>
-                        <td><span className="badge badge-gold">{lead.productName}</span></td>
-                        <td>
-                          <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
-                            {lead.contacted ? 'Contacted' : 'New'}
-                          </span>
-                        </td>
-                        <td style={{ textAlign: 'right' }}>
-                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
-                            <button 
-                              title="View Details"
-                              onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('farmer'); }}
-                              className="btn btn-secondary btn-sm"
-                              style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                            >
-                              <Eye size={14} /> View
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {activeEnquiryTab === 'farmer' && processedEnquiries.map(lead => {
+                      if (!lead) return null;
+                      return (
+                        <tr key={lead.id || Math.random().toString()}>
+                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td>Farmer</td>
+                          <td><span className="badge badge-gold">{lead.productName || 'N/A'}</span></td>
+                          <td>
+                            <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
+                              {lead.contacted ? 'Contacted' : 'New'}
+                            </span>
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                              <button 
+                                title="View Details"
+                                onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('farmer'); }}
+                                className="btn btn-secondary btn-sm"
+                                style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                              >
+                                <Eye size={14} /> View
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
 
-                    {activeEnquiryTab === 'buyer' && processedEnquiries.map(lead => (
-                      <tr key={lead.id}>
-                        <td><strong>{lead.name}</strong></td>
-                        <td>Buyer</td>
-                        <td><span className="badge badge-gold">{lead.productRequirement}</span></td>
-                        <td>
-                          <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
-                            {lead.contacted ? 'Contacted' : 'New'}
-                          </span>
-                        </td>
-                        <td style={{ textAlign: 'right' }}>
-                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
-                            <button 
-                              title="View Details"
-                              onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('buyer'); }}
-                              className="btn btn-secondary btn-sm"
-                              style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                            >
-                              <Eye size={14} /> View
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {activeEnquiryTab === 'buyer' && processedEnquiries.map(lead => {
+                      if (!lead) return null;
+                      return (
+                        <tr key={lead.id || Math.random().toString()}>
+                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td>Buyer</td>
+                          <td><span className="badge badge-gold">{lead.productRequirement || 'N/A'}</span></td>
+                          <td>
+                            <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
+                              {lead.contacted ? 'Contacted' : 'New'}
+                            </span>
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                              <button 
+                                title="View Details"
+                                onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('buyer'); }}
+                                className="btn btn-secondary btn-sm"
+                                style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                              >
+                                <Eye size={14} /> View
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
 
-                    {activeEnquiryTab === 'investor' && processedEnquiries.map(lead => (
-                      <tr key={lead.id}>
-                        <td><strong>{lead.name}</strong></td>
-                        <td>Investor</td>
-                        <td><span className="badge badge-gold">{selectedEnquiry?.investmentInterest || lead.investmentInterest}</span></td>
-                        <td>
-                          <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
-                            {lead.contacted ? 'Contacted' : 'New'}
-                          </span>
-                        </td>
-                        <td style={{ textAlign: 'right' }}>
-                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
-                            <button 
-                              title="View Details"
-                              onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('investor'); }}
-                              className="btn btn-secondary btn-sm"
-                              style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                            >
-                              <Eye size={14} /> View
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {activeEnquiryTab === 'investor' && processedEnquiries.map(lead => {
+                      if (!lead) return null;
+                      return (
+                        <tr key={lead.id || Math.random().toString()}>
+                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td>Investor</td>
+                          <td><span className="badge badge-gold">{lead.investmentInterest || 'N/A'}</span></td>
+                          <td>
+                            <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
+                              {lead.contacted ? 'Contacted' : 'New'}
+                            </span>
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                              <button 
+                                title="View Details"
+                                onClick={() => { setSelectedEnquiry(lead); setSelectedEnquiryType('investor'); }}
+                                className="btn btn-secondary btn-sm"
+                                style={{ padding: '0.35rem 0.65rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                              >
+                                <Eye size={14} /> View
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               ) : (
@@ -737,60 +765,67 @@ export const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {processedReviews.map(review => (
-                      <tr key={review.id}>
-                        <td><strong>{review.customerName}</strong></td>
-                        <td>{renderStars(review.rating)}</td>
-                        <td style={{ maxWidth: '300px', fontSize: '0.85rem', lineHeight: '1.4' }}>
-                          "{review.reviewText}"
-                        </td>
-                        <td><span style={{ fontSize: '0.75rem' }}>{new Date(review.createdAt).toLocaleDateString()}</span></td>
-                        <td>
-                          <span className={`badge ${
-                            review.status === 'approved' ? 'badge-success' : 
-                            review.status === 'rejected' ? 'badge-dark' : 'badge-gold'
-                          }`} style={{ 
-                            color: 
-                              review.status === 'approved' ? 'green' : 
-                              review.status === 'rejected' ? '#dc3545' : 'inherit' 
-                          }}>
-                            {review.status.toUpperCase()}
-                          </span>
-                        </td>
-                        <td style={{ textAlign: 'right' }}>
-                          <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
-                            {review.status !== 'approved' && (
+                    {processedReviews.map(review => {
+                      const name = review?.customerName || 'N/A';
+                      const text = review?.reviewText || '';
+                      const rating = review?.rating || 5;
+                      const status = review?.status || 'pending';
+                      
+                      return (
+                        <tr key={review.id}>
+                          <td><strong>{name}</strong></td>
+                          <td>{renderStars(rating)}</td>
+                          <td style={{ maxWidth: '300px', fontSize: '0.85rem', lineHeight: '1.4' }}>
+                            "{text}"
+                          </td>
+                          <td><span style={{ fontSize: '0.75rem' }}>{formatDateOnly(review?.createdAt)}</span></td>
+                          <td>
+                            <span className={`badge ${
+                              status === 'approved' ? 'badge-success' : 
+                              status === 'rejected' ? 'badge-dark' : 'badge-gold'
+                            }`} style={{ 
+                              color: 
+                                status === 'approved' ? 'green' : 
+                                status === 'rejected' ? '#dc3545' : 'inherit' 
+                            }}>
+                              {status.toUpperCase()}
+                            </span>
+                          </td>
+                          <td style={{ textAlign: 'right' }}>
+                            <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
+                              {status !== 'approved' && (
+                                <button 
+                                  title="Approve Review"
+                                  onClick={() => approveReview(review?.id)}
+                                  className="btn btn-secondary btn-sm"
+                                  style={{ padding: '0.25rem 0.5rem', backgroundColor: 'var(--success-light)', borderColor: 'var(--success)', color: 'green' }}
+                                >
+                                  <ThumbsUp size={14} /> Approve
+                                </button>
+                              )}
+                              {status !== 'rejected' && (
+                                <button 
+                                  title="Reject Review"
+                                  onClick={() => rejectReview(review?.id)}
+                                  className="btn btn-secondary btn-sm"
+                                  style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f8d7da', borderColor: '#f5c6cb', color: '#721c24' }}
+                                >
+                                  <ThumbsDown size={14} /> Reject
+                                </button>
+                              )}
                               <button 
-                                title="Approve Review"
-                                onClick={() => approveReview(review.id)}
-                                className="btn btn-secondary btn-sm"
-                                style={{ padding: '0.25rem 0.5rem', backgroundColor: 'var(--success-light)', borderColor: 'var(--success)', color: 'green' }}
+                                title="Delete Review"
+                                onClick={() => deleteReview(review?.id)}
+                                className="btn btn-dark btn-sm"
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#dc3545', border: 'none', color: '#fff' }}
                               >
-                                <ThumbsUp size={14} /> Approve
+                                <Trash2 size={14} />
                               </button>
-                            )}
-                            {review.status !== 'rejected' && (
-                              <button 
-                                title="Reject Review"
-                                onClick={() => rejectReview(review.id)}
-                                className="btn btn-secondary btn-sm"
-                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f8d7da', borderColor: '#f5c6cb', color: '#721c24' }}
-                              >
-                                <ThumbsDown size={14} /> Reject
-                              </button>
-                            )}
-                            <button 
-                              title="Delete Review"
-                              onClick={() => deleteReview(review.id)}
-                              className="btn btn-dark btn-sm"
-                              style={{ padding: '0.25rem 0.5rem', backgroundColor: '#dc3545', border: 'none', color: '#fff' }}
-                            >
-                              <Trash2 size={14} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               ) : (
@@ -808,126 +843,144 @@ export const AdminDashboard = () => {
 
       {/* Simplified Enquiry Details Modal */}
       {selectedEnquiry && (
-        <div className="modal-overlay" onClick={() => setSelectedEnquiry(null)}>
-          <div className="modal-container" style={{ maxWidth: '600px', width: '100%', padding: '2.5rem' }} onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedEnquiry(null)} aria-label="Close details">
-              <X size={20} />
-            </button>
+        <EnquiryDetailsModal 
+          selectedEnquiry={selectedEnquiry}
+          setSelectedEnquiry={setSelectedEnquiry}
+          selectedEnquiryType={selectedEnquiryType}
+          markLeadContacted={markLeadContacted}
+          deleteLead={deleteLead}
+        />
+      )}
+    </div>
+  );
+};
 
-            <span className="section-tag" style={{ margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>
-              ENQUIRY DETAIL PANEL
+const EnquiryDetailsModal = ({ selectedEnquiry, setSelectedEnquiry, selectedEnquiryType, markLeadContacted, deleteLead }) => {
+  if (!selectedEnquiry) return null;
+
+  return (
+    <div className="modal-overlay" onClick={() => setSelectedEnquiry(null)}>
+      <div className="modal-container" style={{ maxWidth: '600px', width: '100%', padding: '2.5rem' }} onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={() => setSelectedEnquiry(null)} aria-label="Close details">
+          <X size={20} />
+        </button>
+
+        <span className="section-tag" style={{ margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>
+          ENQUIRY DETAIL PANEL
+        </span>
+        <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span>{selectedEnquiry?.name || 'N/A'}</span>
+          <span className={`badge ${selectedEnquiry?.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: selectedEnquiry?.contacted ? 'green' : 'inherit', fontSize: '0.85rem' }}>
+            {selectedEnquiry?.contacted ? 'Contacted' : 'New'}
+          </span>
+        </h2>
+
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+          gap: '1.25rem',
+          backgroundColor: 'var(--bg-secondary)', 
+          padding: '1.5rem', 
+          borderRadius: '8px',
+          border: '1px solid var(--border-color)',
+          marginBottom: '1.5rem'
+        }}>
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Phone</label>
+            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.phone || 'N/A'}</span>
+          </div>
+
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Email</label>
+            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.email || 'N/A'}</span>
+          </div>
+
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>State</label>
+            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+              {selectedEnquiry?.state || selectedEnquiry?.location || 'N/A'}
             </span>
-            <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>{selectedEnquiry.name}</span>
-              <span className={`badge ${selectedEnquiry.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: selectedEnquiry.contacted ? 'green' : 'inherit', fontSize: '0.85rem' }}>
-                {selectedEnquiry.contacted ? 'Contacted' : 'New'}
-              </span>
-            </h2>
+          </div>
 
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
-              gap: '1.25rem',
-              backgroundColor: 'var(--bg-secondary)', 
-              padding: '1.5rem', 
-              borderRadius: '8px',
-              border: '1px solid var(--border-color)',
-              marginBottom: '1.5rem'
-            }}>
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Phone</label>
-                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.phone || 'N/A'}</span>
-              </div>
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>District</label>
+            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.district || 'N/A'}</span>
+          </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Email</label>
-                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.email}</span>
-              </div>
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>City/Village</label>
+            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.cityVillage || 'N/A'}</span>
+          </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>State</label>
-                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
-                  {selectedEnquiry.state || selectedEnquiry.location || 'N/A'}
-                </span>
-              </div>
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Product</label>
+            <span className="badge badge-gold" style={{ marginTop: '0.25rem', display: 'inline-block' }}>
+              {selectedEnquiry?.productName || selectedEnquiry?.productRequirement || selectedEnquiry?.investmentInterest || selectedEnquiry?.subject || 'General Inquiry'}
+            </span>
+          </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>District</label>
-                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.district || 'N/A'}</span>
-              </div>
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Quantity</label>
+            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 700 }}>
+              {selectedEnquiry?.quantity || selectedEnquiry?.requiredQuantity || 'N/A'}
+            </span>
+          </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>City/Village</label>
-                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry.cityVillage || 'N/A'}</span>
-              </div>
-
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Product</label>
-                <span className="badge badge-gold" style={{ marginTop: '0.25rem', display: 'inline-block' }}>
-                  {selectedEnquiry.productName || selectedEnquiry.productRequirement || selectedEnquiry.investmentInterest || selectedEnquiry.subject || 'General Inquiry'}
-                </span>
-              </div>
-
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Quantity</label>
-                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 700 }}>
-                  {selectedEnquiry.quantity || selectedEnquiry.requiredQuantity || 'N/A'}
-                </span>
-              </div>
-
-              <div>
-                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Timestamp</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-                  <Calendar size={14} />
-                  <span>{new Date(selectedEnquiry.date).toLocaleString()}</span>
-                </div>
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600, marginBottom: '0.25rem' }}>Message</label>
-              <div style={{ 
-                fontSize: '0.95rem', 
-                color: 'var(--text-primary)', 
-                lineHeight: '1.6', 
-                backgroundColor: 'var(--bg-primary)', 
-                padding: '1.25rem', 
-                borderRadius: '6px', 
-                border: '1px solid var(--border-color)',
-                whiteSpace: 'pre-wrap'
-              }}>
-                {selectedEnquiry.message}
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <button 
-                type="button" 
-                onClick={() => {
-                  markLeadContacted(selectedEnquiryType, selectedEnquiry.id);
-                  setSelectedEnquiry(prev => ({ ...prev, contacted: !prev.contacted }));
-                }} 
-                className="btn btn-secondary" 
-                style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-              >
-                <Check size={16} /> {selectedEnquiry.contacted ? 'Mark as New' : 'Mark Contacted'}
-              </button>
-              
-              <button 
-                type="button" 
-                onClick={() => {
-                  deleteLead(selectedEnquiryType, selectedEnquiry.id);
-                  setSelectedEnquiry(null);
-                }} 
-                className="btn btn-dark" 
-                style={{ flex: 1, backgroundColor: '#dc3545', border: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-              >
-                <Trash2 size={16} /> Delete Enquiry
-              </button>
+          <div>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Timestamp</label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+              <Calendar size={14} />
+              <span>{selectedEnquiry?.date ? new Date(selectedEnquiry.date).toLocaleString() : 'N/A'}</span>
             </div>
           </div>
         </div>
-      )}
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600, marginBottom: '0.25rem' }}>Message</label>
+          <div style={{ 
+            fontSize: '0.95rem', 
+            color: 'var(--text-primary)', 
+            lineHeight: '1.6', 
+            backgroundColor: 'var(--bg-primary)', 
+            padding: '1.25rem', 
+            borderRadius: '6px', 
+            border: '1px solid var(--border-color)',
+            whiteSpace: 'pre-wrap'
+          }}>
+            {selectedEnquiry?.message || 'N/A'}
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button 
+            type="button" 
+            onClick={() => {
+              if (selectedEnquiry?.id) {
+                markLeadContacted(selectedEnquiryType, selectedEnquiry.id);
+                setSelectedEnquiry(prev => prev ? { ...prev, contacted: !prev.contacted } : null);
+              }
+            }} 
+            className="btn btn-secondary" 
+            style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+          >
+            <Check size={16} /> {selectedEnquiry?.contacted ? 'Mark as New' : 'Mark Contacted'}
+          </button>
+          
+          <button 
+            type="button" 
+            onClick={() => {
+              if (selectedEnquiry?.id) {
+                deleteLead(selectedEnquiryType, selectedEnquiry.id);
+                setSelectedEnquiry(null);
+              }
+            }} 
+            className="btn btn-dark" 
+            style={{ flex: 1, backgroundColor: '#dc3545', border: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+          >
+            <Trash2 size={16} /> Delete Enquiry
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
