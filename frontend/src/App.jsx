@@ -6,6 +6,7 @@ import { BuyerLead } from './pages/BuyerLead';
 import { InvestorLead } from './pages/InvestorLead';
 import { CategoryDetail } from './pages/CategoryDetail';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AdminReports } from './pages/AdminReports';
 import { AdminLogin } from './pages/AdminLogin';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
@@ -22,6 +23,11 @@ function App() {
         <Route path="/admin" element={
           <ProtectedRoute>
             <AdminDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/reports" element={
+          <ProtectedRoute>
+            <AdminReports />
           </ProtectedRoute>
         } />
         <Route path="*" element={<Home />} /> {/* Fallback route */}

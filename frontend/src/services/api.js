@@ -65,6 +65,8 @@ export const api = {
     getAnalytics: () => API.get('/admin/analytics'),
     exportEnquiries: () => API.get('/admin/export/enquiries', { responseType: 'blob' }),
     exportPopupLeads: () => API.get('/admin/export/popup-leads', { responseType: 'blob' }),
-    exportVisitors: () => API.get('/admin/export/visitors', { responseType: 'blob' })
+    exportVisitors: () => API.get('/admin/export/visitors', { responseType: 'blob' }),
+    getMonthlyReport: (params) => API.get('/admin/reports/monthly', { params }),
+    exportMonthlyReport: (params) => API.get('/admin/reports/monthly/export', { params, responseType: 'blob' })
   }
 };
