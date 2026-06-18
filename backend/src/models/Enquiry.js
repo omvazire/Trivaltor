@@ -52,6 +52,10 @@ const enquirySchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  convertedFromPopupLead: {
+    type: Boolean,
+    default: false
+  },
   timestamp: {
     type: Date,
     default: Date.now

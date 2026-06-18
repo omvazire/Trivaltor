@@ -41,13 +41,30 @@ export const api = {
     update: (sessionId, data) => API.patch(`/visitors/${sessionId}`, data)
   },
   popupLead: {
-    create: (data) => API.post('/popup-leads', data)
+    create: (data) => API.post('/popup-leads', data),
+    getAll: (params) => API.get('/popup-leads', { params }),
+    delete: (id) => API.delete(`/popup-leads/${id}`)
   },
   enquiry: {
-    create: (data) => API.post('/enquiries', data)
+    create: (data) => API.post('/enquiries', data),
+    getAll: (params) => API.get('/enquiries', { params }),
+    markContacted: (id) => API.patch(`/enquiries/${id}/contacted`),
+    delete: (id) => API.delete(`/enquiries/${id}`)
+  },
+  review: {
+    create: (data) => API.post('/reviews', data),
+    getApproved: () => API.get('/reviews/approved'),
+    getAll: (params) => API.get('/reviews', { params }),
+    approve: (id) => API.patch(`/reviews/${id}/approve`),
+    reject: (id) => API.patch(`/reviews/${id}/reject`),
+    delete: (id) => API.delete(`/reviews/${id}`)
   },
   admin: {
     login: (credentials) => API.post('/admin/login', credentials),
-    profile: () => API.get('/admin/profile')
+    profile: () => API.get('/admin/profile'),
+    getAnalytics: () => API.get('/admin/analytics'),
+    exportEnquiries: () => API.get('/admin/export/enquiries', { responseType: 'blob' }),
+    exportPopupLeads: () => API.get('/admin/export/popup-leads', { responseType: 'blob' }),
+    exportVisitors: () => API.get('/admin/export/visitors', { responseType: 'blob' })
   }
 };

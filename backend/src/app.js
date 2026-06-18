@@ -5,6 +5,7 @@ import visitorRoutes from './routes/visitorRoutes.js';
 import popupLeadRoutes from './routes/popupLeadRoutes.js';
 import enquiryRoutes from './routes/enquiryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
@@ -38,6 +39,7 @@ app.use('/api/visitors', visitorRoutes);
 app.use('/api/popup-leads', popupLeadRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/admin', authRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Catch-all route for unhandled routes
 app.use((req, res, next) => {

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useReviews } from '../context/ReviewContext';
+import { api } from '../services/api';
 import { 
   Users, Download, LogOut, Lock, 
   Search, ArrowUpDown, Eye, Check, X,
-  MessageSquare, Landmark, Calendar, ThumbsUp, ThumbsDown,
+  MessageSquare, Calendar, ThumbsUp, ThumbsDown,
   Trash2
 } from 'lucide-react';
 
@@ -14,12 +15,25 @@ export const AdminDashboard = () => {
     farmerLeads = [], 
     buyerLeads = [], 
     investorLeads = [], 
+    contactLeads = [],
+    popupLeads = [],
+    paginationFarmer,
+    paginationBuyer,
+    paginationInvestor,
+    paginationContact,
+    paginationPopup,
+    loading: leadsLoading,
+    fetchEnquiries,
+    fetchPopupLeads,
     deleteLead, 
-    markLeadContacted 
+    markLeadContacted,
+    deletePopupLead
   } = useLeads();
 
   const { 
     reviews = [], 
+    paginationReviews,
+    fetchReviews,
     approveReview, 
     rejectReview, 
     deleteReview 
@@ -32,7 +46,7 @@ export const AdminDashboard = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState(false);
 
-  // Main navigation tab: 'enquiries' | 'reviews'
+  // Main navigation tab: 'enquiries' | 'popupLeads' | 'reviews'
   const [activeSection, setActiveSection] = useState('enquiries');
 
   // Enquiries sub-tab: 'farmer' | 'buyer' | 'investor'
@@ -47,6 +61,34 @@ export const AdminDashboard = () => {
 
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
   const [selectedEnquiryType, setSelectedEnquiryType] = useState('');
+
+  // Analytics states
+  const [analytics, setAnalytics] = useState(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+
+  const fetchAnalytics = async () => {
+    setAnalyticsLoading(true);
+    try {
+      const res = await api.admin.getAnalytics();
+      if (res.success) {
+        setAnalytics(res.data);
+      }
+    } catch (err) {
+      console.error('[AdminDashboard] Failed to fetch analytics:', err);
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEnquiries('farmer', 1, 20);
+    fetchEnquiries('buyer', 1, 20);
+    fetchEnquiries('investor', 1, 20);
+    fetchEnquiries('contact', 1, 20);
+    fetchPopupLeads(1, 20);
+    fetchReviews(1, 20);
+    fetchAnalytics();
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -64,79 +106,74 @@ export const AdminDashboard = () => {
     navigate('/admin/login');
   };
 
-  // CSV Exporter helper
-  const exportToCSV = () => {
-    let headers;
-    let rows;
-    let filename;
+  // Secure CSV Exporter from Backend
+  const handleExport = async (type) => {
+    try {
+      let blobData;
+      let filename = '';
+      if (type === 'enquiries') {
+        blobData = await api.admin.exportEnquiries();
+        filename = 'trivaltor_enquiries.csv';
+      } else if (type === 'popup-leads') {
+        blobData = await api.admin.exportPopupLeads();
+        filename = 'trivaltor_popup_leads.csv';
+      }
 
-    if (activeEnquiryTab === 'farmer') {
-      headers = ['ID', 'Name', 'Phone', 'Email', 'Location', 'Product Name', 'Quantity', 'Message', 'Date', 'Contacted'];
-      rows = farmerLeads.map(lead => [
-        lead.id,
-        `"${lead.name.replace(/"/g, '""')}"`,
-        `"${lead.phone}"`,
-        `"${lead.email}"`,
-        `"${lead.location}"`,
-        `"${lead.productName}"`,
-        `"${lead.quantity}"`,
-        `"${lead.message.replace(/"/g, '""')}"`,
-        lead.date,
-        lead.contacted ? 'Yes' : 'No'
-      ]);
-      filename = 'trivaltor_farmer_leads.csv';
-    } else if (activeEnquiryTab === 'buyer') {
-      headers = ['ID', 'Name', 'Company Name', 'Country', 'Email', 'Phone', 'Product Requirement', 'Required Quantity', 'Budget', 'Currency', 'State', 'District', 'City/Village', 'Pincode', 'Message', 'Date', 'Contacted'];
-      rows = buyerLeads.map(lead => [
-        lead.id,
-        `"${lead.name.replace(/"/g, '""')}"`,
-        `"${(lead.companyName || '').replace(/"/g, '""')}"`,
-        `"${lead.country}"`,
-        `"${lead.email}"`,
-        `"${lead.phone}"`,
-        `"${lead.productRequirement}"`,
-        `"${(lead.requiredQuantity || '').replace(/"/g, '""')}"`,
-        `"${lead.targetBudget || ''}"`,
-        `"${lead.currency || 'USD'}"`,
-        `"${lead.state || ''}"`,
-        `"${lead.district || ''}"`,
-        `"${lead.cityVillage || ''}"`,
-        `"${lead.pincode || ''}"`,
-        `"${lead.message.replace(/"/g, '""')}"`,
-        lead.date,
-        lead.contacted ? 'Yes' : 'No'
-      ]);
-      filename = 'trivaltor_buyer_leads.csv';
-    } else {
-      headers = ['ID', 'Name', 'Phone', 'Email', 'Investment Interest', 'Investment Amount', 'Message', 'Date', 'Contacted'];
-      rows = investorLeads.map(lead => [
-        lead.id,
-        `"${lead.name.replace(/"/g, '""')}"`,
-        `"${lead.phone}"`,
-        `"${lead.email}"`,
-        `"${lead.investmentInterest}"`,
-        `"${lead.estimatedInvestmentAmount}"`,
-        `"${lead.message.replace(/"/g, '""')}"`,
-        lead.date,
-        lead.contacted ? 'Yes' : 'No'
-      ]);
-      filename = 'trivaltor_investor_leads.csv';
+      const blob = new Blob([blobData], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('[Export Error]', err);
+      alert('Failed to export data: ' + (err.message || err));
     }
+  };
 
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(e => e.join(','))
-    ].join('\n');
+  // Local handlers for table page changes
+  const handlePageChange = (tab, page) => {
+    fetchEnquiries(tab, page, 20);
+  };
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handlePopupPageChange = (page) => {
+    fetchPopupLeads(page, 20);
+  };
+
+  const handleReviewPageChange = (page) => {
+    fetchReviews(page, 20);
+  };
+
+  // Moderation with analytics sync
+  const handleApproveReview = async (id) => {
+    try {
+      await approveReview(id);
+      fetchAnalytics();
+    } catch (err) {
+      alert('Error approving review: ' + err.message);
+    }
+  };
+
+  const handleRejectReview = async (id) => {
+    try {
+      await rejectReview(id);
+      fetchAnalytics();
+    } catch (err) {
+      alert('Error rejecting review: ' + err.message);
+    }
+  };
+
+  const handleDeleteReview = async (id) => {
+    try {
+      if (confirm('Are you sure you want to delete this review?')) {
+        await deleteReview(id);
+        fetchAnalytics();
+      }
+    } catch (err) {
+      alert('Error deleting review: ' + err.message);
+    }
   };
 
   // Helper to filter/sort enquiries
@@ -155,7 +192,8 @@ export const AdminDashboard = () => {
           return (lead.name || '').toLowerCase().includes(q) || 
                  (lead.email || '').toLowerCase().includes(q) || 
                  (lead.productName || '').toLowerCase().includes(q) || 
-                 (lead.location || '').toLowerCase().includes(q);
+                 (lead.location || '').toLowerCase().includes(q) ||
+                 (lead.state || '').toLowerCase().includes(q);
         } else if (activeEnquiryTab === 'buyer') {
           return (lead.name || '').toLowerCase().includes(q) || 
                  (lead.email || '').toLowerCase().includes(q) || 
@@ -196,7 +234,8 @@ export const AdminDashboard = () => {
       currentReviews = currentReviews.filter(r => 
         r && (
           (r.customerName || '').toLowerCase().includes(q) || 
-          (r.reviewText || '').toLowerCase().includes(q)
+          (r.reviewText || '').toLowerCase().includes(q) ||
+          (r.reviewerType || '').toLowerCase().includes(q)
         )
       );
     }
@@ -214,6 +253,23 @@ export const AdminDashboard = () => {
 
   const processedEnquiries = getProcessedEnquiries();
   const processedReviews = getProcessedReviews();
+
+  // Navigation handlers inside detail modal
+  const currentIndex = processedEnquiries.findIndex(lead => lead.id === selectedEnquiry?.id);
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex >= 0 && currentIndex < processedEnquiries.length - 1;
+
+  const handlePrevEnquiry = () => {
+    if (hasPrev) {
+      setSelectedEnquiry(processedEnquiries[currentIndex - 1]);
+    }
+  };
+
+  const handleNextEnquiry = () => {
+    if (hasNext) {
+      setSelectedEnquiry(processedEnquiries[currentIndex + 1]);
+    }
+  };
 
   // Safe date formatting helpers
   const formatDate = (dateStr) => {
@@ -301,11 +357,10 @@ export const AdminDashboard = () => {
 
             {loginError && (
               <p style={{ color: 'red', fontSize: '0.8rem', margin: '0.5rem 0 1rem 0' }}>
-                Incorrect username or password. Please use standard credentials.
+                Incorrect username or password. Please use credentials.
               </p>
             )}
 
-            {/* Demo Helper Banner */}
             <div style={{ 
               backgroundColor: 'var(--bg-primary)', 
               border: '1px solid var(--border-color)', 
@@ -316,7 +371,7 @@ export const AdminDashboard = () => {
               marginBottom: '1.5rem',
               lineHeight: '1.4'
             }}>
-              🔑 <strong>Demo Credentials:</strong><br />
+              🔑 <strong>Credentials:</strong><br />
               Username: <code style={{ color: 'var(--accent-gold-hover)' }}>admin</code><br />
               Password: <code style={{ color: 'var(--accent-gold-hover)' }}>trivaltor123</code>
             </div>
@@ -360,13 +415,41 @@ export const AdminDashboard = () => {
           </button>
         </div>
 
-        {/* Executive Widgets / Summary */}
+        {/* Executive Widgets / Summary Cards */}
         <div className="admin-stats-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '1.5rem',
           marginBottom: '2.5rem'
         }}>
+          {/* Card Visitors */}
+          <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--accent-gold)' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Total Visitors</span>
+              <Calendar size={20} />
+            </div>
+            <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
+              {analytics?.totalVisitors ?? 0}
+            </h2>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Unique visitor sessions
+            </span>
+          </div>
+
+          {/* Card Popup Leads */}
+          <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--info)' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Total Popup Leads</span>
+              <MessageSquare size={20} />
+            </div>
+            <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
+              {analytics?.totalPopupLeads ?? 0}
+            </h2>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Quick callback requests
+            </span>
+          </div>
+
           {/* Card Enquiries */}
           <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--accent-gold-hover)' }}>
@@ -374,10 +457,24 @@ export const AdminDashboard = () => {
               <Users size={20} />
             </div>
             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
-              {farmerLeads.length + buyerLeads.length + investorLeads.length}
+              {analytics?.totalEnquiries ?? 0}
             </h2>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Registered leads
+              Formal desk queries
+            </span>
+          </div>
+
+          {/* Card Conversion Rate */}
+          <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#10b981' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Lead Conversion</span>
+              <Check size={20} />
+            </div>
+            <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
+              {analytics?.leadConversionCount ?? 0}
+            </h2>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Rate: {analytics?.conversionRate ?? 0}%
             </span>
           </div>
 
@@ -388,35 +485,22 @@ export const AdminDashboard = () => {
               <MessageSquare size={20} />
             </div>
             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
-              {reviews.filter(r => r.status === 'pending').length}
+              {analytics?.pendingReviewsCount ?? 0}
             </h2>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               Requires moderation
             </span>
           </div>
-
-          {/* Card Approved Reviews */}
-          <div className="premium-card" style={{ padding: '1.5rem 2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--info)' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>Public Reviews</span>
-              <Landmark size={20} />
-            </div>
-            <h2 style={{ fontSize: '2rem', marginTop: '0.5rem', color: 'var(--text-primary)' }}>
-              {reviews.filter(r => r.status === 'approved').length}
-            </h2>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Approved testimonials
-            </span>
-          </div>
         </div>
 
-        {/* Navigation Tabs for Two Main Sections */}
+        {/* Navigation Tabs */}
         <div style={{
           display: 'flex',
           gap: '1rem',
           borderBottom: '1px solid var(--border-color)',
           marginBottom: '2rem',
-          paddingBottom: '0.5rem'
+          paddingBottom: '0.5rem',
+          flexWrap: 'wrap'
         }}>
           <button 
             onClick={() => { setActiveSection('enquiries'); setSearchQuery(''); }}
@@ -435,6 +519,22 @@ export const AdminDashboard = () => {
             Enquiries Desk
           </button>
           <button 
+            onClick={() => { setActiveSection('popupLeads'); setSearchQuery(''); }}
+            style={{
+              padding: '0.75rem 1.5rem',
+              fontSize: '1.05rem',
+              fontWeight: '700',
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
+              color: activeSection === 'popupLeads' ? 'var(--accent-gold-hover)' : 'var(--text-secondary)',
+              borderBottom: activeSection === 'popupLeads' ? '3px solid var(--accent-gold-hover)' : 'none',
+              marginBottom: '-0.65rem'
+            }}
+          >
+            Popup Leads Desk
+          </button>
+          <button 
             onClick={() => { setActiveSection('reviews'); setSearchQuery(''); }}
             style={{
               padding: '0.75rem 1.5rem',
@@ -448,7 +548,7 @@ export const AdminDashboard = () => {
               marginBottom: '-0.65rem'
             }}
           >
-            Review Moderation
+            Reviews Desk
           </button>
         </div>
 
@@ -483,7 +583,7 @@ export const AdminDashboard = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Farmers ({farmerLeads.length})
+                    Farmers ({paginationFarmer?.total ?? farmerLeads.length})
                   </button>
                   <button 
                     onClick={() => { setActiveEnquiryTab('buyer'); setSearchQuery(''); }}
@@ -498,7 +598,7 @@ export const AdminDashboard = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Buyers ({buyerLeads.length})
+                    Buyers ({paginationBuyer?.total ?? buyerLeads.length})
                   </button>
                   <button 
                     onClick={() => { setActiveEnquiryTab('investor'); setSearchQuery(''); }}
@@ -513,7 +613,7 @@ export const AdminDashboard = () => {
                       cursor: 'pointer'
                     }}
                   >
-                    Investors ({investorLeads.length})
+                    Investors ({paginationInvestor?.total ?? investorLeads.length})
                   </button>
                 </div>
 
@@ -541,7 +641,7 @@ export const AdminDashboard = () => {
                   </button>
 
                   <button
-                    onClick={exportToCSV}
+                    onClick={() => handleExport('enquiries')}
                     className="btn btn-primary btn-sm"
                     style={{ height: '36px', padding: '0 1rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                   >
@@ -551,7 +651,7 @@ export const AdminDashboard = () => {
               </div>
             </div>
 
-            {/* Simplified Leads Data Table */}
+            {/* Leads Data Table */}
             <div className="table-container">
               {processedEnquiries.length > 0 ? (
                 <table className="leads-table">
@@ -656,10 +756,202 @@ export const AdminDashboard = () => {
                 </div>
               )}
             </div>
-          </div>
-          )}
 
-        {/* SECTION 3: REVIEW MODERATION */}
+            {/* Pagination Controls for Enquiries */}
+            {activeEnquiryTab === 'farmer' && paginationFarmer.pages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1.5rem', alignItems: 'center' }}>
+                <button
+                  disabled={paginationFarmer.page <= 1}
+                  onClick={() => handlePageChange('farmer', paginationFarmer.page - 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationFarmer.page <= 1 ? 0.5 : 1 }}
+                >
+                  &larr; Prev
+                </button>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Page {paginationFarmer.page} of {paginationFarmer.pages}
+                </span>
+                <button
+                  disabled={paginationFarmer.page >= paginationFarmer.pages}
+                  onClick={() => handlePageChange('farmer', paginationFarmer.page + 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationFarmer.page >= paginationFarmer.pages ? 0.5 : 1 }}
+                >
+                  Next &rarr;
+                </button>
+              </div>
+            )}
+
+            {activeEnquiryTab === 'buyer' && paginationBuyer.pages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1.5rem', alignItems: 'center' }}>
+                <button
+                  disabled={paginationBuyer.page <= 1}
+                  onClick={() => handlePageChange('buyer', paginationBuyer.page - 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationBuyer.page <= 1 ? 0.5 : 1 }}
+                >
+                  &larr; Prev
+                </button>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Page {paginationBuyer.page} of {paginationBuyer.pages}
+                </span>
+                <button
+                  disabled={paginationBuyer.page >= paginationBuyer.pages}
+                  onClick={() => handlePageChange('buyer', paginationBuyer.page + 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationBuyer.page >= paginationBuyer.pages ? 0.5 : 1 }}
+                >
+                  Next &rarr;
+                </button>
+              </div>
+            )}
+
+            {activeEnquiryTab === 'investor' && paginationInvestor.pages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1.5rem', alignItems: 'center' }}>
+                <button
+                  disabled={paginationInvestor.page <= 1}
+                  onClick={() => handlePageChange('investor', paginationInvestor.page - 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationInvestor.page <= 1 ? 0.5 : 1 }}
+                >
+                  &larr; Prev
+                </button>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Page {paginationInvestor.page} of {paginationInvestor.pages}
+                </span>
+                <button
+                  disabled={paginationInvestor.page >= paginationInvestor.pages}
+                  onClick={() => handlePageChange('investor', paginationInvestor.page + 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationInvestor.page >= paginationInvestor.pages ? 0.5 : 1 }}
+                >
+                  Next &rarr;
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* SECTION 2: POPUP LEADS */}
+        {activeSection === 'popupLeads' && (
+          <div>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div className="admin-controls-bar" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '1rem',
+                backgroundColor: 'var(--bg-secondary)',
+                border: '1px solid var(--border-color)',
+                padding: '1rem 1.5rem',
+                borderRadius: '8px'
+              }}>
+                <h3 style={{ margin: 0, fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
+                  Popup Callback Leads
+                </h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                  <div style={{ position: 'relative', width: '200px' }}>
+                    <input 
+                      type="text" 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search popup leads..."
+                      className="form-input"
+                      style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
+                    />
+                    <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                  </div>
+                  <button
+                    onClick={() => handleExport('popup-leads')}
+                    className="btn btn-primary btn-sm"
+                    style={{ height: '36px', padding: '0 1rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                  >
+                    <Download size={14} /> Export CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="table-container">
+              {popupLeads.length > 0 ? (
+                <table className="leads-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Date Submitted</th>
+                      <th style={{ textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {popupLeads
+                      .filter(l => 
+                        !searchQuery.trim() || 
+                        l.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                        l.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        l.phone.includes(searchQuery)
+                      )
+                      .map(lead => (
+                        <tr key={lead._id}>
+                          <td><strong>{lead.name}</strong></td>
+                          <td>{lead.phone}</td>
+                          <td>{lead.email}</td>
+                          <td>{formatDate(lead.createdAt || lead.timestamp)}</td>
+                          <td style={{ textAlign: 'right' }}>
+                            <button
+                              onClick={async () => {
+                                if (confirm('Are you sure you want to delete this popup lead?')) {
+                                  await deletePopupLead(lead._id);
+                                  fetchAnalytics();
+                                }
+                              }}
+                              className="btn btn-dark btn-sm"
+                              style={{ backgroundColor: '#dc3545', border: 'none', color: '#fff' }}
+                            >
+                              <Trash2 size={14} /> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '3rem 2rem', color: 'var(--text-secondary)' }}>
+                  No popup leads found.
+                </div>
+              )}
+            </div>
+
+            {/* Pagination Controls for Popup Leads */}
+            {paginationPopup.pages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1.5rem', alignItems: 'center' }}>
+                <button
+                  disabled={paginationPopup.page <= 1}
+                  onClick={() => handlePopupPageChange(paginationPopup.page - 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationPopup.page <= 1 ? 0.5 : 1 }}
+                >
+                  &larr; Prev
+                </button>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Page {paginationPopup.page} of {paginationPopup.pages}
+                </span>
+                <button
+                  disabled={paginationPopup.page >= paginationPopup.pages}
+                  onClick={() => handlePopupPageChange(paginationPopup.page + 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationPopup.page >= paginationPopup.pages ? 0.5 : 1 }}
+                >
+                  Next &rarr;
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* SECTION 3: REVIEWS DESK */}
         {activeSection === 'reviews' && (
           <div>
             <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
@@ -682,7 +974,7 @@ export const AdminDashboard = () => {
                       color: reviewFilter === 'all' ? 'var(--text-primary)' : 'var(--text-secondary)'
                     }}
                   >
-                    All ({reviews.length})
+                    All ({paginationReviews?.total ?? reviews.length})
                   </button>
                   <button 
                     onClick={() => setReviewFilter('pending')}
@@ -761,7 +1053,7 @@ export const AdminDashboard = () => {
                   <thead>
                     <tr>
                       <th>Customer Name</th>
-                      <th>Type</th>
+                      <th>Company</th>
                       <th>Rating</th>
                       <th>Review Text</th>
                       <th>Date Submitted</th>
@@ -804,7 +1096,7 @@ export const AdminDashboard = () => {
                               {status !== 'approved' && (
                                 <button 
                                   title="Approve Review"
-                                  onClick={() => approveReview(review?.id)}
+                                  onClick={() => handleApproveReview(review?.id)}
                                   className="btn btn-secondary btn-sm"
                                   style={{ padding: '0.25rem 0.5rem', backgroundColor: 'var(--success-light)', borderColor: 'var(--success)', color: 'green' }}
                                 >
@@ -814,7 +1106,7 @@ export const AdminDashboard = () => {
                               {status !== 'rejected' && (
                                 <button 
                                   title="Reject Review"
-                                  onClick={() => rejectReview(review?.id)}
+                                  onClick={() => handleRejectReview(review?.id)}
                                   className="btn btn-secondary btn-sm"
                                   style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f8d7da', borderColor: '#f5c6cb', color: '#721c24' }}
                                 >
@@ -823,7 +1115,7 @@ export const AdminDashboard = () => {
                               )}
                               <button 
                                 title="Delete Review"
-                                onClick={() => deleteReview(review?.id)}
+                                onClick={() => handleDeleteReview(review?.id)}
                                 className="btn btn-dark btn-sm"
                                 style={{ padding: '0.25rem 0.5rem', backgroundColor: '#dc3545', border: 'none', color: '#fff' }}
                               >
@@ -842,14 +1134,37 @@ export const AdminDashboard = () => {
                 </div>
               )}
             </div>
+
+            {/* Pagination Controls for Reviews */}
+            {paginationReviews && paginationReviews.pages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1.5rem', alignItems: 'center' }}>
+                <button
+                  disabled={paginationReviews.page <= 1}
+                  onClick={() => handleReviewPageChange(paginationReviews.page - 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationReviews.page <= 1 ? 0.5 : 1 }}
+                >
+                  &larr; Prev
+                </button>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Page {paginationReviews.page} of {paginationReviews.pages}
+                </span>
+                <button
+                  disabled={paginationReviews.page >= paginationReviews.pages}
+                  onClick={() => handleReviewPageChange(paginationReviews.page + 1)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ opacity: paginationReviews.page >= paginationReviews.pages ? 0.5 : 1 }}
+                >
+                  Next &rarr;
+                </button>
+              </div>
+            )}
           </div>
         )}
 
       </div>
 
-
-
-      {/* Simplified Enquiry Details Modal */}
+      {/* Enquiry Details Modal */}
       {selectedEnquiry && (
         <EnquiryDetailsModal 
           selectedEnquiry={selectedEnquiry}
@@ -857,13 +1172,33 @@ export const AdminDashboard = () => {
           selectedEnquiryType={selectedEnquiryType}
           markLeadContacted={markLeadContacted}
           deleteLead={deleteLead}
+          onPrev={handlePrevEnquiry}
+          onNext={handleNextEnquiry}
+          hasPrev={hasPrev}
+          hasNext={hasNext}
+          currentIndex={currentIndex}
+          totalCount={processedEnquiries.length}
+          fetchAnalytics={fetchAnalytics}
         />
       )}
     </div>
   );
 };
 
-const EnquiryDetailsModal = ({ selectedEnquiry, setSelectedEnquiry, selectedEnquiryType, markLeadContacted, deleteLead }) => {
+const EnquiryDetailsModal = ({ 
+  selectedEnquiry, 
+  setSelectedEnquiry, 
+  selectedEnquiryType, 
+  markLeadContacted, 
+  deleteLead,
+  onPrev,
+  onNext,
+  hasPrev,
+  hasNext,
+  currentIndex,
+  totalCount,
+  fetchAnalytics
+}) => {
   if (!selectedEnquiry) return null;
 
   return (
@@ -959,6 +1294,39 @@ const EnquiryDetailsModal = ({ selectedEnquiry, setSelectedEnquiry, selectedEnqu
           </div>
         </div>
 
+        {/* Previous / Next Navigation Row */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '1.5rem',
+          paddingBottom: '1rem',
+          borderBottom: '1px solid var(--border-color)' 
+        }}>
+          <button
+            type="button"
+            onClick={onPrev}
+            disabled={!hasPrev}
+            className="btn btn-secondary btn-sm"
+            style={{ opacity: hasPrev ? 1 : 0.5, cursor: hasPrev ? 'pointer' : 'not-allowed' }}
+          >
+            &larr; Previous
+          </button>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            Enquiry {currentIndex + 1} of {totalCount}
+          </span>
+          <button
+            type="button"
+            onClick={onNext}
+            disabled={!hasNext}
+            className="btn btn-secondary btn-sm"
+            style={{ opacity: hasNext ? 1 : 0.5, cursor: hasNext ? 'pointer' : 'not-allowed' }}
+          >
+            Next &rarr;
+          </button>
+        </div>
+
+        {/* Action Buttons */}
         <div style={{ display: 'flex', gap: '1rem' }}>
           <button 
             type="button" 
@@ -976,10 +1344,13 @@ const EnquiryDetailsModal = ({ selectedEnquiry, setSelectedEnquiry, selectedEnqu
           
           <button 
             type="button" 
-            onClick={() => {
+            onClick={async () => {
               if (selectedEnquiry?.id) {
-                deleteLead(selectedEnquiryType, selectedEnquiry.id);
-                setSelectedEnquiry(null);
+                if (confirm('Are you sure you want to delete this enquiry?')) {
+                  await deleteLead(selectedEnquiryType, selectedEnquiry.id);
+                  setSelectedEnquiry(null);
+                  fetchAnalytics();
+                }
               }
             }} 
             className="btn btn-dark" 

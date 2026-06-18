@@ -21,7 +21,7 @@ import fssaiCertImg from '../assets/images/certificate.jpeg';
 export const Home = () => {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
-  const { reviews, addReview } = useReviews();
+  const { approvedReviews: reviews, addReview, fetchApprovedReviews } = useReviews();
   const contactSectionRef = useRef(null);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -38,6 +38,7 @@ export const Home = () => {
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   useEffect(() => {
+    fetchApprovedReviews();
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };

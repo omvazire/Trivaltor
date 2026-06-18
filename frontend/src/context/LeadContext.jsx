@@ -1,166 +1,131 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { api } from '../services/api';
 
 const LeadContext = createContext();
 
-const initialFarmerLeads = [
-  {
-    id: 'f-1',
-    name: 'Ramesh Patel',
-    phone: '+91 98765 43210',
-    email: 'ramesh.patel@farmemail.com',
-    location: 'Gujarat, India',
-    productName: 'Organic Cumin Seeds',
-    quantity: '1200 Kg',
-    message: 'High grade organic cumin seeds harvested last month. Dry and clean.',
-    date: '2026-06-02T10:30:00.000Z'
-  },
-  {
-    id: 'f-2',
-    name: 'Ananya Sharma',
-    phone: '+91 87654 32109',
-    email: 'ananya.s@agrihub.org',
-    location: 'Kerala, India',
-    productName: 'Black Pepper (Malabar Grade)',
-    quantity: '800 Kg',
-    message: 'Premium sun-dried Malabar black pepper. High piperine content.',
-    date: '2026-06-05T14:15:00.000Z'
-  },
-  {
-    id: 'f-3',
-    name: 'Sukhwinder Singh',
-    phone: '+91 76543 21098',
-    email: 'sukhwinder.farm@yahoo.com',
-    location: 'Punjab, India',
-    productName: 'Turmeric Rhizomes',
-    quantity: '2500 Kg',
-    message: 'Organic turmeric fingers, rich yellow color. Ready for export.',
-    date: '2026-06-08T09:45:00.000Z'
-  }
-];
+const parseEnquiryMessage = (enquiry) => {
+  if (!enquiry) return null;
+  const { enquiryType, category, message, createdAt, updatedAt, _id, contacted, ...rest } = enquiry;
+  
+  const parsed = {
+    id: _id,
+    ...rest,
+    category,
+    date: createdAt || enquiry.timestamp,
+    contacted: contacted || false,
+    rawMessage: message
+  };
 
-const initialBuyerLeads = [
-  {
-    id: 'b-1',
-    name: 'David Miller',
-    companyName: 'Apex Spice Importers',
-    country: 'United States',
-    email: 'dmiller@apexspices.com',
-    phone: '+1 (555) 234-5678',
-    productRequirement: 'Black Pepper & Cumin (Bulk)',
-    requiredQuantity: '3 Tons',
-    message: 'Looking for a monthly supply of 2 tons of Black Pepper and 1 ton of Cumin Seeds. Need samples first.',
-    date: '2026-06-01T16:20:00.000Z'
-  },
-  {
-    id: 'b-2',
-    name: 'Yuki Tanaka',
-    companyName: 'Sakura Foods Ltd',
-    country: 'Japan',
-    email: 'y.tanaka@sakurafoods.co.jp',
-    phone: '+81 3-5555-0143',
-    productRequirement: 'Organic Turmeric Powder',
-    requiredQuantity: '500 Kg',
-    message: 'Interested in organic turmeric powder with high curcumin levels. Please share price sheet and certifications.',
-    date: '2026-06-04T11:05:00.000Z'
-  },
-  {
-    id: 'b-3',
-    name: 'Marcus Dubois',
-    companyName: 'Euro-Agri Trade',
-    country: 'France',
-    email: 'm.dubois@euroagri.fr',
-    phone: '+33 1 42 68 53 00',
-    productRequirement: 'Cardamom & Cloves',
-    requiredQuantity: '2 Containers',
-    message: 'Urgent requirement for green Cardamom (8mm size) and handpicked Cloves. Standard European import quality required.',
-    date: '2026-06-07T18:30:00.000Z'
-  }
-];
+  const msgStr = message || '';
 
-const initialInvestorLeads = [
-  {
-    id: 'i-1',
-    name: 'Sarah Jenkins',
-    phone: '+44 20 7946 0958',
-    email: 's.jenkins@vanguardcap.co.uk',
-    investmentInterest: 'Agri-Tech Supply Chain & Warehouse Expansion',
-    estimatedInvestmentAmount: '$250,000',
-    message: 'Interested in strategic expansion. I would like to review the Trivaltor Group presentation PDF and talk to founders about equity opportunities.',
-    date: '2026-06-03T08:12:00.000Z'
-  },
-  {
-    id: 'i-2',
-    name: 'Rajesh Singhania',
-    phone: '+91 99999 88888',
-    email: 'rsinghania@singhaniaholdings.com',
-    investmentInterest: 'Export-Import Logistics & Cold Storage Infrastructure',
-    estimatedInvestmentAmount: '$500,000',
-    message: 'Seeking passive yield with asset backing. Interested in warehousing and cold chain logistics scaling plans.',
-    date: '2026-06-06T15:50:00.000Z'
-  },
-  {
-    id: 'i-3',
-    name: 'Hans Weber',
-    phone: '+49 89 2424 8888',
-    email: 'h.weber@munich-angels.de',
-    investmentInterest: 'Global Spices Marketplace Platform Development',
-    estimatedInvestmentAmount: '$100,000',
-    message: 'Experienced in tech investments. Interested in the software pipeline connecting farmers directly with buyers.',
-    date: '2026-06-09T12:00:00.000Z'
+  if (enquiryType === 'farmer') {
+    parsed.productName = category || 'N/A';
+    const match = msgStr.match(/Quantity:\s*(.*?)\.\s*specs:\s*([\s\S]*)/i);
+    if (match) {
+      parsed.quantity = match[1];
+      parsed.message = match[2];
+    } else {
+      parsed.quantity = 'N/A';
+      parsed.message = msgStr;
+    }
+  } else if (enquiryType === 'buyer') {
+    parsed.productRequirement = category || 'N/A';
+    const match = msgStr.match(/Company:\s*(.*?)\.\s*Country:\s*(.*?)\.\s*Quantity:\s*(.*?)\.\s*Budget:\s*(.*?)\.\s*Message:\s*([\s\S]*)/i);
+    if (match) {
+      parsed.companyName = match[1];
+      parsed.country = match[2];
+      parsed.requiredQuantity = match[3];
+      const budgetStr = match[4];
+      const budgetParts = budgetStr.split(' ');
+      parsed.targetBudget = budgetParts[0];
+      parsed.currency = budgetParts[1] || 'USD';
+      parsed.message = match[5];
+    } else {
+      parsed.companyName = 'N/A';
+      parsed.country = 'N/A';
+      parsed.requiredQuantity = 'N/A';
+      parsed.targetBudget = '';
+      parsed.currency = 'USD';
+      parsed.message = msgStr;
+    }
+  } else if (enquiryType === 'investor') {
+    parsed.investmentInterest = category || 'N/A';
+    const match = msgStr.match(/Estimated Investment:\s*(.*?)\.\s*Message:\s*([\s\S]*)/i);
+    if (match) {
+      const budgetStr = match[1];
+      const budgetParts = budgetStr.split(' ');
+      parsed.estimatedInvestmentAmount = budgetParts[0];
+      parsed.currency = budgetParts[1] || 'USD';
+      parsed.message = match[2];
+    } else {
+      parsed.estimatedInvestmentAmount = 'N/A';
+      parsed.currency = 'USD';
+      parsed.message = msgStr;
+    }
+  } else {
+    parsed.message = msgStr;
   }
-];
 
-const initialContactLeads = [
-  {
-    id: 'c-1',
-    name: 'Amit Verma',
-    email: 'amit.verma@outlook.com',
-    subject: 'Partnership Query',
-    message: 'Do you offer custom packaging with buyer branding for exports?',
-    date: '2026-06-09T17:10:00.000Z'
-  }
-];
+  return parsed;
+};
 
 export const LeadProvider = ({ children }) => {
-  const [farmerLeads, setFarmerLeads] = useState(() => {
-    const data = localStorage.getItem('trivaltor-farmer-leads');
-    return data ? JSON.parse(data) : initialFarmerLeads;
-  });
+  const [farmerLeads, setFarmerLeads] = useState([]);
+  const [buyerLeads, setBuyerLeads] = useState([]);
+  const [investorLeads, setInvestorLeads] = useState([]);
+  const [contactLeads, setContactLeads] = useState([]);
+  const [popupLeads, setPopupLeads] = useState([]);
 
-  const [buyerLeads, setBuyerLeads] = useState(() => {
-    const data = localStorage.getItem('trivaltor-buyer-leads');
-    return data ? JSON.parse(data) : initialBuyerLeads;
-  });
-
-  const [investorLeads, setInvestorLeads] = useState(() => {
-    const data = localStorage.getItem('trivaltor-investor-leads');
-    return data ? JSON.parse(data) : initialInvestorLeads;
-  });
-
-  const [contactLeads, setContactLeads] = useState(() => {
-    const data = localStorage.getItem('trivaltor-contact-leads');
-    return data ? JSON.parse(data) : initialContactLeads;
-  });
+  const [paginationFarmer, setPaginationFarmer] = useState({ page: 1, limit: 20, total: 0, pages: 1 });
+  const [paginationBuyer, setPaginationBuyer] = useState({ page: 1, limit: 20, total: 0, pages: 1 });
+  const [paginationInvestor, setPaginationInvestor] = useState({ page: 1, limit: 20, total: 0, pages: 1 });
+  const [paginationContact, setPaginationContact] = useState({ page: 1, limit: 20, total: 0, pages: 1 });
+  const [paginationPopup, setPaginationPopup] = useState({ page: 1, limit: 20, total: 0, pages: 1 });
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem('trivaltor-farmer-leads', JSON.stringify(farmerLeads));
-  }, [farmerLeads]);
+  const fetchEnquiries = async (type, page = 1, limit = 20) => {
+    setLoading(true);
+    try {
+      const res = await api.enquiry.getAll({ enquiryType: type, page, limit });
+      if (res.success && Array.isArray(res.data)) {
+        const parsed = res.data.map(parseEnquiryMessage);
+        if (type === 'farmer') {
+          setFarmerLeads(parsed);
+          setPaginationFarmer(res.pagination || { page, limit, total: parsed.length, pages: 1 });
+        } else if (type === 'buyer') {
+          setBuyerLeads(parsed);
+          setPaginationBuyer(res.pagination || { page, limit, total: parsed.length, pages: 1 });
+        } else if (type === 'investor') {
+          setInvestorLeads(parsed);
+          setPaginationInvestor(res.pagination || { page, limit, total: parsed.length, pages: 1 });
+        } else if (type === 'contact') {
+          setContactLeads(parsed);
+          setPaginationContact(res.pagination || { page, limit, total: parsed.length, pages: 1 });
+        }
+      }
+    } catch (err) {
+      console.error(`[LeadContext] Failed to fetch ${type} enquiries:`, err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  useEffect(() => {
-    localStorage.setItem('trivaltor-buyer-leads', JSON.stringify(buyerLeads));
-  }, [buyerLeads]);
-
-  useEffect(() => {
-    localStorage.setItem('trivaltor-investor-leads', JSON.stringify(investorLeads));
-  }, [investorLeads]);
-
-  useEffect(() => {
-    localStorage.setItem('trivaltor-contact-leads', JSON.stringify(contactLeads));
-  }, [contactLeads]);
+  const fetchPopupLeads = async (page = 1, limit = 20) => {
+    setLoading(true);
+    try {
+      const res = await api.popupLead.getAll({ page, limit });
+      if (res.success && Array.isArray(res.data)) {
+        setPopupLeads(res.data);
+        setPaginationPopup(res.pagination || { page, limit, total: res.data.length, pages: 1 });
+      }
+    } catch (err) {
+      console.error('[LeadContext] Failed to fetch popup leads:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const submitPopupLead = async (lead) => {
     try {
@@ -179,7 +144,6 @@ export const LeadProvider = ({ children }) => {
   const submitFarmerLead = async (lead) => {
     setLoading(true);
     try {
-      // 1. Submit to Real Backend API
       await api.enquiry.create({
         name: lead.name,
         phone: lead.phone,
@@ -192,14 +156,6 @@ export const LeadProvider = ({ children }) => {
         pincode: lead.pincode,
         message: `Quantity: ${lead.quantity || 'N/A'}. specs: ${lead.message || ''}`
       });
-
-      // 2. Sync to Local State for Demo Dashboard
-      const newLead = {
-        id: `f-${Date.now()}`,
-        ...lead,
-        date: new Date().toISOString()
-      };
-      setFarmerLeads((prev) => [newLead, ...prev]);
       setLoading(false);
       return { success: true };
     } catch (err) {
@@ -212,7 +168,6 @@ export const LeadProvider = ({ children }) => {
   const submitBuyerLead = async (lead) => {
     setLoading(true);
     try {
-      // 1. Submit to Real Backend API
       await api.enquiry.create({
         name: lead.name,
         phone: lead.phone,
@@ -225,14 +180,6 @@ export const LeadProvider = ({ children }) => {
         pincode: lead.pincode,
         message: `Company: ${lead.companyName || 'N/A'}. Country: ${lead.country || 'N/A'}. Quantity: ${lead.requiredQuantity || 'N/A'}. Budget: ${lead.targetBudget || ''} ${lead.currency || 'USD'}. Message: ${lead.message || ''}`
       });
-
-      // 2. Sync to Local State for Demo Dashboard
-      const newLead = {
-        id: `b-${Date.now()}`,
-        ...lead,
-        date: new Date().toISOString()
-      };
-      setBuyerLeads((prev) => [newLead, ...prev]);
       setLoading(false);
       return { success: true };
     } catch (err) {
@@ -245,7 +192,6 @@ export const LeadProvider = ({ children }) => {
   const submitInvestorLead = async (lead) => {
     setLoading(true);
     try {
-      // 1. Submit to Real Backend API
       await api.enquiry.create({
         name: lead.name,
         phone: lead.phone,
@@ -258,14 +204,6 @@ export const LeadProvider = ({ children }) => {
         pincode: lead.pincode,
         message: `Estimated Investment: ${lead.estimatedInvestmentAmount || 'N/A'} ${lead.currency || 'USD'}. Message: ${lead.message || ''}`
       });
-
-      // 2. Sync to Local State for Demo Dashboard
-      const newLead = {
-        id: `i-${Date.now()}`,
-        ...lead,
-        date: new Date().toISOString()
-      };
-      setInvestorLeads((prev) => [newLead, ...prev]);
       setLoading(false);
       return { success: true };
     } catch (err) {
@@ -278,7 +216,6 @@ export const LeadProvider = ({ children }) => {
   const submitContactLead = async (lead) => {
     setLoading(true);
     try {
-      // 1. Submit to Real Backend API
       await api.enquiry.create({
         name: lead.name,
         phone: 'N/A',
@@ -291,14 +228,6 @@ export const LeadProvider = ({ children }) => {
         pincode: 'N/A',
         message: lead.message || ''
       });
-
-      // 2. Sync to Local State for Demo Dashboard
-      const newLead = {
-        id: `c-${Date.now()}`,
-        ...lead,
-        date: new Date().toISOString()
-      };
-      setContactLeads((prev) => [newLead, ...prev]);
       setLoading(false);
       return { success: true };
     } catch (err) {
@@ -308,30 +237,58 @@ export const LeadProvider = ({ children }) => {
     }
   };
 
-  const deleteLead = (leadType, id) => {
-    if (leadType === 'farmer') {
-      setFarmerLeads(prev => prev.filter(lead => lead.id !== id));
-    } else if (leadType === 'buyer') {
-      setBuyerLeads(prev => prev.filter(lead => lead.id !== id));
-    } else if (leadType === 'investor') {
-      setInvestorLeads(prev => prev.filter(lead => lead.id !== id));
-    } else if (leadType === 'contact') {
-      setContactLeads(prev => prev.filter(lead => lead.id !== id));
+  const deleteLead = async (leadType, id) => {
+    try {
+      await api.enquiry.delete(id);
+      if (leadType === 'farmer') {
+        setFarmerLeads(prev => prev.filter(l => l.id !== id));
+        fetchEnquiries('farmer', paginationFarmer.page, paginationFarmer.limit);
+      } else if (leadType === 'buyer') {
+        setBuyerLeads(prev => prev.filter(l => l.id !== id));
+        fetchEnquiries('buyer', paginationBuyer.page, paginationBuyer.limit);
+      } else if (leadType === 'investor') {
+        setInvestorLeads(prev => prev.filter(l => l.id !== id));
+        fetchEnquiries('investor', paginationInvestor.page, paginationInvestor.limit);
+      } else if (leadType === 'contact') {
+        setContactLeads(prev => prev.filter(l => l.id !== id));
+        fetchEnquiries('contact', paginationContact.page, paginationContact.limit);
+      }
+    } catch (err) {
+      console.error('[LeadContext] Failed to delete lead:', err);
+      alert(err.message || 'Failed to delete lead');
     }
   };
 
-  const markLeadContacted = (leadType, id) => {
-    const toggleContacted = (leads) => 
-      leads.map(lead => lead.id === id ? { ...lead, contacted: !lead.contacted } : lead);
+  const markLeadContacted = async (leadType, id) => {
+    try {
+      const res = await api.enquiry.markContacted(id);
+      if (res.success) {
+        const toggleContacted = (leads) => 
+          leads.map(lead => lead.id === id ? { ...lead, contacted: res.data.contacted } : lead);
+        if (leadType === 'farmer') {
+          setFarmerLeads(prev => toggleContacted(prev));
+        } else if (leadType === 'buyer') {
+          setBuyerLeads(prev => toggleContacted(prev));
+        } else if (leadType === 'investor') {
+          setInvestorLeads(prev => toggleContacted(prev));
+        } else if (leadType === 'contact') {
+          setContactLeads(prev => toggleContacted(prev));
+        }
+      }
+    } catch (err) {
+      console.error('[LeadContext] Failed to update contacted status:', err);
+      alert(err.message || 'Failed to update contacted status');
+    }
+  };
 
-    if (leadType === 'farmer') {
-      setFarmerLeads(prev => toggleContacted(prev));
-    } else if (leadType === 'buyer') {
-      setBuyerLeads(prev => toggleContacted(prev));
-    } else if (leadType === 'investor') {
-      setInvestorLeads(prev => toggleContacted(prev));
-    } else if (leadType === 'contact') {
-      setContactLeads(prev => toggleContacted(prev));
+  const deletePopupLead = async (id) => {
+    try {
+      await api.popupLead.delete(id);
+      setPopupLeads(prev => prev.filter(l => l._id !== id));
+      fetchPopupLeads(paginationPopup.page, paginationPopup.limit);
+    } catch (err) {
+      console.error('[LeadContext] Failed to delete popup lead:', err);
+      alert(err.message || 'Failed to delete popup lead');
     }
   };
 
@@ -341,14 +298,23 @@ export const LeadProvider = ({ children }) => {
       buyerLeads,
       investorLeads,
       contactLeads,
+      popupLeads,
+      paginationFarmer,
+      paginationBuyer,
+      paginationInvestor,
+      paginationContact,
+      paginationPopup,
       loading,
+      fetchEnquiries,
+      fetchPopupLeads,
       submitPopupLead,
       submitFarmerLead,
       submitBuyerLead,
       submitInvestorLead,
       submitContactLead,
       deleteLead,
-      markLeadContacted
+      markLeadContacted,
+      deletePopupLead
     }}>
       {children}
     </LeadContext.Provider>
