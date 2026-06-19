@@ -8,10 +8,12 @@ import {
 } from '../controllers/AdminController.js';
 import { getMonthlyReport, exportMonthlyReport } from '../controllers/ReportController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
+import { validateLogin } from '../middleware/validation.js';
+import { adminLoginLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
-router.post('/login', loginAdmin);
+router.post('/login', validateLogin, adminLoginLimiter, loginAdmin);
 router.get('/profile', authMiddleware, getAdminProfile);
 
 // Analytics & Exports

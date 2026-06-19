@@ -4,27 +4,11 @@ export const createReview = async (req, res, next) => {
   try {
     const { name, company, review, rating } = req.body;
 
-    // Server-side validation of rating
-    const parsedRating = Number(rating);
-    if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5 || !Number.isInteger(parsedRating)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Rating must be an integer value between 1 and 5.'
-      });
-    }
-
-    if (!name || !review) {
-      return res.status(400).json({
-        success: false,
-        message: 'Name and review text are required.'
-      });
-    }
-
     const newReview = new Review({
       name,
       company: company || '',
       review,
-      rating: parsedRating,
+      rating,
       approved: false,
       status: 'pending'
     });

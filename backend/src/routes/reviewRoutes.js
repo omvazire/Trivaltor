@@ -8,11 +8,13 @@ import {
   deleteReview 
 } from '../controllers/ReviewController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
+import { validateReview } from '../middleware/validation.js';
+import { publicFormsLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
 // Public review endpoints
-router.post('/', createReview);
+router.post('/', publicFormsLimiter, validateReview, createReview);
 router.get('/approved', getApprovedReviews);
 
 // Protected admin review desk endpoints

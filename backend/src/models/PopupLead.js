@@ -27,6 +27,8 @@ const popupLeadSchema = new mongoose.Schema({
   timestamps: true
 });
 
+popupLeadSchema.index({ createdAt: -1 });
+
 const PopupLead = mongoose.model('PopupLead', popupLeadSchema);
 
 export default PopupLead;

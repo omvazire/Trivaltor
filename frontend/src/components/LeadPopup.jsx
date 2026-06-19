@@ -79,15 +79,6 @@ export const LeadPopup = () => {
 
     const res = await submitPopupLead(form);
     if (res.success) {
-      console.group('%c[Lead Capture Popup Submission] SUCCESS', 'color: #3A7D44; font-weight: bold; font-size: 12px;');
-      console.log('Timestamp:', new Date().toISOString());
-      console.log('Session ID:', sessionStorage.getItem('trivaltor-session-id'));
-      console.log('Name:', form.name);
-      console.log('Phone:', form.phone);
-      console.log('Email:', form.email);
-      console.log('Status: Saved to MongoDB Atlas successfully.');
-      console.groupEnd();
-
       // Store in localStorage for prefilling and blocking subsequent overlays
       localStorage.setItem('trivaltor-lead-submitted', 'true');
       localStorage.setItem('trivaltor-lead-name', form.name);

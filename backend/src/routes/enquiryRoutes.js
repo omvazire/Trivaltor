@@ -8,11 +8,12 @@ import {
 } from '../controllers/EnquiryController.js';
 import { validateEnquiry } from '../middleware/validation.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
+import { publicFormsLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
 // Public route for form submission
-router.post('/', validateEnquiry, createEnquiry);
+router.post('/', publicFormsLimiter, validateEnquiry, createEnquiry);
 
 // Protected admin management routes
 router.get('/', authMiddleware, getAllEnquiries);

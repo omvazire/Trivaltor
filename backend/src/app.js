@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
+import compression from 'compression';
 import visitorRoutes from './routes/visitorRoutes.js';
 import popupLeadRoutes from './routes/popupLeadRoutes.js';
 import enquiryRoutes from './routes/enquiryRoutes.js';
@@ -10,11 +12,43 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
-// Enable CORS
-app.use(cors());
+// Configure trust proxy behind Render's infrastructure for accurate rate limiting
+app.set('trust proxy', 1);
 
-// Parse JSON request bodies
-app.use(express.json());
+// Apply Helmet security headers with production-safe configurations
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+// Apply Compression for API payloads and JSON responses
+app.use(compression());
+
+// Harden CORS Configuration
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. backend tools, mobile apps, or local scripts)
+    if (!origin) return callback(null, true);
+
+    const isLocal = origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:');
+
+    // Dynamic localhost checking for non-production environments
+    if (process.env.NODE_ENV !== 'production' && isLocal) {
+      return callback(null, true);
+    }
+
+    // Static comparison against the production frontend URL configuration
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+// Parse JSON request bodies with body size limits to prevent flood DoS attacks
+app.use(express.json({ limit: '10kb' }));
 
 // Health Check endpoint
 app.get('/api/health', (req, res) => {
