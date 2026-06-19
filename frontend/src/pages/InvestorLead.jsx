@@ -236,7 +236,6 @@ export const InvestorLead = () => {
                     name="currency" 
                     value={form.currency} 
                     onChange={handleCurrencyChange} 
-                    required 
                     className="form-select"
                   >
                     <option value="USD">USD ($)</option>
@@ -250,7 +249,6 @@ export const InvestorLead = () => {
                     name="estimatedInvestmentAmount" 
                     value={form.estimatedInvestmentAmount} 
                     onChange={handleChange} 
-                    required 
                     className="form-select"
                   >
                     <option value="">{t('selectInvestment')}</option>
@@ -273,7 +271,6 @@ export const InvestorLead = () => {
                     name="state" 
                     value={form.state} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. California, Maharashtra, Ontario" 
                     className="form-input"
                   />
@@ -286,7 +283,6 @@ export const InvestorLead = () => {
                     name="district" 
                     value={form.district} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. Los Angeles County, Ernakulam District" 
                     className="form-input"
                   />
@@ -302,7 +298,6 @@ export const InvestorLead = () => {
                     name="cityVillage" 
                     value={form.cityVillage} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. Pasadena, Kochi, Manchester" 
                     className="form-input"
                   />
@@ -315,7 +310,6 @@ export const InvestorLead = () => {
                     name="pincode" 
                     value={form.pincode} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. 91101, 400001" 
                     className="form-input"
                   />
@@ -329,7 +323,6 @@ export const InvestorLead = () => {
                   name="message" 
                   value={form.message} 
                   onChange={handleChange} 
-                  required 
                   placeholder="Describe your investment goals, partnership interests, expected ROI, strategic interests, infrastructure requirements, or any additional details." 
                   className="form-textarea"
                 ></textarea>

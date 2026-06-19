@@ -7,7 +7,8 @@ import { categoriesData } from '../config/categories';
 import { config } from '../services/config';
 import { 
   Sprout, Globe2, TrendingUp, Shovel, Ship, Landmark, ArrowRight, 
-  Mail, Phone, MapPin, Send, CheckCircle2, Star, Download, FileText, X
+  Mail, Phone, MapPin, Send, CheckCircle2, Star, Download, FileText, X,
+  ShieldCheck, Award
 } from 'lucide-react';
 
 // Import local assets
@@ -407,7 +408,7 @@ export const Home = () => {
           <div className="video-wrapper">
             <iframe
               src={config.youtubeEmbedUrl}
-              title="Tirvaltor Group Corporate Video"
+              title="TRIVALTOR Group Corporate Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
@@ -433,7 +434,15 @@ export const Home = () => {
             alignItems: 'stretch'
           }}>
             {/* Card A: UDYAM */}
-            <div className="premium-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+            <div className="premium-card" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '1.5rem', 
+              padding: '2rem',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--border-radius-md)'
+            }}>
               <div 
                 onClick={() => setPreviewImage(udyamCertImg)}
                 style={{ 
@@ -445,7 +454,8 @@ export const Home = () => {
                   height: '240px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
                 }}
                 title="Click to preview certificate"
               >
@@ -455,27 +465,68 @@ export const Home = () => {
                   style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
                 />
               </div>
-              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <h3 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
-                  UDYAM REGISTRATION CERTIFICATE
-                </h3>
-                <p style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-gold-hover)', margin: 0 }}>
-                  Udyam Registered Enterprise
-                </p>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0 }}>
-                  <strong>Registration No:</strong> <br />
-                  <code style={{ fontSize: '0.95rem', color: 'var(--text-primary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.4rem', borderRadius: '4px', display: 'inline-block', marginTop: '0.25rem' }}>
-                    UDYAM-MH-33-0703853
-                  </code>
+              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <Award size={20} style={{ color: 'var(--accent-gold-hover)', marginTop: '0.15rem', flexShrink: 0 }} />
+                  <div>
+                    <h3 style={{ fontSize: '1.15rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', fontWeight: '700', lineHeight: '1.3', margin: 0 }}>
+                      Ministry of MSME, Govt. of India
+                    </h3>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.15rem 0 0 0' }}>
+                      UDYAM Certificate of Registration
+                    </p>
+                  </div>
                 </div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto', margin: 0 }}>
-                  Government Recognized MSME
-                </p>
+
+                <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '0.25rem 0' }} />
+
+                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                  <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Registration Number</strong>
+                  <div>
+                    <code style={{ 
+                      fontSize: '0.9rem', 
+                      color: '#0c2d1c', 
+                      background: 'var(--success-light)', 
+                      padding: '0.3rem 0.6rem', 
+                      borderRadius: '4px', 
+                      display: 'inline-block', 
+                      marginTop: '0.25rem',
+                      fontWeight: '700',
+                      border: '1px solid rgba(12, 45, 28, 0.15)'
+                    }}>
+                      UDYAM-MH-33-0703853
+                    </code>
+                  </div>
+                </div>
+
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.35rem', 
+                  marginTop: 'auto', 
+                  color: '#0c2d1c', 
+                  fontSize: '0.85rem', 
+                  fontWeight: '600',
+                  backgroundColor: 'var(--success-light)',
+                  padding: '0.4rem 0.75rem',
+                  borderRadius: '4px',
+                  width: 'fit-content'
+                }}>
+                  <ShieldCheck size={16} /> Government Recognized Enterprise
+                </div>
               </div>
             </div>
 
             {/* Card B: FSSAI */}
-            <div className="premium-card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+            <div className="premium-card" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '1.5rem', 
+              padding: '2rem',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--border-radius-md)'
+            }}>
               <div 
                 onClick={() => setPreviewImage(fssaiCertImg)}
                 style={{ 
@@ -487,7 +538,8 @@ export const Home = () => {
                   height: '240px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
                 }}
                 title="Click to preview certificate"
               >
@@ -497,22 +549,65 @@ export const Home = () => {
                   style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
                 />
               </div>
-              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <h3 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
-                  FSSAI REGISTRATION
-                </h3>
-                <p style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-gold-hover)', margin: 0 }}>
-                  FSSAI Registered Business
-                </p>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0 }}>
-                  <strong>Registration No:</strong> <br />
-                  <code style={{ fontSize: '0.95rem', color: 'var(--text-primary)', background: 'var(--bg-secondary)', padding: '0.2rem 0.4rem', borderRadius: '4px', display: 'inline-block', marginTop: '0.25rem' }}>
-                    21526022000048
-                  </code>
+              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <Award size={20} style={{ color: 'var(--accent-gold-hover)', marginTop: '0.15rem', flexShrink: 0 }} />
+                  <div>
+                    <h3 style={{ fontSize: '1.15rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', fontWeight: '700', lineHeight: '1.3', margin: 0 }}>
+                      Food Safety & Standards Authority of India
+                    </h3>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.15rem 0 0 0' }}>
+                      FSSAI License & Standards Compliance
+                    </p>
+                  </div>
                 </div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto', margin: 0 }}>
-                  <strong>Valid Until:</strong> 04-01-2027
-                </p>
+
+                <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '0.25rem 0' }} />
+
+                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                  <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>License Number</strong>
+                  <div>
+                    <code style={{ 
+                      fontSize: '0.9rem', 
+                      color: '#0c2d1c', 
+                      background: 'var(--success-light)', 
+                      padding: '0.3rem 0.6rem', 
+                      borderRadius: '4px', 
+                      display: 'inline-block', 
+                      marginTop: '0.25rem',
+                      fontWeight: '700',
+                      border: '1px solid rgba(12, 45, 28, 0.15)'
+                    }}>
+                      21526022000048
+                    </code>
+                  </div>
+                </div>
+
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between',
+                  marginTop: 'auto',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem'
+                }}>
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.35rem', 
+                    color: '#0c2d1c', 
+                    fontSize: '0.85rem', 
+                    fontWeight: '600',
+                    backgroundColor: 'var(--success-light)',
+                    padding: '0.4rem 0.75rem',
+                    borderRadius: '4px'
+                  }}>
+                    <ShieldCheck size={16} /> Certified Quality
+                  </div>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
+                    Valid Until: 04-01-2027
+                  </span>
+                </div>
               </div>
             </div>
           </div>

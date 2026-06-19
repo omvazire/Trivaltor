@@ -179,19 +179,19 @@ export const Layout = ({ children }) => {
             <h3>{t('quickLinks') || 'Quick Links'}</h3>
             <ul className="footer-links">
               <li><Link to="/" className="footer-link">{t('home')}</Link></li>
-              <li><Link to="/farmer" className="footer-link">{t('farmersPortal')}</Link></li>
-              <li><Link to="/buyer" className="footer-link">{t('buyersPortal')}</Link></li>
-              <li><Link to="/investor" className="footer-link">{t('investorsPortal')}</Link></li>
+              <li><Link to="/#about" className="footer-link">{t('pillar1Title') || 'Three Pillars'}</Link></li>
+              <li><Link to="/#categories" className="footer-link">{t('categoriesTitle') || 'Product Categories'}</Link></li>
+              <li><Link to="/#contact" className="footer-link">{t('contactDesk') || 'Contact Desk'}</Link></li>
             </ul>
           </div>
 
           <div className="footer-column">
             <h3>{t('businessPortals') || 'Business Portals'}</h3>
             <ul className="footer-links">
+              <li><Link to="/farmer" className="footer-link">{t('farmersPortal')}</Link></li>
+              <li><Link to="/buyer" className="footer-link">{t('buyersPortal')}</Link></li>
+              <li><Link to="/investor" className="footer-link">{t('investorsPortal')}</Link></li>
               <li><Link to="/admin" className="footer-link">{t('adminDashboard')}</Link></li>
-              <li><Link to="/#about" className="footer-link">{t('pillar1Title') || 'Three Pillars'}</Link></li>
-              <li><Link to="/#categories" className="footer-link">{t('categoriesTitle') || 'Product Categories'}</Link></li>
-              <li><Link to="/#contact" className="footer-link">{t('contactDesk') || 'Contact Desk'}</Link></li>
             </ul>
           </div>
 
@@ -233,8 +233,6 @@ export const Layout = ({ children }) => {
             <span style={{ cursor: 'pointer' }}>{t('privacyPolicy')}</span>
             <span>•</span>
             <span style={{ cursor: 'pointer' }}>{t('termsOfTrade')}</span>
-            <span>•</span>
-            <span style={{ cursor: 'pointer' }}>{t('demoMode')}</span>
           </div>
         </div>
       </footer>

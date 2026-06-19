@@ -173,7 +173,6 @@ export const FarmerLead = () => {
                   name="email" 
                   value={form.email} 
                   onChange={handleChange} 
-                  required 
                   placeholder="ramesh@example.com" 
                   className="form-input"
                 />
@@ -260,7 +259,6 @@ export const FarmerLead = () => {
                     name="quantity" 
                     value={form.quantity} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. 1500 Kg" 
                     className="form-input"
                   />
@@ -274,7 +272,6 @@ export const FarmerLead = () => {
                   name="message" 
                   value={form.message} 
                   onChange={handleChange} 
-                  required 
                   placeholder="Describe your crop quality, harvest date, certifications, or delivery requests..." 
                   className="form-textarea"
                 ></textarea>

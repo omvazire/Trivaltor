@@ -10,18 +10,18 @@ export const translations = {
     switchLanguage: "Switch Language",
 
     // Hero Section
-    welcomeTag: "Welcome to Tirvaltor Group",
+    welcomeTag: "Welcome to TRIVALTOR Group",
     heroTitle: "Connecting Farmers, Global Buyers, Strategic Investors",
     heroDesc: "Building a transparent ecosystem for agriculture, exports, imports and investment opportunities.",
     iAmFarmer: "I Am A Farmer",
     iAmBuyer: "I Am A Buyer",
     iAmInvestor: "I Am An Investor",
-    tradeEcosystem: "Trivaltor Trade Ecosystem",
+    tradeEcosystem: "TRIVALTOR Trade Ecosystem",
     tradeEcosystemDesc: "Verifiable transparency in global supply chain logistics.",
 
     // Pillars Section
     corePrinciples: "Core Principles",
-    threePillars: "The Three Pillars of Trivaltor",
+    threePillars: "The Three Pillars of TRIVALTOR",
     pillarsDesc: "We align our activities along three key pillars to ensure sustainable crop farming, reliable global distribution, and solid strategic infrastructure.",
     pillar1Title: "We Grow",
     pillar1Desc: "We empower farmers with training, quality organic inputs, and modern techniques. By cultivating premium, export-quality spices directly in rich local soils, we secure sustainable livelihoods and exceptional produce.",
@@ -33,7 +33,7 @@ export const translations = {
     // Divisions Section
     operationalScope: "Operational Scope",
     diverseActivities: "Diverse Business Activities",
-    divisionsDesc: "Trivaltor coordinates four main divisions to create a stable, risk-managed agricultural enterprise.",
+    divisionsDesc: "TRIVALTOR coordinates four main divisions to create a stable, risk-managed agricultural enterprise.",
     division1: "Division 01",
     div1Title: "Agriculture",
     div1Desc: "Partnering with smallholders to grow certified, pesticide-free products through contract farming.",
@@ -54,8 +54,8 @@ export const translations = {
     exploreProducts: "Explore Products",
 
     // Video Section
-    videoTag: "Corporate Showcase",
-    videoTitle: "Tirvaltor Group Company Video",
+    videoTag: "Corporate Video",
+    videoTitle: "TRIVALTOR Group Corporate Video",
     videoDesc: "Watch how we bridge the gap between rural Indian farms and international shipping ports using clean sorting plants and temperature-controlled logistics.",
 
     // Credibility Section
@@ -63,7 +63,7 @@ export const translations = {
     credibilityTitle: "Trust & Export Infrastructure",
     credibilityDesc: "Our verified performance metrics, certification badges, and operational registrations.",
     overviewTitle: "Company Overview",
-    overviewText: "Tirvaltor Group connects local Indian farming groups with global buyers. We own processing machinery, sorting plants, and warehouse facilities that guarantee product quality and export grade compliance.",
+    overviewText: "TRIVALTOR Group connects local Indian farming groups with global buyers. We own processing machinery, sorting plants, and warehouse facilities that guarantee product quality and export grade compliance.",
     achievementsTitle: "Business Achievements",
     achievementsText: "Over the past years, we have scaled contract farming fields, increased spice trade volumes, and achieved certified status under global agricultural regulatory standards.",
     exportCapTitle: "Export Capabilities",
@@ -86,19 +86,19 @@ export const translations = {
     // Reviews Section
     reviewsTag: "Testimonials",
     reviewsTitle: "Client & Partner Feedback",
-    reviewsDesc: "Read comments from our buyers, farmers, and strategic investors regarding their partnership with Tirvaltor.",
+    reviewsDesc: "Read comments from our buyers, farmers, and strategic investors regarding their partnership with TRIVALTOR.",
     review1Name: "Michael Chang (Importer)",
-    review1Text: "Trivaltor is our most trusted supplier for green cardamom. Their moisture and purity specs are always exactly as promised. The sortex grading is excellent.",
+    review1Text: "TRIVALTOR is our most trusted supplier for green cardamom. Their moisture and purity specs are always exactly as promised. The sortex grading is excellent.",
     review2Name: "Dnyaneshwar Patil (Farmer)",
-    review2Text: "Since joining the Tirvaltor contract farming program, we receive direct guidance, organic inputs, and get paid immediately. They offer fair market rates.",
+    review2Text: "Since joining the TRIVALTOR contract farming program, we receive direct guidance, organic inputs, and get paid immediately. They offer fair market rates.",
     review3Name: "Emily Watson (Investor)",
-    review3Text: "Investing in Tirvaltor's cold storage infrastructure has delivered stable asset-backed yields. Their regular progress updates and transparent financials are impressive.",
+    review3Text: "Investing in TRIVALTOR's cold storage infrastructure has delivered stable asset-backed yields. Their regular progress updates and transparent financials are impressive.",
 
     // Contact Section
     getInTouch: "Get In Touch",
     contactDesk: "Contact Our Trade Desk",
     contactDesc: "Have a general inquiry or partnership proposal? Fill out the contact form below and a trade representative will get back to you.",
-    headquarters: "Trivaltor Group Headquarters",
+    headquarters: "TRIVALTOR Group Headquarters",
     hqDesc: "Reach out to us directly for urgent shipments, customized sorting requirements, or investment presentation questions.",
     officeAddress: "Office Address",
     addressText: "305 B WING DHARA RESIDENCY, VISHWANATH CHOWK, PALEGAON, AMBERNATH(E), AMBARNATH(M CL), AMBARNATH, THANE, 421501",
@@ -110,11 +110,11 @@ export const translations = {
     formMessage: "Message",
     formSubmit: "Send Message",
     formSubmitting: "Sending Message...",
-    formSuccess: "Message Sent Successfully",
-    formSuccessDesc: "Thank you. Your message has been sent successfully.",
+    formSuccess: "Thank You",
+    formSuccessDesc: "Your enquiry has been successfully submitted. Our team will review your requirements and contact you shortly. If you require immediate assistance, please contact us at trivaltorgoc@gmail.com.",
 
     // Lead Popup
-    popupTitle: "Connect With Tirvaltor Group",
+    popupTitle: "Connect With TRIVALTOR Group",
     popupDesc: "Provide your details to explore direct supply agreements, global import rates, or strategic yield opportunities. A trade desk officer will contact you.",
     popupSubmit: "Continue",
     popupSubmitting: "Submitting...",
@@ -154,8 +154,8 @@ export const translations = {
     farmerHeader: "Farmers & Cultivators Portal",
     farmerSub: "Register your crops, dry spices, or raw agricultural commodities. We offer direct buying, fair-trade pricing, and transparent weighments.",
     farmerSubmit: "Submit Farmer Inquiry",
-    farmerSuccess: "Inquiry Logged Successfully!",
-    farmerSuccessDesc: "Your supply details have been simulated and successfully registered. You can verify this inquiry inside the Admin Dashboard Demo.",
+    farmerSuccess: "Thank You",
+    farmerSuccessDesc: "Your enquiry has been successfully submitted. Our team will review your requirements and contact you shortly. If you require immediate assistance, please contact us at trivaltorgoc@gmail.com.",
     submitAnother: "Submit Another Inquiry",
     suppliersDesk: "Suppliers Desk",
 
@@ -163,23 +163,23 @@ export const translations = {
     buyerHeader: "Buyer & Importer Inquiry",
     buyerSub: "Request quotation, specification sheets, packaging options, or bulk sample shipments for our premium spices and agricultural exports.",
     buyerSubmit: "Submit Buyer Inquiry",
-    buyerSuccess: "Requirement Logged Successfully!",
-    buyerSuccessDesc: "Your buyer request has been simulated and successfully logged. You can review and sort this inquiry inside the Admin Dashboard Demo.",
+    buyerSuccess: "Thank You",
+    buyerSuccessDesc: "Your enquiry has been successfully submitted. Our team will review your requirements and contact you shortly. If you require immediate assistance, please contact us at trivaltorgoc@gmail.com.",
     globalTradeDesk: "Global Trade Desk",
 
     // Investor Form Specific
     investorHeader: "Strategic Investor Portal",
     investorSub: "Inquire about equity financing, cold storage infrastructure backing, or international export shipping yields. Please download and review our prospectus below.",
     investorSubmit: "Submit Investor Inquiry",
-    investorSuccess: "Investment Inquiry Logged!",
-    investorSuccessDesc: "Your investor profile has been simulated and successfully logged. You can review this inquiry inside the Admin Dashboard Demo.",
+    investorSuccess: "Thank You",
+    investorSuccessDesc: "Your enquiry has been successfully submitted. Our team will review your requirements and contact you shortly. If you require immediate assistance, please contact us at trivaltorgoc@gmail.com.",
     strategicFinancing: "Strategic Financing",
-    presentationTitle: "Trivaltor Group Presentation",
+    presentationTitle: "TRIVALTOR Group Presentation",
     presentationDesc: "Corporate overview, business workflow, and expansion pipeline (PDF, 8MB).",
     downloadPresentation: "Download Presentation",
 
     // Admin Dashboard / Backends Alerts
-    backendAlertTitle: "MERN + Google Sheets Lead Architecture Pipeline",
+    backendAlertTitle: "TRIVALTOR Lead Architecture Pipeline",
     backendAlertDesc: "For the production release, the forms are wired to a RESTful Node.js (Express) backend. Submissions are stored instantly in MongoDB Atlas and mirrored in real-time to Google Sheets for business ops convenience.",
     backendStep1Title: "React Frontend",
     backendStep1Desc: "Form validation & Axios POST",
@@ -189,13 +189,13 @@ export const translations = {
     backendStep3Desc: "Document Store (Primary)",
     backendStep4Title: "Google Sheets API",
     backendStep4Desc: "Live Backup spreadsheet",
-    backendConsoleNote: "💡 Note: Currently running in Demo Mode. Open the browser Developer Console (F12) during form submission to view simulated API payloads, MongoDB models, and Google Sheets trigger logs.",
+    backendConsoleNote: "💡 Note: Currently running. Submissions are securely recorded in the database.",
 
     // Footer bottom
-    rightsReserved: "Trivaltor Group of Companies. All Rights Reserved.",
+    rightsReserved: "TRIVALTOR Group of Companies. All Rights Reserved.",
     privacyPolicy: "Privacy Policy",
     termsOfTrade: "Terms of Trade",
-    demoMode: "Client Demo Mode",
+    demoMode: "Corporate Portal",
 
     // Buyer Portal Refinements
     phoneNoBuyer: "Phone Number (Include Country Code)",
@@ -235,18 +235,18 @@ export const translations = {
     switchLanguage: "भाषा बदला",
 
     // Hero Section
-    welcomeTag: "तिर्वाल्टर ग्रुपमध्ये आपले स्वागत आहे",
+    welcomeTag: "TRIVALTOR ग्रुपमध्ये आपले स्वागत आहे",
     heroTitle: "शेतकरी, जागतिक खरेदीदार, धोरणात्मक गुंतवणूकदार यांना जोडणे",
     heroDesc: "कृषी, निर्यात, आयात आणि गुंतवणुकीच्या संधींसाठी पारदर्शक परिसंस्था निर्माण करणे.",
     iAmFarmer: "मी शेतकरी आहे",
     iAmBuyer: "मी खरेदीदार आहे",
     iAmInvestor: "मी गुंतवणूकदार आहे",
-    tradeEcosystem: "तिर्वाल्टर ट्रेड इकोसिस्टम",
+    tradeEcosystem: "TRIVALTOR ट्रेड इकोसिस्टम",
     tradeEcosystemDesc: "जागतिक पुरवठा साखळीमध्ये पडताळणीयोग्य पारदर्शकता.",
 
     // Pillars Section
     corePrinciples: "मुख्य तत्त्वे",
-    threePillars: "तिर्वाल्टरचे तीन मुख्य स्तंभ",
+    threePillars: "TRIVALTOR चे तीन मुख्य स्तंभ",
     pillarsDesc: "आम्ही शाश्वत शेती, विश्वासार्ह जागतिक वितरण आणि भक्कम पायाभूत सुविधा सुनिश्चित करण्यासाठी तीन स्तंभांवर काम करतो.",
     pillar1Title: "आम्ही पिकवतो",
     pillar1Desc: "आम्ही शेतकऱ्यांना प्रशिक्षण, दर्जाची सेंद्रिय खते आणि आधुनिक तंत्रज्ञान देतो. सुपीक जमिनीत प्रीमियम दर्जाचे मसाले पिकवून आम्ही चांगला रोजगार आणि दर्जेदार उत्पादन मिळवतो.",
@@ -258,13 +258,13 @@ export const translations = {
     // Divisions Section
     operationalScope: "कार्यक्षेत्र",
     diverseActivities: "विविध व्यावसायिक उपक्रम",
-    divisionsDesc: "तिर्वाल्टर कृषी व्यवसायात जोखीम कमी करण्यासाठी चार प्रमुख विभागांचे समन्वय साधते.",
+    divisionsDesc: "TRIVALTOR कृषी व्यवसायात जोखीम कमी करण्यासाठी चार प्रमुख विभागांचे समन्वय साधते.",
     division1: "विभाग ०१",
     div1Title: "कृषी व्यवसाय",
     div1Desc: "करार शेतीद्वारे शेतकऱ्यांच्या मदतीने प्रमाणित, कीटकनाशकमुक्त पिकांचे उत्पादन करणे.",
     division2: "विभाग ०२",
     div2Title: "निर्यात",
-    div2Desc: "भारतीय मसाले, डाळी आणि सुका मेवा युरोपियन, अमेरिकन आणि पूर्व आशियाई देशांत पाठवणे.",
+    division2Desc: "भारतीय मसाले, डाळी आणि सुका मेवा युरोपियन, अमेरिकन आणि पूर्व आशियाई देशांत पाठवणे.",
     division3: "विभाग ०३",
     div3Title: "आयात",
     div3Desc: "शेती सुधारण्यासाठी उच्च दर्जाचे खत तंत्रज्ञान, बियाणे आणि प्रक्रिया यंत्रसामग्री आयात करणे.",
@@ -279,8 +279,8 @@ export const translations = {
     exploreProducts: "उत्पादने पहा",
 
     // Video Section
-    videoTag: "कंपनी सादरीकरण",
-    videoTitle: "तिर्वाल्टर ग्रुप कंपनी व्हिडिओ",
+    videoTag: "कंपनी व्हिडिओ",
+    videoTitle: "TRIVALTOR ग्रुप कॉर्पोरेट व्हिडिओ",
     videoDesc: "आम्ही आधुनिक सॉर्टिंग प्लांट आणि नियंत्रित तापमानाच्या कोल्ड चेनद्वारे भारतातील ग्रामीण शेतकरी आणि आंतरराष्ट्रीय जहाजे कशी जोडतो ते पहा.",
 
     // Credibility Section
@@ -288,7 +288,7 @@ export const translations = {
     credibilityTitle: "विश्वास आणि निर्यात पायाभूत सुविधा",
     credibilityDesc: "आमची प्रमाणित कामगिरी आणि अधिकृत सरकारी नोंदणी.",
     overviewTitle: "company-logo",
-    overviewText: "तिर्वाल्टर ग्रुप स्थानिक भारतीय शेतकरी गटांना जागतिक खरेदीदारांशी जोडतो. उत्पादनाचा दर्जा आणि निर्यात मानके सुनिश्चित करण्यासाठी आमचे स्वतःचे प्रक्रिया केंद्र आणि गोदामे आहेत.",
+    overviewText: "TRIVALTOR ग्रुप स्थानिक भारतीय शेतकरी गटांना जागतिक खरेदीदारांशी जोडतो. उत्पादनाचा दर्जा आणि निर्यात मानके सुनिश्चित करण्यासाठी आमचे स्वतःचे प्रक्रिया केंद्र आणि गोदामे आहेत.",
     achievementsTitle: "व्यावसायिक यश",
     achievementsText: "गेल्या काही वर्षांत, आम्ही करार शेतीचे क्षेत्र वाढवले आहे, मसाल्यांच्या व्यापाराचे प्रमाण वाढवले आहे आणि जागतिक कृषी मानकांनुसार प्रमाणित दर्जा मिळवला आहे.",
     exportCapTitle: "निर्यात क्षमता",
@@ -311,19 +311,19 @@ export const translations = {
     // Reviews Section
     reviewsTag: "अभिप्राय",
     reviewsTitle: "ग्राहक आणि भागीदारांचे मत",
-    reviewsDesc: "तिर्वाल्टरसोबत काम करणाऱ्या खरेदीदार, शेतकरी आणि गुंतवणूकदारांचे अनुभव वाचा.",
+    reviewsDesc: "TRIVALTOR सोबत काम करणाऱ्या खरेदीदार, शेतकरी आणि गुंतवणूकदारांचे अनुभव वाचा.",
     review1Name: "मायकेल चँग (आयातदार)",
-    review1Text: "हिरव्या वेलचीसाठी तिर्वाल्टर आमचा सर्वात विश्वासू पुरवठादार आहे. त्यांची आर्द्रता आणि शुद्धता मानके नेहमीच अचूक असतात. सॉर्टेक्स ग्रेडिंग उत्कृष्ट आहे.",
+    review1Text: "TRIVALTOR हिरव्या वेलचीसाठी आमचा सर्वात विश्वासू पुरवठादार आहे. त्यांची आर्द्रता आणि शुद्धता मानके नेहमीच अचूक असतात. सॉर्टेक्स ग्रेडिंग उत्कृष्ट आहे.",
     review2Name: "ज्ञानेश्वर पाटील (शेतकरी)",
-    review2Text: "तिर्वाल्टर करार शेती कार्यक्रमात सामील झाल्यापासून आम्हाला वेळेवर मार्गदर्शन, सेंद्रिय खते मिळतात आणि पैशांची देयके लगेच होतात. ते वाजवी दर देतात.",
+    review2Text: "TRIVALTOR करार शेती कार्यक्रमात सामील झाल्यापासून आम्हाला वेळेवर मार्गदर्शन, सेंद्रिय खते मिळतात आणि पैशांची देयके लगेच होतात. ते वाजवी दर देतात.",
     review3Name: "एमिली वॉटसन (गुंतवणूकदार)",
-    review3Text: "तिर्वाल्टरच्या शीतगृहांच्या पायाभूत सुविधांमध्ये केलेली गुंतवणूक सुरक्षित आणि फायदेशीर ठरली आहे. त्यांचे नियमित अपडेट आणि पारदर्शकता कौतुकास्पद आहे.",
+    review3Text: "TRIVALTOR च्या शीतगृहांच्या पायाभूत सुविधांमध्ये केलेली गुंतवणूक सुरक्षित आणि फायदेशीर ठरली आहे. त्यांचे नियमित अपडेट आणि पारदर्शकता कौतुकास्पद आहे.",
 
     // Contact Section
     getInTouch: "संपर्क साधा",
     contactDesk: "आमच्या ट्रेड डेस्कशी संपर्क साधा",
     contactDesc: "काही सामान्य प्रश्न किंवा भागीदारी प्रस्ताव आहे का? खालील संपर्क अर्ज भरा आणि आमचा प्रतिनिधी लवकरच आपल्याशी संपर्क साधेल.",
-    headquarters: "तिर्वाल्टर ग्रुप मुख्यालय",
+    headquarters: "TRIVALTOR ग्रुप मुख्यालय",
     hqDesc: "तातडीची शिपमेंट, विशिष्ट सॉर्टिंग किंवा गुंतवणूक सादरीकरणाच्या प्रश्नांसाठी आमच्याशी थेट संपर्क साधा.",
     officeAddress: "कार्यालयाचा पत्ता",
     addressText: "३०५ बी विंग धारा रेसिडेन्सी, विश्वनाथ चौक, पालेगाव, अंबरनाथ (पूर्व), अंबरनाथ (एम सीएल), अंबरनाथ, ठाणे, ४२१५०१",
@@ -335,11 +335,11 @@ export const translations = {
     formMessage: "संदेश",
     formSubmit: "संदेश पाठवा",
     formSubmitting: "संदेश पाठवत आहे...",
-    formSuccess: "संदेश यशस्वीरित्या पाठवला गेला",
-    formSuccessDesc: "धन्यवाद. आपला संदेश यशस्वीरित्या पाठवला गेला आहे.",
+    formSuccess: "धन्यवाद",
+    formSuccessDesc: "तुमची चौकशी यशस्वीरित्या सबमिट करण्यात आली आहे. आमची टीम तुमच्या आवश्यकतांचे पुनरावलोकन करेल आणि लवकरच तुमच्याशी संपर्क साधेल. तुम्हाला त्वरित मदतीची आवश्यकता असल्यास, कृपया आमच्याशी trivaltorgoc@gmail.com वर संपर्क साधा.",
 
     // Lead Popup
-    popupTitle: "तिर्वाल्टर ग्रुपशी संपर्क साधा",
+    popupTitle: "TRIVALTOR ग्रुपशी संपर्क साधा",
     popupDesc: "थेट पुरवठा करार, जागतिक आयात दर किंवा धोरणात्मक गुंतवणुकीच्या संधी शोधण्यासाठी आपले तपशील द्या. आमचा प्रतिनिधी आपल्याशी संपर्क साधेल.",
     popupSubmit: "पुढे जा",
     popupSubmitting: "नोंदणी होत आहे...",
@@ -379,8 +379,8 @@ export const translations = {
     farmerHeader: "शेतकरी आणि उत्पादक पोर्टल",
     farmerSub: "तुमची पिके, सुके मसाले किंवा कच्च्या शेती मालाची नोंदणी करा. आम्ही थेट खरेदी, रास्त दर आणि पारदर्शक मोजमाप देतो.",
     farmerSubmit: "शेतकरी चौकशी नोंदवा",
-    farmerSuccess: "चौकशी यशस्वीरित्या नोंदवली गेली!",
-    farmerSuccessDesc: "तुमचे पीक तपशील यशस्वीरित्या नोंदवले गेले आहेत. आपण अ‍ॅडमीन डॅशबोर्ड डेमोमध्ये याची तपासणी करू शकता.",
+    farmerSuccess: "धन्यवाद",
+    farmerSuccessDesc: "तुमची चौकशी यशस्वीरित्या सबमिट करण्यात आली आहे. आमची टीम तुमच्या आवश्यकतांचे पुनरावलोकन करेल आणि लवकरच तुमच्याशी संपर्क साधेल. तुम्हाला त्वरित मदतीची आवश्यकता असल्यास, कृपया आमच्याशी trivaltorgoc@gmail.com वर संपर्क साधा.",
     submitAnother: "दुसरी चौकशी नोंदवा",
     suppliersDesk: "पुरवठादार कक्ष",
 
@@ -388,23 +388,23 @@ export const translations = {
     buyerHeader: "खरेदीदार आणि आयातदार चौकशी",
     buyerSub: "आमच्या दर्जेदार मसाल्यांच्या निर्यातीसाठी दरपत्रक, तपशील पत्रक, पॅकेजिंग पर्याय किंवा नमुन्यांची मागणी करा.",
     buyerSubmit: "खरेदीदार चौकशी नोंदवा",
-    buyerSuccess: "चौकशी यशस्वीरित्या नोंदवली गेली!",
-    buyerSuccessDesc: "आपली खरेदीदाराची विनंती यशस्वीरित्या नोंदवली गेली आहे. आपण अ‍ॅडमीन डॅशबोर्ड डेमोमध्ये याची तपासणी करू शकता.",
+    buyerSuccess: "धन्यवाद",
+    buyerSuccessDesc: "तुमची चौकशी यशस्वीरित्या सबमिट करण्यात आली आहे. आमची टीम तुमच्या आवश्यकतांचे पुनरावलोकन करेल आणि लवकरच तुमच्याशी संपर्क साधेल. तुम्हाला त्वरित मदतीची आवश्यकता असल्यास, कृपया आमच्याशी trivaltorgoc@gmail.com वर संपर्क साधा.",
     globalTradeDesk: "जागतिक व्यापार कक्ष",
 
     // Investor Form Specific
     investorHeader: "धोरणात्मक गुंतवणूकदार पोर्टल",
     investorSub: "इक्विटी फायनान्सिंग, शीतगृहाच्या पायाभूत सुविधा किंवा आंतरराष्ट्रीय मालवाहतूक परताव्याबाबत चौकशी करा. खालील माहितीपत्रक डाउनलोड करा.",
     investorSubmit: "गुंतवणूकदार चौकशी नोंदवा",
-    investorSuccess: "गुंतवणूक चौकशी नोंदवली गेली!",
-    investorSuccessDesc: "आपली गुंतवणूक चौकशी यशस्वीरित्या नोंदवली गेली आहे. आपण अ‍ॅडमीन डॅशबोर्ड डेमोमध्ये याची तपासणी करू शकता.",
+    investorSuccess: "धन्यवाद",
+    investorSuccessDesc: "तुमची चौकशी यशस्वीरित्या सबमिट करण्यात आली आहे. आमची टीम तुमच्या आवश्यकतांचे पुनरावलोकन करेल आणि लवकरच तुमच्याशी संपर्क साधेल. तुम्हाला त्वरित मदतीची आवश्यकता असल्यास, कृपया आमच्याशी trivaltorgoc@gmail.com वर संपर्क साधा.",
     strategicFinancing: "धोरणात्मक वित्तपुरवठा",
-    presentationTitle: "तिर्वाल्टर ग्रुप सादरीकरण",
+    presentationTitle: "TRIVALTOR ग्रुप सादरीकरण",
     presentationDesc: "कंपनीची माहिती, व्यावसायिक काम आणि भविष्यातील योजना (PDF, 8MB).",
     downloadPresentation: "सादरीकरण डाउनलोड करा",
 
     // Admin Dashboard
-    backendAlertTitle: "MERN + गुगल शीट्स लीड आर्किटेक्चर पाइपलाइन",
+    backendAlertTitle: "TRIVALTOR लीड आर्किटेक्चर पाइपलाइन",
     backendAlertDesc: "निर्यातीसाठी हे अर्ज Node.js (Express) बॅकएंडला जोडलेले असतात. माहिती त्वरित MongoDB Atlas मध्ये साठवली जाते आणि गुगल शीट्समध्ये लाइव्ह अपडेट केली जाते.",
     backendStep1Title: "रिएक्ट फ्रंटएंड",
     backendStep1Desc: "फॉर्म व्हॅलिडेशन आणि Axios POST",
@@ -414,13 +414,13 @@ export const translations = {
     backendStep3Desc: "दस्तऐवज संग्रह (प्राथमिक)",
     backendStep4Title: "गुगल शीट्स API",
     backendStep4Desc: "लाइव्ह बॅकअप स्प्रेडशीट",
-    backendConsoleNote: "💡 टीप: सध्या हे डेमो मोडवर चालत आहे. सबमिशन दरम्यान ब्राउझर डेव्हलपर कन्सोल (F12) उघडून तुम्ही सिम्युलेटेड API पेलोड आणि लॉग पाहू शकता.",
+    backendConsoleNote: "💡 टीप: सुरक्षित रेकॉर्ड डेटाबेस मध्ये जतन केली आहे.",
 
     // Footer bottom
-    rightsReserved: "तिर्वाल्टर ग्रुप ऑफ कंपनीज. सर्व हक्क राखीव.",
+    rightsReserved: "TRIVALTOR Group of Companies. सर्व हक्क राखीव.",
     privacyPolicy: "गोपनीयता धोरण",
     termsOfTrade: "व्यापार अटी",
-    demoMode: "ग्राहक डेमो मोड",
+    demoMode: "कॉर्पोरेट पोर्टल",
 
     // Buyer Portal Refinements
     phoneNoBuyer: "फोन नंबर (देशाचा कोड समाविष्ट करा)",
@@ -460,18 +460,18 @@ export const translations = {
     switchLanguage: "भाषा बदलें",
 
     // Hero Section
-    welcomeTag: "तिर्वाल्टर ग्रुप में आपका स्वागत है",
+    welcomeTag: "TRIVALTOR ग्रुप में आपका स्वागत है",
     heroTitle: "किसानों, वैश्विक खरीदारों, रणनीतिक निवेशकों को जोड़ना",
     heroDesc: "कृषि, निर्यात, आयात और निवेश के अवसरों के लिए एक पारदर्शी पारिस्थितिकी तंत्र का निर्माण।",
     iAmFarmer: "मैं किसान हूँ",
     iAmBuyer: "मैं खरीदार हूँ",
     iAmInvestor: "मैं निवेशक हूँ",
-    tradeEcosystem: "तिर्वाल्टर ट्रेड इकोसिस्टम",
+    tradeEcosystem: "TRIVALTOR ट्रेड इकोसिस्टम",
     tradeEcosystemDesc: "वैश्विक आपूर्ति श्रृंखला लॉजिस्टिक्स में सत्यापन योग्य पारदर्शकता।",
 
     // Pillars Section
     corePrinciples: "मुख्य सिद्धांत",
-    threePillars: "तिर्वाल्टर के तीन स्तंभ",
+    threePillars: "TRIVALTOR के तीन स्तंभ",
     pillarsDesc: "हम टिकाऊ खेती, विश्वसनीय वैश्विक वितरण और ठोस रणनीतिक बुनियादी ढांचे को सुनिश्चित करने के लिए तीन प्रमुख स्तंभों के साथ काम करते हैं।",
     pillar1Title: "हम उगाते हैं",
     pillar1Desc: "हम किसानों को प्रशिक्षण, गुणवत्तापूर्ण जैविक इनपुट और आधुनिक तकनीकों के साथ सशक्त बनाते हैं। समृद्ध स्थानीय मिट्टी में सीधे प्रीमियम, निर्यात-गुणवत्ता वाले मसालों की खेती करके, हम टिकाऊ आजीविका और असाधारण उपज सुनिश्चित करते हैं।",
@@ -483,7 +483,7 @@ export const translations = {
     // Divisions Section
     operationalScope: "परिचालन दायरा",
     diverseActivities: "विविध व्यावसायिक गतिविधियाँ",
-    divisionsDesc: "तिर्वाल्टर जोखिम-मुक्त कृषि उद्यम बनाने के लिए चार मुख्य विभागों का समन्वय करता है।",
+    divisionsDesc: "TRIVALTOR जोखिम-मुक्त कृषि उद्यम बनाने के लिए चार मुख्य विभागों का समन्वय करता है।",
     division1: "विभाग 01",
     div1Title: "कृषि",
     div1Desc: "अनुबंध खेती के माध्यम से प्रमाणित, कीटनाशक मुक्त उत्पादों को उगाने के लिए किसानों के साथ साझेदारी करना।",
@@ -504,8 +504,8 @@ export const translations = {
     exploreProducts: "उत्पाद एक्सप्लोर करें",
 
     // Video Section
-    videoTag: "कॉर्पोरेट शोकेस",
-    videoTitle: "तिर्वाल्टर ग्रुप कंपनी वीडियो",
+    videoTag: "कंपनी वीडियो",
+    videoTitle: "TRIVALTOR ग्रुप कॉर्पोरेट वीडियो",
     videoDesc: "देखें कि हम सॉर्टिंग प्लांट और नियंत्रित तापमान वाली कोल्ड चेन का उपयोग करके ग्रामीण भारतीय खेतों और अंतरराष्ट्रीय शिपिंग पोर्ट को कैसे जोड़ते हैं।",
 
     // Credibility Section
@@ -513,7 +513,7 @@ export const translations = {
     credibilityTitle: "विश्वास और निर्यात बुनियादी ढांचा",
     credibilityDesc: "हमारी प्रमाणित उपलब्धियां और आधिकारिक सरकारी पंजीकरण।",
     overviewTitle: "कंपनी अवलोकन",
-    overviewText: "तिर्वाल्टर ग्रुप स्थानीय भारतीय कृषि समूहों को वैश्विक खरीदारों से जोड़ता है। हमारे पास प्रसंस्करण मशीनरी, सॉर्टिंग प्लांट और वेयरहाउस सुविधाएं हैं जो उत्पाद की गुणवत्ता और निर्यात मानकों का अनुपालन सुनिश्चित करती हैं।",
+    overviewText: "TRIVALTOR ग्रुप स्थानीय भारतीय कृषि समूहों को वैश्विक खरीदारों से जोड़ता है। हमारे पास प्रसंस्करण मशीनरी, सॉर्टिंग प्लांट और वेयरहाउस सुविधाएं हैं जो उत्पाद की गुणवत्ता और निर्यात मानकों का अनुपालन सुनिश्चित करती हैं।",
     achievementsTitle: "व्यावसायिक उपलब्धियां",
     achievementsText: "पिछले वर्षों में, हमने अनुबंध खेती के खेतों का विस्तार किया है, मसालों के व्यापार की मात्रा बढ़ाई है और वैश्विक कृषि नियामक मानकों के तहत प्रमाणित दर्जा प्राप्त किया है।",
     exportCapTitle: "निर्यात क्षमता",
@@ -536,19 +536,19 @@ export const translations = {
     // Reviews Section
     reviewsTag: "अभिप्राय",
     reviewsTitle: "ग्राहक और भागीदार प्रतिक्रिया",
-    reviewsDesc: "तिर्वाल्टर के साथ उनकी साझेदारी के संबंध में हमारे खरीदारों, किसानों और रणनीतिक निवेशकों की टिप्पणियां पढ़ें।",
+    reviewsDesc: "TRIVALTOR के साथ उनकी साझेदारी के संबंध में हमारे खरीदारों, किसानों और रणनीतिक निवेशकों की टिप्पणियां पढ़ें।",
     review1Name: "माइकल चांग (आयातक)",
-    review1Text: "हरी इलायची के लिए तिर्वाल्टर हमारा सबसे भरोसेमंद आपूर्तिकर्ता है। उनकी नमी और शुद्धता विशिष्टताएं हमेशा वादे के अनुसार होती हैं। सॉर्टेक्स ग्रेडिंग उत्कृष्ट है।",
+    review1Text: "TRIVALTOR हरी इलायची के लिए हमारा सबसे भरोसेमंद आपूर्तिकर्ता है। उनकी नमी और शुद्धता विशिष्टताएं हमेशा वादे के अनुसार होती हैं। सॉर्टेक्स ग्रेडिंग उत्कृष्ट है।",
     review2Name: "ज्ञानेश्वर पाटिल (किसान)",
-    review2Text: "जब से मैं तिर्वाल्टर अनुबंध खेती कार्यक्रम में शामिल हुआ हूँ, मुझे सीधा मार्गदर्शन, जैविक इनपुट मिलते हैं और तुरंत भुगतान किया जाता है। वे उचित बाजार दरें देते हैं।",
+    review2Text: "TRIVALTOR अनुबंध खेती कार्यक्रम में शामिल होने के बाद से, हमें सीधे मार्गदर्शन, जैविक इनपुट मिलते हैं और तुरंत भुगतान किया जाता है। वे उचित बाजार दरें देते हैं।",
     review3Name: "एमिली वॉटसन (निवेशक)",
-    review3Text: "तिर्वाल्टर के कोल्ड स्टोरेज बुनियादी ढांचे में निवेश करने से स्थिर संपत्ति-समर्थित रिटर्न मिला है। उनके नियमित प्रगति अपडेट और पारदर्शी वित्तीय जानकारी प्रभावशाली हैं।",
+    review3Text: "TRIVALTOR के कोल्ड स्टोरेज बुनियादी ढांचे में निवेश करने से स्थिर संपत्ति-समर्थित रिटर्न मिला है। उनके नियमित प्रगति अपडेट और पारदर्शी वित्तीय जानकारी प्रभावशाली हैं।",
 
     // Contact Section
     getInTouch: "संपर्क करें",
     contactDesk: "हमारे ट्रेड डेस्क से संपर्क करें",
     contactDesc: "सामान्य पूछताछ या साझेदारी का प्रस्ताव है? नीचे दिया गया संपर्क फ़ॉर्म भरें और हमारा एक प्रतिनिधि आपसे संपर्क करेगा।",
-    headquarters: "तिर्वाल्टर ग्रुप मुख्यालय",
+    headquarters: "TRIVALTOR ग्रुप मुख्यालय",
     hqDesc: "तत्काल शिपमेंट, अनुकूलित सॉर्टिंग आवश्यकताओं, या निवेश प्रस्तुति के प्रश्नों के लिए हमसे सीधे संपर्क करें।",
     officeAddress: "कार्यालय का पता",
     addressText: "305 बी विंग धारा रेसीडेंसी, विश्वनाथ चौक, पालेगांव, अंबरनाथ (पूर्व), अंबरनाथ (एम CL), अंबरनाथ, ठाणे, महाराष्ट्र, 421501, भारत",
@@ -560,11 +560,11 @@ export const translations = {
     formMessage: "संदेश",
     formSubmit: "संदेश भेजें",
     formSubmitting: "संदेश भेजा जा रहा है...",
-    formSuccess: "संदेश सफलतापूर्वक भेजा गया",
-    formSuccessDesc: "धन्यवाद। आपका संदेश सफलतापूर्वक पंजीकृत कर लिया गया है।",
+    formSuccess: "धन्यवाद",
+    formSuccessDesc: "आपकी पूछताछ सफलतापूर्वक सबमिट कर दी गई है। हमारी टीम आपकी आवश्यकताओं की समीक्षा करेगी और जल्द ही आपसे संपर्क करेगी। यदि आपको तत्काल सहायता की आवश्यकता है, तो कृपया हमसे trivaltorgoc@gmail.com पर संपर्क करें।",
 
     // Lead Popup
-    popupTitle: "तिर्वाल्टर ग्रुप से जुड़ें",
+    popupTitle: "TRIVALTOR ग्रुप से जुड़ें",
     popupDesc: "आपूर्ति समझौतों, वैश्विक आयात दरों, या रणनीतिक निवेश के अवसरों का पता लगाने के लिए अपने विवरण प्रदान करें। एक प्रतिनिधि आपसे संपर्क करेगा।",
     popupSubmit: "जारी रखें",
     popupSubmitting: "जमा किया जा रहा है...",
@@ -604,8 +604,8 @@ export const translations = {
     farmerHeader: "किसान और उत्पादक पोर्टल",
     farmerSub: "अपनी फसलों, सूखे मसालों या कच्चे कृषि उत्पादों को पंजीकृत करें। हम सीधी खरीद, निष्पक्ष मूल्य निर्धारण और पारदर्शी वजन की पेशकश करते हैं।",
     farmerSubmit: "किसान पूछताछ दर्ज करें",
-    farmerSuccess: "पूछताछ सफलतापूर्वक दर्ज की गई!",
-    farmerSuccessDesc: "आपकी आपूर्ति का विवरण सफलतापूर्वक पंजीकृत कर लिया गया है। आप इस पूछताछ को एडमिन डैशबोर्ड डेमो के अंदर सत्यापित कर सकते हैं।",
+    farmerSuccess: "धन्यवाद",
+    farmerSuccessDesc: "आपकी पूछताछ सफलतापूर्वक सबमिट कर दी गई है। हमारी टीम आपकी आवश्यकताओं की समीक्षा करेगी और जल्द ही आपसे संपर्क करेगी। यदि आपको तत्काल सहायता की आवश्यकता है, तो कृपया हमसे trivaltorgoc@gmail.com पर संपर्क करें।",
     submitAnother: "एक और पूछताछ दर्ज करें",
     suppliersDesk: "आपूर्तिकर्ता डेस्क",
 
@@ -613,39 +613,39 @@ export const translations = {
     buyerHeader: "खरीदार और आयातक पूछताछ",
     buyerSub: "हमारे प्रीमियम मसालों और कृषि निर्यातों के लिए उद्धरण, विशिष्टता पत्रक, packaging विकल्प या थोक नमूना शिपमेंट का अनुरोध करें।",
     buyerSubmit: "खरीदार पूछताछ दर्ज करें",
-    buyerSuccess: "आवश्यकता सफलतापूर्वक दर्ज की गई!",
-    buyerSuccessDesc: "आपकी खरीदार की विनती सफलतापूर्वक पंजीकृत की गई है। आप इसे एडमिन डैशबोर्ड डेमो के अंदर देख सकते हैं।",
+    buyerSuccess: "धन्यवाद",
+    buyerSuccessDesc: "आपकी पूछताछ सफलतापूर्वक सबमिट कर दी गई है। हमारी टीम आपकी आवश्यकताओं की समीक्षा करेगी और जल्द ही आपसे संपर्क करेगी। यदि आपको तत्काल सहायता की आवश्यकता है, तो कृपया हमसे trivaltorgoc@gmail.com पर संपर्क करें।",
     globalTradeDesk: "वैश्विक व्यापार डेस्क",
 
     // Investor Form Specific
     investorHeader: "रणनीतिक निवेशक पोर्टल",
     investorSub: "इक्विटी वित्तपोषण, कोल्ड स्टोरेज बुनियादी ढांचे, या अंतरराष्ट्रीय निर्यात शिपिंग रिटर्न के बारे में पूछताछ करें। कृपया नीचे हमारी विवरणिका डाउनलोड करें।",
     investorSubmit: "निवेशक पूछताछ दर्ज करें",
-    investorSuccess: "निवेश पूछताछ सफलतापूर्वक दर्ज की गई!",
-    investorSuccessDesc: "आपका निवेशक प्रोफ़ाइल सफलतापूर्वक पंजीकृत कर लिया गया है। आप इसे एडमिन डैशबोर्ड डेमो के अंदर देख सकते हैं।",
+    investorSuccess: "धन्यवाद",
+    investorSuccessDesc: "आपकी पूछताछ सफलतापूर्वक सबमिट कर दी गई है। हमारी टीम आपकी आवश्यकताओं की समीक्षा करेगी और जल्द ही आपसे संपर्क करेगी। यदि आपको तत्काल सहायता की आवश्यकता है, तो कृपया हमसे trivaltorgoc@gmail.com पर संपर्क करें।",
     strategicFinancing: "रणनीतिक वित्तपोषण",
-    presentationTitle: "तिर्वाल्टर ग्रुप प्रस्तुति",
+    presentationTitle: "TRIVALTOR ग्रुप प्रस्तुति",
     presentationDesc: "कॉर्पोरेट अवलोकन, व्यावसायिक कार्यप्रवाह और विस्तार योजनाएं (PDF, 8MB)।",
     downloadPresentation: "प्रस्तुति डाउनलोड करें",
 
     // Admin Dashboard
-    backendAlertTitle: "MERN + गूगल शीट्स लीड आर्किटेक्चर पाइपलाइन",
+    backendAlertTitle: "TRIVALTOR लीड आर्किटेक्चर पाइपलाइन",
     backendAlertDesc: "उत्पादन रिलीज के लिए, फ़ॉर्म एक्सप्रेस बैकएंड से जुड़े हैं। प्रस्तुतियाँ तुरंत मोंगोडीबी एटलस में सहेजी जाती हैं और वास्तविक समय में गूगल शीट्स में प्रतिबिंबित होती हैं।",
     backendStep1Title: "रिएक्ट फ्रंटएंड",
     backendStep1Desc: "फ़ॉर्म सत्यापन और Axios POST",
     backendStep2Title: "Node.js / Express",
-    backendStep2Desc: "सुरक्षित API रूट हैंडलर",
+    backendStep2Desc: "सुरक्षित API रूटहैंडलर",
     backendStep3Title: "MongoDB Atlas",
     backendStep3Desc: "दस्तावेज़ स्टोर (प्राथमिक)",
     backendStep4Title: "Google Sheets API",
     backendStep4Desc: "लाइव बैकअप स्प्रेडशीट",
-    backendConsoleNote: "💡 नोट: वर्तमान में डेमो मोड में चल रहा है। सिम्युलेटेड API पेलोड और लॉग देखने के लिए सबमिशन के दौरान ब्राउज़र डेवलपर कन्सोल (F12) खोलें।",
+    backendConsoleNote: "💡 नोट: सुरक्षित रिकॉर्ड डेटाबेस में सहेजा गया है।",
 
     // Footer bottom
-    rightsReserved: "तिर्वाल्टर ग्रुप ऑफ कंपनीज। सर्वाधिकार सुरक्षित।",
+    rightsReserved: "TRIVALTOR Group of Companies। सर्वाधिकार सुरक्षित।",
     privacyPolicy: "गोपनीयता नीति",
     termsOfTrade: "व्यापार की शर्तें",
-    demoMode: "ग्राहक डेमो मोड",
+    demoMode: "कॉर्पोरेट पोर्टल",
 
     // Buyer Portal Refinements
     phoneNoBuyer: "फ़ोन नंबर (देश कोड शामिल करें)",

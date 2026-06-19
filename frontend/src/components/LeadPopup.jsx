@@ -158,7 +158,6 @@ export const LeadPopup = () => {
                 name="email" 
                 value={form.email} 
                 onChange={handleChange} 
-                required 
                 placeholder="john@example.com" 
                 className="form-input"
                 style={{ paddingLeft: '2.5rem' }}
@@ -166,7 +165,6 @@ export const LeadPopup = () => {
               <Mail size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             </div>
           </div>
-
           <button 
             type="submit" 
             disabled={isSubmitting} 

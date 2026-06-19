@@ -1109,7 +1109,7 @@ body.dark .leads-table tbody tr:hover {
   .credibility-grid,
   .contact-grid {
     grid-template-columns: 1fr !important;
-    gap: 1.25rem !important;
+    gap: 1.75rem !important;
   }
   .premium-card {
     padding: 1.25rem !important;
@@ -1599,8 +1599,8 @@ body.dark .leads-table tbody tr:hover {
 @media (max-width: 768px) {
   /* 1. Spacing, Padding, Margins & Section Gaps */
   .section {
-    padding-top: 2.25rem !important;
-    padding-bottom: 2.25rem !important;
+    padding-top: 3.25rem !important;
+    padding-bottom: 3.25rem !important;
   }
 
   .container {
@@ -1618,7 +1618,7 @@ body.dark .leads-table tbody tr:hover {
   .section-desc {
     font-size: 0.95rem !important;
     margin-bottom: 2rem !important;
-    line-height: 1.5 !important;
+    line-height: 1.6 !important;
   }
 
   .section-tag {

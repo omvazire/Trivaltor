@@ -29,6 +29,7 @@ export const validatePopupLead = [
     .notEmpty()
     .withMessage('Phone number is required'),
   body('email')
+    .optional({ checkFalsy: true })
     .trim()
     .toLowerCase()
     .isEmail()
@@ -50,6 +51,7 @@ export const validateEnquiry = [
     .notEmpty()
     .withMessage('Phone number is required'),
   body('email')
+    .optional({ checkFalsy: true })
     .trim()
     .toLowerCase()
     .isEmail()
@@ -65,24 +67,21 @@ export const validateEnquiry = [
     .trim()
     .escape(),
   body('state')
+    .optional({ checkFalsy: true })
     .trim()
-    .escape()
-    .notEmpty()
-    .withMessage('State is required'),
+    .escape(),
   body('district')
+    .optional({ checkFalsy: true })
     .trim()
-    .escape()
-    .notEmpty()
-    .withMessage('District is required'),
+    .escape(),
   body('cityVillage')
     .optional({ checkFalsy: true })
     .trim()
     .escape(),
   body('pincode')
+    .optional({ checkFalsy: true })
     .trim()
-    .escape()
-    .notEmpty()
-    .withMessage('Pincode is required'),
+    .escape(),
   body('message')
     .optional({ checkFalsy: true })
     .trim()

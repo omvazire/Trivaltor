@@ -166,7 +166,6 @@ export const BuyerLead = () => {
                     name="companyName" 
                     value={form.companyName} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. Apex Spices LLC" 
                     className="form-input"
                   />
@@ -224,7 +223,6 @@ export const BuyerLead = () => {
                     name="productRequirement" 
                     value={form.productRequirement} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. Alphonso Mango, Green Cardamom, Turmeric Finger" 
                     className="form-input"
                   />
@@ -240,7 +238,6 @@ export const BuyerLead = () => {
                     name="currency" 
                     value={form.currency} 
                     onChange={handleChange} 
-                    required 
                     className="form-select"
                   >
                     <option value="USD">USD ($)</option>
@@ -266,7 +263,6 @@ export const BuyerLead = () => {
                       name="targetBudget" 
                       value={form.targetBudget} 
                       onChange={handleChange} 
-                      required 
                       placeholder="e.g. 25000" 
                       className="form-input"
                       style={{ paddingLeft: '2rem' }}
@@ -284,7 +280,6 @@ export const BuyerLead = () => {
                   name="requiredQuantity" 
                   value={form.requiredQuantity} 
                   onChange={handleChange} 
-                  required 
                   placeholder="e.g. 5 Tons, 2000 Kg, or 1 Container" 
                   className="form-input"
                 />
@@ -300,7 +295,6 @@ export const BuyerLead = () => {
                     name="state" 
                     value={form.state} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. California, Maharashtra, Ontario" 
                     className="form-input"
                   />
@@ -313,7 +307,6 @@ export const BuyerLead = () => {
                     name="district" 
                     value={form.district} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. Los Angeles County, Ernakulam District" 
                     className="form-input"
                   />
@@ -329,7 +322,6 @@ export const BuyerLead = () => {
                     name="cityVillage" 
                     value={form.cityVillage} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. Pasadena, Kochi, Manchester" 
                     className="form-input"
                   />
@@ -342,7 +334,6 @@ export const BuyerLead = () => {
                     name="pincode" 
                     value={form.pincode} 
                     onChange={handleChange} 
-                    required 
                     placeholder="e.g. 91101, 400001" 
                     className="form-input"
                   />
@@ -356,7 +347,6 @@ export const BuyerLead = () => {
                   name="message" 
                   value={form.message} 
                   onChange={handleChange} 
-                  required 
                   placeholder="Describe quantity requirements, packaging preferences, quality expectations, certifications required, delivery requirements, or any additional details." 
                   className="form-textarea"
                 ></textarea>
