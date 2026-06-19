@@ -87,6 +87,14 @@ export const CategoryDetail = () => {
                     {productName}
                   </h3>
 
+                  {category.id === 'spices' && product.shortDescription && (
+                    <p className="product-card-desc">
+                      {typeof product.shortDescription === 'object'
+                        ? (product.shortDescription[language] || product.shortDescription['en'])
+                        : product.shortDescription}
+                    </p>
+                  )}
+
                   {/* Single Enquire Button */}
                   <button 
                     onClick={() => navigate(`/buyer?product=${encodeURIComponent(productName)}`)} 
