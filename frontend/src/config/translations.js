@@ -54,14 +54,14 @@ export const translations = {
     exploreProducts: "Explore Products",
 
     // Video Section
-    videoTag: "Corporate Video",
-    videoTitle: "TRIVALTOR Group Corporate Video",
-    videoDesc: "Watch how we bridge the gap between rural Indian farms and international shipping ports using clean sorting plants and temperature-controlled logistics.",
+    videoTag: "Inside TRIVALTOR's Export Network",
+    videoTitle: "From Indian Farms to Global Markets",
+    videoDesc: "Explore how TRIVALTOR transforms agricultural produce into export-ready shipments through quality sourcing, professional handling, packaging, compliance, and global distribution networks.",
 
     // Credibility Section
-    credibilityTag: "Certifications & Registrations",
-    credibilityTitle: "Trust & Export Infrastructure",
-    credibilityDesc: "Our verified performance metrics, certification badges, and operational registrations.",
+    credibilityTag: "TRUSTED EXPORT PARTNERSHIP",
+    credibilityTitle: "Certified. Compliant. Global.",
+    credibilityDesc: "A strong foundation of verified registrations and industry certifications supporting transparent and reliable international trade operations.",
     overviewTitle: "Company Overview",
     overviewText: "TRIVALTOR Group connects local Indian farming groups with global buyers. We own processing machinery, sorting plants, and warehouse facilities that guarantee product quality and export grade compliance.",
     achievementsTitle: "Business Achievements",
@@ -279,14 +279,14 @@ export const translations = {
     exploreProducts: "उत्पादने पहा",
 
     // Video Section
-    videoTag: "कंपनी व्हिडिओ",
-    videoTitle: "TRIVALTOR ग्रुप कॉर्पोरेट व्हिडिओ",
-    videoDesc: "आम्ही आधुनिक सॉर्टिंग प्लांट आणि नियंत्रित तापमानाच्या कोल्ड चेनद्वारे भारतातील ग्रामीण शेतकरी आणि आंतरराष्ट्रीय जहाजे कशी जोडतो ते पहा.",
+    videoTag: "TRIVALTOR च्या निर्यात नेटवर्कमध्ये",
+    videoTitle: "भारतीय शेतातून जागतिक बाजारपेठेत",
+    videoDesc: "गुणवत्तापूर्ण स्त्रोत, व्यावसायिक हाताळणी, पॅकेजिंग, अनुपालन आणि जागतिक वितरण नेटवर्कद्वारे TRIVALTOR शेतमालाचे निर्यात-योग्य मालामध्ये कसे रूपांतर करते ते पहा.",
 
     // Credibility Section
-    credibilityTag: "प्रमाणपत्रे आणि नोंदणी",
-    credibilityTitle: "विश्वास आणि निर्यात पायाभूत सुविधा",
-    credibilityDesc: "आमची प्रमाणित कामगिरी आणि अधिकृत सरकारी नोंदणी.",
+    credibilityTag: "विश्वासू निर्यात भागीदारी",
+    credibilityTitle: "प्रमाणित. सुसंगत. जागतिक.",
+    credibilityDesc: "पारदर्शक आणि विश्वासार्ह आंतरराष्ट्रीय व्यापार ऑपरेशन्सना पाठबळ देणाऱ्या प्रमाणित नोंदणी आणि उद्योग प्रमाणपत्रांचा भक्कम पाया.",
     overviewTitle: "company-logo",
     overviewText: "TRIVALTOR ग्रुप स्थानिक भारतीय शेतकरी गटांना जागतिक खरेदीदारांशी जोडतो. उत्पादनाचा दर्जा आणि निर्यात मानके सुनिश्चित करण्यासाठी आमचे स्वतःचे प्रक्रिया केंद्र आणि गोदामे आहेत.",
     achievementsTitle: "व्यावसायिक यश",
@@ -504,14 +504,14 @@ export const translations = {
     exploreProducts: "उत्पाद एक्सप्लोर करें",
 
     // Video Section
-    videoTag: "कंपनी वीडियो",
-    videoTitle: "TRIVALTOR ग्रुप कॉर्पोरेट वीडियो",
-    videoDesc: "देखें कि हम सॉर्टिंग प्लांट और नियंत्रित तापमान वाली कोल्ड चेन का उपयोग करके ग्रामीण भारतीय खेतों और अंतरराष्ट्रीय शिपिंग पोर्ट को कैसे जोड़ते हैं।",
+    videoTag: "TRIVALTOR के निर्यात नेटवर्क के भीतर",
+    videoTitle: "भारतीय खेतों से वैश्विक बाजारों तक",
+    videoDesc: "देखें कि कैसे TRIVALTOR गुणवत्तापूर्ण सोर्सिंग, व्यावसायिक प्रबंधन, पैकेजिंग, अनुपालन और वैश्विक वितरण नेटवर्क के माध्यम से कृषि उपज को निर्यात-योग्य खेप में बदलता है।",
 
     // Credibility Section
-    credibilityTag: "प्रमाणपत्र और पंजीकरण",
-    credibilityTitle: "विश्वास और निर्यात बुनियादी ढांचा",
-    credibilityDesc: "हमारी प्रमाणित उपलब्धियां और आधिकारिक सरकारी पंजीकरण।",
+    credibilityTag: "विश्वसनीय निर्यात साझेदारी",
+    credibilityTitle: "प्रमाणित। अनुपालन। वैश्विक।",
+    credibilityDesc: "पारदर्शी और विश्वसनीय अंतरराष्ट्रीय व्यापार संचालन का समर्थन करने वाले सत्यापित पंजीकरणों और उद्योग प्रमाणपत्रों की एक मजबूत नींव।",
     overviewTitle: "कंपनी अवलोकन",
     overviewText: "TRIVALTOR ग्रुप स्थानीय भारतीय कृषि समूहों को वैश्विक खरीदारों से जोड़ता है। हमारे पास प्रसंस्करण मशीनरी, सॉर्टिंग प्लांट और वेयरहाउस सुविधाएं हैं जो उत्पाद की गुणवत्ता और निर्यात मानकों का अनुपालन सुनिश्चित करती हैं।",
     achievementsTitle: "व्यावसायिक उपलब्धियां",

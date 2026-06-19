@@ -408,7 +408,7 @@ export const Home = () => {
           <div className="video-wrapper">
             <iframe
               src={config.youtubeEmbedUrl}
-              title="TRIVALTOR Group Corporate Video"
+              title={t('videoTitle')}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>

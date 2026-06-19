@@ -1,6 +1,6 @@
 export const config = {
   // YouTube video embed URL for the homepage section
-  youtubeEmbedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  youtubeEmbedUrl: "https://www.youtube.com/embed/xjbzDQm2CqQ",
 
   // Investment brackets for Investor Portal
   investmentBrackets: {
