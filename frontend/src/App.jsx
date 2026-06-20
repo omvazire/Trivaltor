@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './layouts/Layout';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { ScrollToTop } from './components/ScrollToTop';
 
 // Lazy load page components to enable route-based code splitting and optimize initial bundle size
 const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
@@ -44,6 +45,7 @@ const PageLoader = () => (
 function App() {
   return (
     <Layout>
+      <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />

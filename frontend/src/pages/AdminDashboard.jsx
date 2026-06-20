@@ -10,6 +10,25 @@ import {
   Trash2
 } from 'lucide-react';
 
+const unescape = (str) => {
+  if (str === null || str === undefined || String(str).trim() === '') {
+    return 'N/A';
+  }
+  if (typeof str !== 'string') return String(str);
+  
+  const decoded = str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/')
+    .replace(/&#x3D;/g, '=')
+    .replace(/&#96;/g, '`');
+    
+  return decoded.trim() === '' || decoded === 'N/A' ? 'N/A' : decoded;
+};
+
 export const AdminDashboard = () => {
   const { 
     farmerLeads = [], 
@@ -569,7 +588,7 @@ export const AdminDashboard = () => {
                 borderRadius: '8px'
               }}>
                 {/* Sub tabs */}
-                <div className="admin-tabs-wrapper" style={{ display: 'flex', gap: '0.25rem', backgroundColor: 'var(--bg-primary)', padding: '0.25rem', borderRadius: '6px' }}>
+                <div className="admin-tabs-wrapper" style={{ display: 'flex', gap: '0.25rem', backgroundColor: 'var(--bg-primary)', padding: '0.25rem', borderRadius: '6px', flexWrap: 'wrap' }}>
                   <button 
                     onClick={() => { setActiveEnquiryTab('farmer'); setSearchQuery(''); }}
                     style={{
@@ -619,16 +638,16 @@ export const AdminDashboard = () => {
 
                 {/* Query filters */}
                 <div className="admin-actions-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', width: '200px' }}>
+                  <div style={{ position: 'relative', width: '100%', maxWidth: '240px' }}>
                     <input 
                       type="text" 
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search inquiries..."
                       className="form-input"
-                      style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
+                      style={{ padding: '0.45rem 0.75rem 0.45rem 3rem', fontSize: '0.85rem', height: '36px', width: '100%' }}
                     />
-                    <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <Search size={14} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                   </div>
 
                   <button
@@ -669,9 +688,9 @@ export const AdminDashboard = () => {
                       if (!lead) return null;
                       return (
                         <tr key={lead.id || Math.random().toString()}>
-                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td><strong>{unescape(lead.name)}</strong></td>
                           <td>Farmer</td>
-                          <td><span className="badge badge-gold">{lead.productName || 'N/A'}</span></td>
+                          <td><span className="badge badge-gold">{unescape(lead.productName)}</span></td>
                           <td>
                             <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
                               {lead.contacted ? 'Contacted' : 'New'}
@@ -697,9 +716,9 @@ export const AdminDashboard = () => {
                       if (!lead) return null;
                       return (
                         <tr key={lead.id || Math.random().toString()}>
-                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td><strong>{unescape(lead.name)}</strong></td>
                           <td>Buyer</td>
-                          <td><span className="badge badge-gold">{lead.productRequirement || 'N/A'}</span></td>
+                          <td><span className="badge badge-gold">{unescape(lead.productRequirement)}</span></td>
                           <td>
                             <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
                               {lead.contacted ? 'Contacted' : 'New'}
@@ -725,9 +744,9 @@ export const AdminDashboard = () => {
                       if (!lead) return null;
                       return (
                         <tr key={lead.id || Math.random().toString()}>
-                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td><strong>{unescape(lead.name)}</strong></td>
                           <td>Investor</td>
-                          <td><span className="badge badge-gold">{lead.investmentInterest || 'N/A'}</span></td>
+                          <td><span className="badge badge-gold">{unescape(lead.investmentInterest)}</span></td>
                           <td>
                             <span className={`badge ${lead.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: lead.contacted ? 'green' : 'inherit' }}>
                               {lead.contacted ? 'Contacted' : 'New'}
@@ -851,16 +870,16 @@ export const AdminDashboard = () => {
                   Popup Callback Leads
                 </h3>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', width: '200px' }}>
+                  <div style={{ position: 'relative', width: '100%', maxWidth: '240px' }}>
                     <input 
                       type="text" 
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search popup leads..."
                       className="form-input"
-                      style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
+                      style={{ padding: '0.45rem 0.75rem 0.45rem 3rem', fontSize: '0.85rem', height: '36px', width: '100%' }}
                     />
-                    <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <Search size={14} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                   </div>
                   <button
                     onClick={() => handleExport('popup-leads')}
@@ -895,9 +914,9 @@ export const AdminDashboard = () => {
                       )
                       .map(lead => (
                         <tr key={lead._id}>
-                          <td><strong>{lead.name}</strong></td>
-                          <td>{lead.phone}</td>
-                          <td>{lead.email}</td>
+                          <td><strong>{unescape(lead.name)}</strong></td>
+                          <td>{unescape(lead.phone)}</td>
+                          <td>{unescape(lead.email)}</td>
                           <td>{formatDate(lead.createdAt || lead.timestamp)}</td>
                           <td style={{ textAlign: 'right' }}>
                             <button
@@ -1025,16 +1044,16 @@ export const AdminDashboard = () => {
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <div style={{ position: 'relative', width: '200px' }}>
+                <div style={{ position: 'relative', width: '100%', maxWidth: '240px' }}>
                   <input 
                     type="text" 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search reviews..."
                     className="form-input"
-                    style={{ padding: '0.45rem 0.75rem 0.45rem 2rem', fontSize: '0.85rem', height: '36px' }}
+                    style={{ padding: '0.45rem 0.75rem 0.45rem 3rem', fontSize: '0.85rem', height: '36px', width: '100%' }}
                   />
-                  <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                  <Search size={14} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                 </div>
                 <button
                   onClick={() => setSortByDateOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
@@ -1064,9 +1083,9 @@ export const AdminDashboard = () => {
                   <tbody>
                     {processedReviews.map(review => {
                       if (!review) return null;
-                      const name = review.customerName || 'N/A';
-                      const type = review.reviewerType || 'Customer';
-                      const text = review.reviewText || '';
+                      const name = unescape(review.customerName);
+                      const type = unescape(review.reviewerType);
+                      const text = unescape(review.reviewText);
                       const rating = review.rating || 5;
                       const status = review.status || 'pending';
                       
@@ -1203,161 +1222,165 @@ const EnquiryDetailsModal = ({
 
   return (
     <div className="modal-overlay" onClick={() => setSelectedEnquiry(null)}>
-      <div className="modal-container" style={{ maxWidth: '600px', width: '100%', padding: '2.5rem' }} onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={() => setSelectedEnquiry(null)} aria-label="Close details">
-          <X size={20} />
-        </button>
+      <div className="modal-container scrollable-modal" style={{ maxWidth: '600px', width: '100%' }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header-sticky">
+          <button className="modal-close" onClick={() => setSelectedEnquiry(null)} aria-label="Close details" style={{ top: '1.5rem', right: '1.5rem', zIndex: 12 }}>
+            <X size={20} />
+          </button>
 
-        <span className="section-tag" style={{ margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>
-          ENQUIRY DETAIL PANEL
-        </span>
-        <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span>{selectedEnquiry?.name || 'N/A'}</span>
-          <span className={`badge ${selectedEnquiry?.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: selectedEnquiry?.contacted ? 'green' : 'inherit', fontSize: '0.85rem' }}>
-            {selectedEnquiry?.contacted ? 'Contacted' : 'New'}
+          <span className="section-tag" style={{ margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>
+            ENQUIRY DETAIL PANEL
           </span>
-        </h2>
-
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
-          gap: '1.25rem',
-          backgroundColor: 'var(--bg-secondary)', 
-          padding: '1.5rem', 
-          borderRadius: '8px',
-          border: '1px solid var(--border-color)',
-          marginBottom: '1.5rem'
-        }}>
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Phone</label>
-            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.phone || 'N/A'}</span>
-          </div>
-
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Email</label>
-            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.email || 'N/A'}</span>
-          </div>
-
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>State</label>
-            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
-              {selectedEnquiry?.state || selectedEnquiry?.location || 'N/A'}
+          <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: '2rem' }}>
+            <span>{unescape(selectedEnquiry?.name)}</span>
+            <span className={`badge ${selectedEnquiry?.contacted ? 'badge-success' : 'badge-gold'}`} style={{ color: selectedEnquiry?.contacted ? 'green' : 'inherit', fontSize: '0.85rem', marginLeft: '0.5rem' }}>
+              {selectedEnquiry?.contacted ? 'Contacted' : 'New'}
             </span>
-          </div>
+          </h2>
+        </div>
 
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>District</label>
-            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.district || 'N/A'}</span>
-          </div>
+        <div className="modal-body-scrollable">
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+            gap: '1.25rem',
+            backgroundColor: 'var(--bg-secondary)', 
+            padding: '1.5rem', 
+            borderRadius: '8px',
+            border: '1px solid var(--border-color)',
+            marginBottom: '1.5rem'
+          }}>
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Phone</label>
+              <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{unescape(selectedEnquiry?.phone)}</span>
+            </div>
 
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>City/Village</label>
-            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{selectedEnquiry?.cityVillage || 'N/A'}</span>
-          </div>
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Email</label>
+              <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{unescape(selectedEnquiry?.email)}</span>
+            </div>
 
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Product</label>
-            <span className="badge badge-gold" style={{ marginTop: '0.25rem', display: 'inline-block' }}>
-              {selectedEnquiry?.productName || selectedEnquiry?.productRequirement || selectedEnquiry?.investmentInterest || selectedEnquiry?.subject || 'General Inquiry'}
-            </span>
-          </div>
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>State</label>
+              <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                {unescape(selectedEnquiry?.state || selectedEnquiry?.location)}
+              </span>
+            </div>
 
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Quantity</label>
-            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 700 }}>
-              {selectedEnquiry?.quantity || selectedEnquiry?.requiredQuantity || 'N/A'}
-            </span>
-          </div>
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>District</label>
+              <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{unescape(selectedEnquiry?.district)}</span>
+            </div>
 
-          <div>
-            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Timestamp</label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-              <Calendar size={14} />
-              <span>{selectedEnquiry?.date ? new Date(selectedEnquiry.date).toLocaleString() : 'N/A'}</span>
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>City/Village</label>
+              <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>{unescape(selectedEnquiry?.cityVillage)}</span>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Product</label>
+              <span className="badge badge-gold" style={{ marginTop: '0.25rem', display: 'inline-block' }}>
+                {unescape(selectedEnquiry?.productName || selectedEnquiry?.productRequirement || selectedEnquiry?.investmentInterest || selectedEnquiry?.subject || 'General Inquiry')}
+              </span>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Quantity</label>
+              <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 700 }}>
+                {unescape(selectedEnquiry?.quantity || selectedEnquiry?.requiredQuantity)}
+              </span>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Timestamp</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                <Calendar size={14} />
+                <span>{selectedEnquiry?.date ? new Date(selectedEnquiry.date).toLocaleString() : 'N/A'}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div style={{ marginBottom: '1.5rem' }}>
-          <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600, marginBottom: '0.25rem' }}>Message</label>
-          <div style={{ 
-            fontSize: '0.95rem', 
-            color: 'var(--text-primary)', 
-            lineHeight: '1.6', 
-            backgroundColor: 'var(--bg-primary)', 
-            padding: '1.25rem', 
-            borderRadius: '6px', 
-            border: '1px solid var(--border-color)',
-            whiteSpace: 'pre-wrap'
-          }}>
-            {selectedEnquiry?.message || 'N/A'}
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600, marginBottom: '0.25rem' }}>Message</label>
+            <div style={{ 
+              fontSize: '0.95rem', 
+              color: 'var(--text-primary)', 
+              lineHeight: '1.6', 
+              backgroundColor: 'var(--bg-primary)', 
+              padding: '1.25rem', 
+              borderRadius: '6px', 
+              border: '1px solid var(--border-color)',
+              whiteSpace: 'pre-wrap'
+            }}>
+              {unescape(selectedEnquiry?.message)}
+            </div>
           </div>
-        </div>
 
-        {/* Previous / Next Navigation Row */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          marginBottom: '1.5rem',
-          paddingBottom: '1rem',
-          borderBottom: '1px solid var(--border-color)' 
-        }}>
-          <button
-            type="button"
-            onClick={onPrev}
-            disabled={!hasPrev}
-            className="btn btn-secondary btn-sm"
-            style={{ opacity: hasPrev ? 1 : 0.5, cursor: hasPrev ? 'pointer' : 'not-allowed' }}
-          >
-            &larr; Previous
-          </button>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-            Enquiry {currentIndex + 1} of {totalCount}
-          </span>
-          <button
-            type="button"
-            onClick={onNext}
-            disabled={!hasNext}
-            className="btn btn-secondary btn-sm"
-            style={{ opacity: hasNext ? 1 : 0.5, cursor: hasNext ? 'pointer' : 'not-allowed' }}
-          >
-            Next &rarr;
-          </button>
-        </div>
+          {/* Previous / Next Navigation Row */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            marginBottom: '1.5rem',
+            paddingBottom: '1rem',
+            borderBottom: '1px solid var(--border-color)' 
+          }}>
+            <button
+              type="button"
+              onClick={onPrev}
+              disabled={!hasPrev}
+              className="btn btn-secondary btn-sm"
+              style={{ opacity: hasPrev ? 1 : 0.5, cursor: hasPrev ? 'pointer' : 'not-allowed' }}
+            >
+              &larr; Previous
+            </button>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              Enquiry {currentIndex + 1} of {totalCount}
+            </span>
+            <button
+              type="button"
+              onClick={onNext}
+              disabled={!hasNext}
+              className="btn btn-secondary btn-sm"
+              style={{ opacity: hasNext ? 1 : 0.5, cursor: hasNext ? 'pointer' : 'not-allowed' }}
+            >
+              Next &rarr;
+            </button>
+          </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button 
-            type="button" 
-            onClick={() => {
-              if (selectedEnquiry?.id) {
-                markLeadContacted(selectedEnquiryType, selectedEnquiry.id);
-                setSelectedEnquiry(prev => prev ? { ...prev, contacted: !prev.contacted } : null);
-              }
-            }} 
-            className="btn btn-secondary" 
-            style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-          >
-            <Check size={16} /> {selectedEnquiry?.contacted ? 'Mark as New' : 'Mark Contacted'}
-          </button>
-          
-          <button 
-            type="button" 
-            onClick={async () => {
-              if (selectedEnquiry?.id) {
-                if (confirm('Are you sure you want to delete this enquiry?')) {
-                  await deleteLead(selectedEnquiryType, selectedEnquiry.id);
-                  setSelectedEnquiry(null);
-                  fetchAnalytics();
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button 
+              type="button" 
+              onClick={() => {
+                if (selectedEnquiry?.id) {
+                  markLeadContacted(selectedEnquiryType, selectedEnquiry.id);
+                  setSelectedEnquiry(prev => prev ? { ...prev, contacted: !prev.contacted } : null);
                 }
-              }
-            }} 
-            className="btn btn-dark" 
-            style={{ flex: 1, backgroundColor: '#dc3545', border: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-          >
-            <Trash2 size={16} /> Delete Enquiry
-          </button>
+              }} 
+              className="btn btn-secondary" 
+              style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+            >
+              <Check size={16} /> {selectedEnquiry?.contacted ? 'Mark as New' : 'Mark Contacted'}
+            </button>
+            
+            <button 
+              type="button" 
+              onClick={async () => {
+                if (selectedEnquiry?.id) {
+                  if (confirm('Are you sure you want to delete this enquiry?')) {
+                    await deleteLead(selectedEnquiryType, selectedEnquiry.id);
+                    setSelectedEnquiry(null);
+                    fetchAnalytics();
+                  }
+                }
+              }} 
+              className="btn btn-dark" 
+              style={{ flex: 1, backgroundColor: '#dc3545', border: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+            >
+              <Trash2 size={16} /> Delete Enquiry
+            </button>
+          </div>
         </div>
       </div>
     </div>
