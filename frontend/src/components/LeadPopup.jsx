@@ -115,7 +115,7 @@ export const LeadPopup = () => {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div className="form-group" style={{ marginBottom: '0' }}>
             <label className="form-label" htmlFor="popupName">{t('formName')}</label>
-            <div style={{ position: 'relative' }}>
+            <div className="popup-field-wrapper">
               <input 
                 type="text" 
                 id="popupName"
@@ -124,16 +124,15 @@ export const LeadPopup = () => {
                 onChange={handleChange} 
                 required 
                 placeholder="John Doe" 
-                className="form-input"
-                style={{ paddingLeft: '2.5rem' }}
+                className="form-input popup-field-input"
               />
-              <User size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <User size={16} className="popup-field-icon" />
             </div>
           </div>
 
           <div className="form-group" style={{ marginBottom: '0' }}>
             <label className="form-label" htmlFor="popupPhone">{t('phoneNo')}</label>
-            <div style={{ position: 'relative' }}>
+            <div className="popup-field-wrapper">
               <input 
                 type="tel" 
                 id="popupPhone"
@@ -142,16 +141,15 @@ export const LeadPopup = () => {
                 onChange={handleChange} 
                 required 
                 placeholder="+91 98765 43210" 
-                className="form-input"
-                style={{ paddingLeft: '2.5rem' }}
+                className="form-input popup-field-input"
               />
-              <Phone size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <Phone size={16} className="popup-field-icon" />
             </div>
           </div>
 
           <div className="form-group" style={{ marginBottom: '0' }}>
             <label className="form-label" htmlFor="popupEmail">{t('formEmail')}</label>
-            <div style={{ position: 'relative' }}>
+            <div className="popup-field-wrapper">
               <input 
                 type="email" 
                 id="popupEmail"
@@ -159,10 +157,9 @@ export const LeadPopup = () => {
                 value={form.email} 
                 onChange={handleChange} 
                 placeholder="john@example.com" 
-                className="form-input"
-                style={{ paddingLeft: '2.5rem' }}
+                className="form-input popup-field-input"
               />
-              <Mail size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <Mail size={16} className="popup-field-icon" />
             </div>
           </div>
           <button 

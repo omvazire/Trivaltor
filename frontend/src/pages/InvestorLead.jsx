@@ -6,7 +6,7 @@ import { config } from '../services/config';
 import { Landmark, CheckCircle2, ArrowLeft, Download, FileText } from 'lucide-react';
 
 // Import presentation PDF
-import presentationPdf from '../assets/docs/Tirvaltor main.pdf';
+import presentationPdf from '../assets/docs/TRIVALTOR main.pdf';
 
 export const InvestorLead = () => {
   const { submitInvestorLead, loading } = useLeads();
