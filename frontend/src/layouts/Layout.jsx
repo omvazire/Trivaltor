@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LeadPopup } from '../components/LeadPopup';
 import { VisitorTracker } from '../components/VisitorTracker';
@@ -8,6 +8,8 @@ import { FaWhatsapp } from 'react-icons/fa';
 import logoImg from '../assets/images/company-logo.png'; // company-logo.png is the logo
 
 export const Layout = ({ children }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
@@ -152,15 +154,17 @@ export const Layout = ({ children }) => {
       </main>
 
       {/* Floating WhatsApp Button */}
-      <a 
-        href="#whatsapp" 
-        onClick={handleWhatsAppClick} 
-        className="whatsapp-float flex-center"
-        aria-label="Contact Trivaltor via WhatsApp"
-        title="Chat on WhatsApp"
-      >
-        <FaWhatsapp size={28} />
-      </a>
+      {isHomePage && (
+        <a 
+          href="#whatsapp" 
+          onClick={handleWhatsAppClick} 
+          className="whatsapp-float flex-center"
+          aria-label="Contact Trivaltor via WhatsApp"
+          title="Chat on WhatsApp"
+        >
+          <FaWhatsapp size={28} />
+        </a>
+      )}
 
       {/* Footer */}
       <footer className="footer">

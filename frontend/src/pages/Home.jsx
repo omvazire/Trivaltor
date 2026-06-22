@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLeads } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,27 +8,185 @@ import { config } from '../services/config';
 import { 
   Sprout, Globe2, TrendingUp, Shovel, Ship, Landmark, ArrowRight, 
   Mail, Phone, MapPin, Send, CheckCircle2, Star, Download, FileText, X,
-  ShieldCheck, Award
+  ShieldCheck, Award, Plane
 } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 
 // Import local assets
 import heroImg from '../assets/images/export-hero.png';
 import imgAgri from '../assets/images/deal-agriculture.jpg';
 import imgExport from '../assets/images/deal-export.jpeg';
 import imgInvest from '../assets/images/deal-invest.jpg';
-import udyamCertImg from '../assets/images/udyam certificate.jpeg';
-import fssaiCertImg from '../assets/images/certificate.jpeg';
+
+// ============ PHASE 6B: Framer Motion Animation Variants ============
+const premiumEasing = [0.16, 1, 0.3, 1]; // cubic-bezier(0.16, 1, 0.3, 1)
+
+const welcomeBadgeVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1, y: 0,
+    transition: { duration: 0.8, ease: premiumEasing, delay: 0.15 }
+  }
+};
+
+const maskRevealLine1 = {
+  hidden: { y: '110%' },
+  visible: {
+    y: '0%',
+    transition: { duration: 0.9, ease: premiumEasing, delay: 0.35 }
+  }
+};
+
+const maskRevealLine2 = {
+  hidden: { y: '110%' },
+  visible: {
+    y: '0%',
+    transition: { duration: 0.9, ease: premiumEasing, delay: 0.47 }
+  }
+};
+
+const maskRevealLine3 = {
+  hidden: { y: '110%' },
+  visible: {
+    y: '0%',
+    transition: { duration: 0.9, ease: premiumEasing, delay: 0.59 }
+  }
+};
+
+const descriptionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1, y: 0,
+    transition: { duration: 0.85, ease: premiumEasing, delay: 0.72 }
+  }
+};
+
+const ctaVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1, y: 0,
+    transition: { duration: 0.8, ease: premiumEasing, delay: 0.88 }
+  }
+};
+
+const cardEntranceVariants = {
+  hidden: { opacity: 0, scale: 0.95, y: 30 },
+  visible: {
+    opacity: 1, scale: 1, y: 0,
+    transition: { duration: 1.1, ease: premiumEasing, delay: 1.08 }
+  }
+};
+
+// Helper: generates entrance + perpetual float props for each badge
+const getFloatBadgeProps = (index) => ({
+  initial: { opacity: 0, scale: 0.85 },
+  animate: { 
+    opacity: 1, 
+    scale: 1, 
+    y: [0, -(8 + index * 2), 0]
+  },
+  transition: {
+    opacity: { duration: 0.7, delay: 1.35 + index * 0.15, ease: premiumEasing },
+    scale: { duration: 0.7, delay: 1.35 + index * 0.15, ease: premiumEasing },
+    y: { 
+      duration: 4.0 + index * 0.6, 
+      repeat: Infinity, 
+      ease: 'easeInOut',
+      delay: 2.1 + index * 0.2
+    }
+  }
+});
+
+// ============ PHASE 6C+: Mobile Trade Network Graphic ============
+const MobileTradeGraphic = () => {
+  return (
+    <div className="mobile-trade-graphic-container">
+      <svg 
+        viewBox="0 0 200 200" 
+        className="mobile-trade-graphic"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Globe Grid Circle */}
+        <circle cx="100" cy="100" r="85" fill="none" stroke="var(--accent-gold)" strokeWidth="0.5" strokeDasharray="3 6" opacity="0.3" />
+        
+        {/* Rotating Globe Grid */}
+        <g className="globe-grid">
+          {/* Latitude lines */}
+          <ellipse cx="100" cy="100" rx="85" ry="30" fill="none" stroke="var(--accent-gold)" strokeWidth="0.75" opacity="0.25" />
+          <ellipse cx="100" cy="100" rx="85" ry="60" fill="none" stroke="var(--accent-gold)" strokeWidth="0.75" opacity="0.2" />
+          <line x1="15" y1="100" x2="185" y2="100" stroke="var(--accent-gold)" strokeWidth="0.75" opacity="0.2" />
+          {/* Longitude lines */}
+          <ellipse cx="100" cy="100" rx="30" ry="85" fill="none" stroke="var(--accent-gold)" strokeWidth="0.75" opacity="0.25" />
+          <ellipse cx="100" cy="100" rx="60" ry="85" fill="none" stroke="var(--accent-gold)" strokeWidth="0.75" opacity="0.2" />
+          <line x1="100" y1="15" x2="100" y2="185" stroke="var(--accent-gold)" strokeWidth="0.75" opacity="0.2" />
+        </g>
+
+        {/* Trade Routes (curves connecting port nodes) */}
+        {/* Route 1: Top Left to Bottom Right */}
+        <path d="M 45 60 Q 90 40 145 140" fill="none" strokeWidth="1.5" className="route-line" />
+        {/* Route 2: Bottom Left to Top Right */}
+        <path d="M 50 145 Q 110 110 150 55" fill="none" strokeWidth="1.5" className="route-line-reverse" />
+        {/* Route 3: Middle Left to Middle Right */}
+        <path d="M 30 100 Q 100 160 170 100" fill="none" strokeWidth="1.5" className="route-line" />
+        {/* Route 4: Top Center to Bottom Center */}
+        <path d="M 100 35 Q 60 100 100 165" fill="none" strokeWidth="1.25" className="route-line-reverse" />
+
+        {/* Port Nodes (subtle mini hubs) */}
+        {/* Hub 1: Mumbai/India Area (Center) */}
+        <circle cx="100" cy="100" r="2.5" fill="var(--accent-gold)" />
+        {/* Hub 2: East Asia Area */}
+        <circle cx="150" cy="55" r="2" fill="var(--accent-gold)" />
+        {/* Hub 3: Europe/Middle East Area */}
+        <circle cx="45" cy="60" r="2" fill="var(--accent-gold)" />
+        {/* Hub 4: Africa/Southern Ocean Area */}
+        <circle cx="50" cy="145" r="2" fill="var(--accent-gold)" />
+        {/* Hub 5: Australia/Pacific Area */}
+        <circle cx="145" cy="140" r="2" fill="var(--accent-gold)" />
+      </svg>
+    </div>
+  );
+};
+
+// ============ PHASE 6C+: Mobile Headline Word-by-Word Reveal ============
+const renderMobileWords = (text, baseDelay = 0.2, prefersReduced = false) => {
+  if (!text) return null;
+  const words = text.split(/\s+/);
+  return words.map((word, wordIdx) => {
+    return (
+      <span key={wordIdx} className="hero-word-mask" style={{ marginRight: '0.25em' }}>
+        <motion.span
+          className="hero-word-inner"
+          variants={{
+            hidden: { y: prefersReduced ? 0 : '110%' },
+            visible: {
+              y: '0%',
+              transition: prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: baseDelay + wordIdx * 0.08 }
+            }
+          }}
+        >
+          {word}
+        </motion.span>
+      </span>
+    );
+  });
+};
 
 export const Home = () => {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
   const { approvedReviews: reviews, addReview, fetchApprovedReviews } = useReviews();
   const contactSectionRef = useRef(null);
-
   const [isMobile, setIsMobile] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [prefersReduced, setPrefersReduced] = useState(false);
 
-  // Review Form States
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReduced(mediaQuery.matches);
+    const listener = (e) => setPrefersReduced(e.matches);
+    mediaQuery.addEventListener('change', listener);
+    return () => mediaQuery.removeEventListener('change', listener);
+  }, []);  // Review Form States
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewForm, setReviewForm] = useState({
     name: '',
@@ -38,6 +196,21 @@ export const Home = () => {
   });
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+  // ============ PHASE 6B: Animation Refs & Hooks ============
+  const heroSectionRef = useRef(null);
+  const scrollRevealRefs = useRef([]);
+
+  // Collect scroll-reveal element refs (used by sections below hero)
+  const addScrollRevealRef = useCallback((el) => {
+    if (el && !scrollRevealRefs.current.includes(el)) {
+      scrollRevealRefs.current.push(el);
+    }
+  }, []);
+
+  // Phase 6B: Scroll-based hero parallax (hero content drifts up on scroll)
+  const { scrollY } = useScroll();
+  const heroContentY = useTransform(scrollY, [0, 600], [0, -60]);
+
   useEffect(() => {
     fetchApprovedReviews();
     const checkMobile = () => {
@@ -46,6 +219,31 @@ export const Home = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Phase 6B: Scroll reveal via IntersectionObserver (triggers once per element)
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      scrollRevealRefs.current.forEach(el => el.classList.add('visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    scrollRevealRefs.current.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
   }, []);
 
   // Contact Form State simplified
@@ -103,118 +301,356 @@ export const Home = () => {
 
   return (
     <div className="home-page">
-      {/* 1. Hero Section */}
-      <section className="section hero-section" style={{ 
-        paddingTop: '5rem',
-        paddingBottom: '5rem',
-        backgroundColor: 'var(--bg-secondary)',
-        borderBottom: '1px solid var(--border-color)',
-        overflow: 'hidden'
+      {/* 1. Hero Section – Phase 6B: Modern Interactive Hero */}
+      <section ref={heroSectionRef} className="section hero-section hero-6b" style={{ 
+        paddingTop: isMobile ? '3.25rem' : '5rem',
+        paddingBottom: isMobile ? '3.25rem' : '5rem'
       }}>
-        <div className="container hero-container" style={{
-          display: 'grid',
-          gridTemplateColumns: '1.2fr 1fr',
-          gap: '4rem',
-          alignItems: 'center'
-        }}>
+        {/* Background gradient mesh depth */}
+        <div className="hero-bg-mesh" aria-hidden="true">
+          <div className="hero-mesh-orb hero-mesh-orb-1" />
+          <div className="hero-mesh-orb hero-mesh-orb-2" />
+          <div className="hero-mesh-orb hero-mesh-orb-3" />
+        </div>
+        {/* Mobile background blur */}
+        {isMobile && <div className="hero-mobile-blur" aria-hidden="true" />}
+
+        <motion.div 
+          className="container hero-container" 
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1.2fr 1fr',
+            gap: isMobile ? '1.5rem' : '4rem',
+            alignItems: 'center',
+            position: 'relative',
+            zIndex: 1,
+            y: isMobile ? 0 : heroContentY
+          }}
+        >
           {/* Hero Left (Text & CTAs) */}
-          <div className="animate-fade-in hero-text-content" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <span className="section-tag">{t('welcomeTag')}</span>
-            <h1 className="hero-title" style={{ 
-              fontSize: '3.5rem', 
-              fontWeight: '800', 
-              lineHeight: '1.15', 
-              color: 'var(--text-primary)',
-              letterSpacing: '-0.03em'
-            }}>
-              {t('heroTitle').split(',')[0]}, <br />
-              <span style={{ color: 'var(--accent-gold)' }}>{t('heroTitle').split(',')[1]}</span> {language === 'mr' ? 'आणि' : '&'} <br />
-              {t('heroTitle').split(',')[2] || (language === 'mr' ? 'धोरणात्मक गुंतवणूकदार' : 'Strategic Investors')}
-            </h1>
-            <p className="hero-desc-p" style={{ 
-              fontSize: '1.25rem', 
+          <motion.div 
+            className="hero-text-content" 
+            initial="hidden"
+            animate="visible"
+            style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '1.25rem',
+              alignItems: isMobile ? 'center' : 'flex-start',
+              textAlign: isMobile ? 'center' : 'left'
+            }}
+          >
+            {/* Welcome tag */}
+            <motion.span className="section-tag" variants={welcomeBadgeVariants}>
+              {t('welcomeTag')}
+            </motion.span>
+
+            {/* Headline with cinematic mask reveal */}
+            {!isMobile ? (
+              <h1 className="hero-title" style={{ 
+                fontSize: '3.5rem', 
+                fontWeight: '800', 
+                lineHeight: '1.15', 
+                color: 'var(--text-primary)',
+                letterSpacing: '-0.03em'
+              }}>
+                <span className="hero-line-mask">
+                  <motion.span className="hero-line-inner" variants={maskRevealLine1}>
+                    {t('heroTitle').split(',')[0]},
+                  </motion.span>
+                </span>
+                <span className="hero-line-mask">
+                  <motion.span className="hero-line-inner" variants={maskRevealLine2} style={{ color: 'var(--accent-gold)' }}>
+                    {t('heroTitle').split(',')[1]}
+                  </motion.span>
+                </span>
+                <span className="hero-line-mask">
+                  <motion.span className="hero-line-inner" variants={maskRevealLine3}>
+                    {language === 'mr' ? 'आणि' : '&'} {t('heroTitle').split(',')[2] || (language === 'mr' ? 'धोरणात्मक गुंतवणूकदार' : 'Strategic Investors')}
+                  </motion.span>
+                </span>
+              </h1>
+            ) : (
+              <h1 className="hero-title" style={{ 
+                fontSize: '2.35rem', 
+                fontWeight: '800', 
+                lineHeight: '1.2', 
+                color: 'var(--text-primary)',
+                letterSpacing: '-0.025em',
+                textAlign: 'center',
+                margin: 0
+              }}>
+                <span style={{ display: 'block' }}>
+                  {renderMobileWords(t('heroTitle').split(',')[0] + ',', 0.35, prefersReduced)}
+                </span>
+                <span style={{ display: 'block', color: 'var(--accent-gold)' }}>
+                  {renderMobileWords(t('heroTitle').split(',')[1], 0.55, prefersReduced)}
+                </span>
+                <span style={{ display: 'block' }}>
+                  {renderMobileWords((language === 'mr' ? 'आणि ' : '& ') + (t('heroTitle').split(',')[2] || (language === 'mr' ? 'धोरणात्मक गुंतवणूकदार' : 'Strategic Investors')), 0.75, prefersReduced)}
+                </span>
+              </h1>
+            )}
+
+            {/* Mobile Trust Floating Badges */}
+            {isMobile && (
+              <motion.div 
+                className="mobile-badges-container"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: 0.08, delayChildren: 1.35 } }
+                }}
+              >
+                <motion.div 
+                  className="mobile-float-badge"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { 
+                      opacity: 1, 
+                      scale: 1,
+                      y: prefersReduced ? 0 : [0, -4, 0],
+                      transition: {
+                        y: prefersReduced ? {} : { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                        default: { duration: prefersReduced ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }
+                      }
+                    }
+                  }}
+                >
+                  <Globe2 size={13} /> {language === 'mr' ? 'जागतिक निर्यात' : 'Global Export'}
+                </motion.div>
+                <motion.div 
+                  className="mobile-float-badge"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { 
+                      opacity: 1, 
+                      scale: 1,
+                      y: prefersReduced ? 0 : [0, -4, 0],
+                      transition: {
+                        y: prefersReduced ? {} : { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.15 },
+                        default: { duration: prefersReduced ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }
+                      }
+                    }
+                  }}
+                >
+                  <Award size={13} /> {language === 'mr' ? 'MSME नोंदणीकृत' : 'MSME Registered'}
+                </motion.div>
+                <motion.div 
+                  className="mobile-float-badge"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { 
+                      opacity: 1, 
+                      scale: 1,
+                      y: prefersReduced ? 0 : [0, -4, 0],
+                      transition: {
+                        y: prefersReduced ? {} : { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.3 },
+                        default: { duration: prefersReduced ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }
+                      }
+                    }
+                  }}
+                >
+                  <ShieldCheck size={13} /> {language === 'mr' ? 'FSSAI प्रमाणित' : 'FSSAI Certified'}
+                </motion.div>
+                <motion.div 
+                  className="mobile-float-badge"
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { 
+                      opacity: 1, 
+                      scale: 1,
+                      y: prefersReduced ? 0 : [0, -4, 0],
+                      transition: {
+                        y: prefersReduced ? {} : { duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.45 },
+                        default: { duration: prefersReduced ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }
+                      }
+                    }
+                  }}
+                >
+                  <Ship size={13} /> {language === 'mr' ? 'आंतरराष्ट्रीय व्यापार' : 'International Trade'}
+                </motion.div>
+              </motion.div>
+            )}
+            {/* Description */}
+            <motion.p className="hero-desc-p" variants={descriptionVariants} style={{ 
+              fontSize: isMobile ? '1.05rem' : '1.25rem', 
               color: 'var(--text-secondary)',
               lineHeight: '1.6',
-              maxWidth: '540px'
+              maxWidth: '540px',
+              margin: 0
             }}>
               {t('heroDesc')}
-            </p>
+            </motion.p>
+
+            {/* Mobile Trade Network Graphic with Floating Icons */}
+            {isMobile && (
+              <div className="mobile-trade-graphic-container">
+                <div className="floating-export-icon floating-icon-1">
+                  <Globe2 size={20} />
+                </div>
+                <div className="floating-export-icon floating-icon-2">
+                  <Ship size={20} />
+                </div>
+                <div className="floating-export-icon floating-icon-3">
+                  <Plane size={20} />
+                </div>
+                <MobileTradeGraphic />
+              </div>
+            )}
             
             {/* Hero CTAs */}
-            <div className="hero-ctas-wrapper" style={{ 
-              display: 'flex', 
-              gap: '1rem', 
-              flexWrap: 'wrap', 
-              marginTop: '1.5rem' 
-            }}>
-              <button 
-                onClick={() => navigate('/farmer')} 
-                className="btn btn-primary"
-                style={{ flex: '1', minWidth: '160px' }}
-              >
-                {t('iAmFarmer')}
-              </button>
-              <button 
-                onClick={() => navigate('/buyer')} 
-                className="btn btn-secondary"
-                style={{ flex: '1', minWidth: '160px' }}
-              >
-                {t('iAmBuyer')}
-              </button>
-              <button 
-                onClick={() => navigate('/investor')} 
-                className="btn btn-dark"
-                style={{ flex: '1', minWidth: '160px' }}
-              >
-                {t('iAmInvestor')}
-              </button>
-            </div>
-          </div>
-
-          {/* Hero Right (Visual Image Showcase) */}
-          {!isMobile && (
-            <div className="animate-fade-in hero-visual-wrapper" style={{ 
-              position: 'relative', 
-              borderRadius: 'var(--border-radius-lg)', 
-              overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)',
-              border: '1px solid var(--border-color)',
-              height: '480px'
-            }}>
-              <img 
-                src={heroImg} 
-                alt="Trivaltor Corporate presentation" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-              {/* Overlay Gradient for high premium feel */}
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                background: 'linear-gradient(to top, rgba(31,27,22,0.85), transparent)',
-                padding: '2rem',
-                color: '#ffffff'
+            {!isMobile ? (
+              <motion.div className="hero-ctas-wrapper" variants={ctaVariants} style={{ 
+                display: 'flex', 
+                gap: '1rem', 
+                flexWrap: 'wrap', 
+                marginTop: '1.5rem' 
               }}>
-                <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '0.25rem' }}>
-                  {t('tradeEcosystem')}
-                </h4>
-                <span style={{ fontSize: '0.85rem', opacity: '0.9', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  {t('tradeEcosystemDesc')}
-                </span>
-              </div>
-            </div>
+                <button 
+                  onClick={() => navigate('/farmer')} 
+                  className="btn btn-primary hero-cta-btn"
+                  style={{ flex: '1', minWidth: '160px' }}
+                >
+                  {t('iAmFarmer')}
+                </button>
+                <button 
+                  onClick={() => navigate('/buyer')} 
+                  className="btn btn-secondary hero-cta-btn"
+                  style={{ flex: '1', minWidth: '160px' }}
+                >
+                  {t('iAmBuyer')}
+                </button>
+                <button 
+                  onClick={() => navigate('/investor')} 
+                  className="btn btn-dark hero-cta-btn"
+                  style={{ flex: '1', minWidth: '160px' }}
+                >
+                  {t('iAmInvestor')}
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div 
+                className="hero-ctas-wrapper" 
+                variants={{
+                  hidden: { opacity: 0, scale: 0.96 },
+                  visible: { 
+                    opacity: 1, 
+                    scale: prefersReduced ? 1 : [0.96, 1.02, 1],
+                    transition: { 
+                      duration: prefersReduced ? 0 : 0.8, 
+                      delay: prefersReduced ? 0 : 0.88,
+                      ease: premiumEasing
+                    }
+                  }
+                }}
+                initial="hidden"
+                animate="visible"
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  gap: '0.75rem', 
+                  width: '100%',
+                  marginTop: '0.5rem' 
+                }}
+              >
+                <motion.button 
+                  whileTap={prefersReduced ? {} : { scale: 0.96 }}
+                  onClick={() => navigate('/farmer')} 
+                  className="btn btn-primary hero-cta-btn cta-shine"
+                  style={{ width: '100%' }}
+                >
+                  {t('iAmFarmer')}
+                </motion.button>
+                <motion.button 
+                  whileTap={prefersReduced ? {} : { scale: 0.96 }}
+                  onClick={() => navigate('/buyer')} 
+                  className="btn btn-secondary hero-cta-btn"
+                  style={{ width: '100%' }}
+                >
+                  {t('iAmBuyer')}
+                </motion.button>
+                <motion.button 
+                  whileTap={prefersReduced ? {} : { scale: 0.96 }}
+                  onClick={() => navigate('/investor')} 
+                  className="btn btn-dark hero-cta-btn"
+                  style={{ width: '100%' }}
+                >
+                  {t('iAmInvestor')}
+                </motion.button>
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Hero Right (3D Interactive Card Scene) */}
+          {!isMobile && (
+            <motion.div 
+              className="hero-3d-scene"
+              initial="hidden"
+              animate="visible"
+              variants={cardEntranceVariants}
+            >
+              <Tilt
+                tiltMaxAngleX={6}
+                tiltMaxAngleY={6}
+                perspective={1000}
+                scale={1.02}
+                transitionSpeed={1500}
+                gyroscope={false}
+                className="hero-tilt-wrapper"
+              >
+                <div className="hero-card-3d">
+                  <img 
+                    src={heroImg} 
+                    alt="Trivaltor Corporate presentation" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                  {/* Overlay Gradient for premium feel */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(to top, rgba(31,27,22,0.85), transparent)',
+                    padding: '2rem',
+                    color: '#ffffff'
+                  }}>
+                    <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '0.25rem' }}>
+                      {t('tradeEcosystem')}
+                    </h4>
+                    <span style={{ fontSize: '0.85rem', opacity: '0.9', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      {t('tradeEcosystemDesc')}
+                    </span>
+                  </div>
+                </div>
+              </Tilt>
+
+              {/* Floating Trust Badges — glassmorphism, independent float cycles */}
+              <motion.div className="hero-float-badge hero-badge-1" {...getFloatBadgeProps(0)}>
+                <Globe2 size={16} /> Export Ready
+              </motion.div>
+              <motion.div className="hero-float-badge hero-badge-2" {...getFloatBadgeProps(1)}>
+                <ShieldCheck size={16} /> FSSAI Certified
+              </motion.div>
+              <motion.div className="hero-float-badge hero-badge-3" {...getFloatBadgeProps(2)}>
+                <Award size={16} /> MSME Registered
+              </motion.div>
+              <motion.div className="hero-float-badge hero-badge-4" {...getFloatBadgeProps(3)}>
+                <Ship size={16} /> Global Trade
+              </motion.div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. About Section (Three Pillars) */}
       <section id="about" className="section about-section" style={{ backgroundColor: 'var(--bg-primary)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span className="section-tag">{t('corePrinciples')}</span>
             <h2 className="section-title">{t('threePillars')}</h2>
             <p className="section-desc">
@@ -229,7 +665,7 @@ export const Home = () => {
             marginTop: '1.5rem'
           }}>
             {/* Pillar 1 */}
-            <div className="premium-card">
+            <div ref={addScrollRevealRef} className="premium-card scroll-reveal" style={{ '--stagger-index': 0 }}>
               <div style={{ 
                 width: '60px', 
                 height: '60px', 
@@ -247,7 +683,7 @@ export const Home = () => {
             </div>
 
             {/* Pillar 2 */}
-            <div className="premium-card">
+            <div ref={addScrollRevealRef} className="premium-card scroll-reveal" style={{ '--stagger-index': 1 }}>
               <div style={{ 
                 width: '60px', 
                 height: '60px', 
@@ -265,7 +701,7 @@ export const Home = () => {
             </div>
 
             {/* Pillar 3 */}
-            <div className="premium-card">
+            <div ref={addScrollRevealRef} className="premium-card scroll-reveal" style={{ '--stagger-index': 2 }}>
               <div style={{ 
                 width: '60px', 
                 height: '60px', 
@@ -288,7 +724,7 @@ export const Home = () => {
       {/* 3. Business Overview */}
       <section className="section divisions-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span className="section-tag">{t('operationalScope')}</span>
             <h2 className="section-title">{t('diverseActivities')}</h2>
             <p className="section-desc">
@@ -302,7 +738,7 @@ export const Home = () => {
             gap: '2rem'
           }}>
             {/* Div 1 */}
-            <div className="premium-card" style={{ padding: '0', overflow: 'hidden' }}>
+            <div ref={addScrollRevealRef} className="premium-card scroll-reveal" style={{ padding: '0', overflow: 'hidden', '--stagger-index': 0 }}>
               <div style={{ height: '180px', overflow: 'hidden' }}>
                 <img src={imgAgri} alt="Agriculture Division" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
               </div>
@@ -319,7 +755,7 @@ export const Home = () => {
             </div>
 
             {/* Div 2 */}
-            <div className="premium-card" style={{ padding: '0', overflow: 'hidden' }}>
+            <div ref={addScrollRevealRef} className="premium-card scroll-reveal" style={{ padding: '0', overflow: 'hidden', '--stagger-index': 1 }}>
               <div style={{ height: '180px', overflow: 'hidden' }}>
                 <img src={imgExport} alt="Export Division" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
@@ -336,7 +772,7 @@ export const Home = () => {
             </div>
 
             {/* Div 4 */}
-            <div className="premium-card" style={{ padding: '0', overflow: 'hidden' }}>
+            <div ref={addScrollRevealRef} className="premium-card scroll-reveal" style={{ padding: '0', overflow: 'hidden', '--stagger-index': 2 }}>
               <div style={{ height: '180px', overflow: 'hidden' }}>
                 <img src={imgInvest} alt="Investment Division" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
@@ -358,7 +794,7 @@ export const Home = () => {
       {/* 4. Product Categories Section (Replaces Mixed Catalog) */}
       <section id="categories" className="section categories-section" style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span className="section-tag">{t('categoriesTitle')}</span>
             <h2 className="section-title">{t('categoriesTitle')}</h2>
             <p className="section-desc">
@@ -367,12 +803,12 @@ export const Home = () => {
           </div>
 
           <div className="categories-grid">
-            {categoriesData.map((category) => {
+            {categoriesData.map((category, index) => {
               const catName = category.name[language] || category.name['en'];
               const catDesc = category.description[language] || category.description['en'];
               
               return (
-                <div key={category.id} className="category-card animate-fade-in">
+                <div key={category.id} ref={addScrollRevealRef} className="category-card scroll-reveal" style={{ '--stagger-index': index }}>
                   <div className="category-image-container">
                     <img src={category.image} alt={catName} />
                   </div>
@@ -397,7 +833,7 @@ export const Home = () => {
       {/* 5. Company Video Section */}
       <section id="video" className="section video-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3.5rem' }}>
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3.5rem' }}>
             <span className="section-tag">{t('videoTag')}</span>
             <h2 className="section-title">{t('videoTitle')}</h2>
             <p className="section-desc" style={{ marginBottom: '0' }}>
@@ -405,7 +841,7 @@ export const Home = () => {
             </p>
           </div>
 
-          <div className="video-wrapper">
+          <div ref={addScrollRevealRef} className="video-wrapper scroll-reveal">
             <iframe
               src={config.youtubeEmbedUrl}
               title={t('videoTitle')}
@@ -415,215 +851,17 @@ export const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* 6. Certifications & Registrations Section */}
-      <section id="credibility" className="section credibility-section" style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem' }}>
-            <span className="section-tag">{t('credibilityTag')}</span>
-            <h2 className="section-title">{t('credibilityTitle')}</h2>
-            <p className="section-desc">
-              {t('credibilityDesc')}
-            </p>
-          </div>
-
-          <div className="credibility-grid" style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-            gap: '2.5rem', 
-            alignItems: 'stretch'
-          }}>
-            {/* Card A: UDYAM */}
-            <div className="premium-card" style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '1.5rem', 
-              padding: '2rem',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--border-radius-md)'
-            }}>
-              <div 
-                onClick={() => setPreviewImage(udyamCertImg)}
-                style={{ 
-                  cursor: 'pointer', 
-                  borderRadius: 'var(--border-radius-sm)', 
-                  overflow: 'hidden', 
-                  border: '1px solid var(--border-color)',
-                  backgroundColor: '#ffffff',
-                  height: '240px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-                }}
-                title="Click to preview certificate"
-              >
-                <img 
-                  src={udyamCertImg} 
-                  alt="Udyam Registration Certificate" 
-                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                />
-              </div>
-              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                  <Award size={20} style={{ color: 'var(--accent-gold-hover)', marginTop: '0.15rem', flexShrink: 0 }} />
-                  <div>
-                    <h3 style={{ fontSize: '1.15rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', fontWeight: '700', lineHeight: '1.3', margin: 0 }}>
-                      Ministry of MSME, Govt. of India
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.15rem 0 0 0' }}>
-                      UDYAM Certificate of Registration
-                    </p>
-                  </div>
-                </div>
-
-                <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '0.25rem 0' }} />
-
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Registration Number</strong>
-                  <div>
-                    <code style={{ 
-                      fontSize: '0.9rem', 
-                      color: '#0c2d1c', 
-                      background: 'var(--success-light)', 
-                      padding: '0.3rem 0.6rem', 
-                      borderRadius: '4px', 
-                      display: 'inline-block', 
-                      marginTop: '0.25rem',
-                      fontWeight: '700',
-                      border: '1px solid rgba(12, 45, 28, 0.15)'
-                    }}>
-                      UDYAM-MH-33-0703853
-                    </code>
-                  </div>
-                </div>
-
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.35rem', 
-                  marginTop: 'auto', 
-                  color: '#0c2d1c', 
-                  fontSize: '0.85rem', 
-                  fontWeight: '600',
-                  backgroundColor: 'var(--success-light)',
-                  padding: '0.4rem 0.75rem',
-                  borderRadius: '4px',
-                  width: 'fit-content'
-                }}>
-                  <ShieldCheck size={16} /> Government Recognized Enterprise
-                </div>
-              </div>
-            </div>
-
-            {/* Card B: FSSAI */}
-            <div className="premium-card" style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '1.5rem', 
-              padding: '2rem',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--border-radius-md)'
-            }}>
-              <div 
-                onClick={() => setPreviewImage(fssaiCertImg)}
-                style={{ 
-                  cursor: 'pointer', 
-                  borderRadius: 'var(--border-radius-sm)', 
-                  overflow: 'hidden', 
-                  border: '1px solid var(--border-color)',
-                  backgroundColor: '#ffffff',
-                  height: '240px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-                }}
-                title="Click to preview certificate"
-              >
-                <img 
-                  src={fssaiCertImg} 
-                  alt="FSSAI Registration" 
-                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                />
-              </div>
-              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                  <Award size={20} style={{ color: 'var(--accent-gold-hover)', marginTop: '0.15rem', flexShrink: 0 }} />
-                  <div>
-                    <h3 style={{ fontSize: '1.15rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', fontWeight: '700', lineHeight: '1.3', margin: 0 }}>
-                      Food Safety & Standards Authority of India
-                    </h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.15rem 0 0 0' }}>
-                      FSSAI License & Standards Compliance
-                    </p>
-                  </div>
-                </div>
-
-                <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '0.25rem 0' }} />
-
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>License Number</strong>
-                  <div>
-                    <code style={{ 
-                      fontSize: '0.9rem', 
-                      color: '#0c2d1c', 
-                      background: 'var(--success-light)', 
-                      padding: '0.3rem 0.6rem', 
-                      borderRadius: '4px', 
-                      display: 'inline-block', 
-                      marginTop: '0.25rem',
-                      fontWeight: '700',
-                      border: '1px solid rgba(12, 45, 28, 0.15)'
-                    }}>
-                      21526022000048
-                    </code>
-                  </div>
-                </div>
-
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between',
-                  marginTop: 'auto',
-                  flexWrap: 'wrap',
-                  gap: '0.5rem'
-                }}>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '0.35rem', 
-                    color: '#0c2d1c', 
-                    fontSize: '0.85rem', 
-                    fontWeight: '600',
-                    backgroundColor: 'var(--success-light)',
-                    padding: '0.4rem 0.75rem',
-                    borderRadius: '4px'
-                  }}>
-                    <ShieldCheck size={16} /> Certified Quality
-                  </div>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
-                    Valid Until: 04-01-2027
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       {/* 7. Reviews Section */}
       <section id="testimonials" className="section reviews-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span className="section-tag">{t('reviewsTag')}</span>
             <h2 className="section-title">{t('reviewsTitle')}</h2>
             <p className="section-desc" style={{ marginBottom: '1.5rem' }}>{t('reviewsDesc')}</p>
           </div>
         </div>
 
-        <div className="reviews-marquee-container">
+        <div ref={addScrollRevealRef} className="reviews-marquee-container scroll-reveal">
           <div className="reviews-marquee-track">
             <div className="reviews-marquee-content">
               {reviews.filter(r => r.status === 'approved').map(review => (
@@ -697,7 +935,7 @@ export const Home = () => {
         borderBottom: '1px solid var(--border-color)' 
       }}>
         <div className="container">
-          <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span className="section-tag">{t('getInTouch')}</span>
             <h2 className="section-title">{t('contactDesk')}</h2>
             <p className="section-desc">
@@ -713,7 +951,7 @@ export const Home = () => {
             marginTop: '1.5rem'
           }}>
             {/* Contact Details */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div ref={addScrollRevealRef} className="scroll-reveal contact-details-reveal" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
               <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
                 {t('headquarters')}
               </h3>
@@ -783,7 +1021,7 @@ export const Home = () => {
             </div>
 
             {/* Contact Form - Simplified to Name, Email, Message */}
-            <div className="form-container-card" style={{
+            <div ref={addScrollRevealRef} className="form-container-card scroll-reveal contact-form-reveal" style={{
               backgroundColor: 'var(--bg-primary)',
               border: '1px solid var(--border-color)',
               padding: '2.5rem',
@@ -866,40 +1104,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Certificate Preview Modal */}
-      {previewImage && (
-        <div className="modal-overlay" onClick={() => setPreviewImage(null)}>
-          <div 
-            className="modal-container" 
-            style={{ 
-              maxWidth: '800px', 
-              padding: '1.5rem', 
-              backgroundColor: '#fff', 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center',
-              position: 'relative'
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button 
-              className="modal-close" 
-              onClick={() => setPreviewImage(null)} 
-              aria-label="Close preview"
-              style={{ top: '1rem', right: '1rem', zIndex: 10 }}
-            >
-              <X size={24} />
-            </button>
-            <div style={{ width: '100%', maxHeight: '80vh', overflow: 'auto', display: 'flex', justifyContent: 'center' }}>
-              <img 
-                src={previewImage} 
-                alt="Certificate Preview" 
-                style={{ maxWidth: '100%', maxHeight: '75vh', objectFit: 'contain' }} 
-              />
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Leave Your Review Form Modal */}
       {showReviewModal && (

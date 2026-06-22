@@ -3,6 +3,25 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getCategoryById } from '../config/categories';
 import { useLanguage } from '../context/LanguageContext';
 import { ArrowLeft } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    scale: 0.94, 
+    y: 25 
+  },
+  visible: (i) => ({ 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: { 
+      duration: 0.7, 
+      ease: [0.16, 1, 0.3, 1],
+      delay: (i % 4) * 0.08
+    }
+  })
+};
 
 export const CategoryDetail = () => {
   const { categoryId } = useParams();
@@ -63,13 +82,22 @@ export const CategoryDetail = () => {
         </h2>
 
         <div className="category-products-grid">
-          {categoryProducts.map((product) => {
+          {categoryProducts.map((product, index) => {
             const productName = typeof product.name === 'object' 
               ? (product.name[language] || product.name['en']) 
               : product.name;
 
             return (
-              <div key={product.id} className="premium-card product-card animate-fade-in" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <motion.div 
+                key={product.id} 
+                className="premium-card product-card" 
+                style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%' }}
+                variants={itemVariants}
+                custom={index}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
+              >
                 {/* Product Image */}
                 <div className="product-card-image" style={{ position: 'relative', width: '100%', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
                   <img 
@@ -104,7 +132,7 @@ export const CategoryDetail = () => {
                     Enquire Now
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
