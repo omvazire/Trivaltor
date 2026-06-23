@@ -88,6 +88,15 @@ export const categoriesData = [
           "mr": "पेरू"
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869557/trivaltor/products/fruits/Guava.jpg"
+      },
+      {
+        "id": "fr-9",
+        "name": {
+          "en": "Black Grapes",
+          "hi": "काले अंगूर",
+          "mr": "काळी द्राक्षे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204754/trivaltor/products/fruits/black_grapes.webp"
       }
     ]
   },
@@ -163,20 +172,11 @@ export const categoriesData = [
       {
         "id": "vg-7",
         "name": {
-          "en": "Red Capsicum",
-          "hi": "लाल शिमला मिर्च",
-          "mr": "लाल ढोबळी मिरची"
+          "en": "Bell Pepper (Mixed Red & Yellow)",
+          "hi": "शिमला मिर्च (लाल और पीली मिश्रित)",
+          "mr": "ढोबळी मिरची (लाल आणि पिवळी मिश्रित)"
         },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869567/trivaltor/products/vegetables/red_capsicum.jpg"
-      },
-      {
-        "id": "vg-8",
-        "name": {
-          "en": "Yellow Capsicum",
-          "hi": "पीली शिमला मिर्च",
-          "mr": "पिवळी ढोबळी मिरची"
-        },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869569/trivaltor/products/vegetables/yellow_capsicum.jpg"
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204759/trivaltor/products/vegetables/bell_pepper_mixed.jpg"
       },
       {
         "id": "vg-9",
@@ -195,6 +195,42 @@ export const categoriesData = [
           "mr": "लिंबू"
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869564/trivaltor/products/vegetables/lemons.jpg"
+      },
+      {
+        "id": "vg-11",
+        "name": {
+          "en": "Oyster Mushroom",
+          "hi": "ऑयस्टर मशरूम",
+          "mr": "ऑयस्टर मशरूम"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204760/trivaltor/products/vegetables/oyster_mushroom.jpg"
+      },
+      {
+        "id": "vg-12",
+        "name": {
+          "en": "Ginger",
+          "hi": "अदरक",
+          "mr": "आले"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204757/trivaltor/products/vegetables/ginger.jpg"
+      },
+      {
+        "id": "vg-13",
+        "name": {
+          "en": "Iceberg Lettuce",
+          "hi": "आइसबर्ग लेट्यूस",
+          "mr": "आइसबर्ग लेट्यूस"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204758/trivaltor/products/vegetables/iceberg_lettuce.jpg"
+      },
+      {
+        "id": "vg-14",
+        "name": {
+          "en": "Peeled Garlic",
+          "hi": "छिला हुआ लहसुन",
+          "mr": "सोललेला लसूण"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204756/trivaltor/products/vegetables/peeled_garlic.jpg"
       }
     ]
   },
@@ -1080,6 +1116,441 @@ export const categoriesData = [
           "mr": "चटपटीत पदार्थांसाठी वापरण्यात येणारी सुकवलेली पांढरा कांदा पावडर."
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869632/trivaltor/products/spices/white_onion_powder.jpg"
+      }
+    ]
+  },
+  {
+    "id": "herbs",
+    "name": {
+      "en": "Herbs & Medicinal Plants",
+      "hi": "जड़ी-बूटियाँ और औषधीय पौधे",
+      "mr": "औषधी वनस्पती आणि जडीबुटी"
+    },
+    "description": {
+      "en": "High-potency wildcrafted and organic medicinal herbs sourced from traditional farming belts, shade-dried and processed to preserve active bio-compounds.",
+      "hi": "पारंपरिक कृषि क्षेत्रों से प्राप्त उच्च क्षमता वाली जंगली और जैविक औषधीय जड़ी-बूटियाँ, सक्रिय जैव-यौगिकों को संरक्षित करने के लिए छाया में सुखाकर संसाधित की गईं।",
+      "mr": "पारंपरिक शेती क्षेत्रांमधून आणलेल्या उच्च दर्जाच्या नैसर्गिक आणि सेंद्रिय औषधी वनस्पती, औषधी घटक टिकवून ठेवण्यासाठी सावलीत सुकवून आणि त्यावर प्रक्रिया करून तयार केल्या जातात."
+    },
+    "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782206978/trivaltor/banners/herbs_plants_new.jpg",
+    "bannerImage": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782206978/trivaltor/banners/herbs_plants_new.jpg",
+    "products": [
+      {
+        "id": "hb-1",
+        "name": {
+          "en": "Bedakicha Pala",
+          "hi": "बेदाकीचा पाला",
+          "mr": "बेदकीचा पाला"
+        },
+        "shortDescription": {
+          "en": "Diabetes / Sugar Control",
+          "hi": "मधुमेह / शुगर नियंत्रण",
+          "mr": "मधुमेह / शुगर नियंत्रण"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204766/trivaltor/products/herbs/bedkicha_pala.jpg"
+      },
+      {
+        "id": "hb-2",
+        "name": {
+          "en": "Jungli Adrak (Raan Ale)",
+          "hi": "जंगली अदरक (रान आले)",
+          "mr": "जंगली आले (रान आले)"
+        },
+        "shortDescription": {
+          "en": "Weight Loss, Joint Pain, Swelling",
+          "hi": "वजन घटाने, जोड़ों का दर्द, सूजन",
+          "mr": "वजन कमी करणे, सांधेदुखी, सूज येणे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204773/trivaltor/products/herbs/jungli_adrak.jpg"
+      },
+      {
+        "id": "hb-3",
+        "name": {
+          "en": "Amarkand",
+          "hi": "अमरकंद",
+          "mr": "अमरकंद"
+        },
+        "shortDescription": {
+          "en": "Spondylosis, Sciatica, Back & Joint Pain",
+          "hi": "स्पॉन्डिलाइटिस, साइटिका, पीठ और जोड़ों का दर्द",
+          "mr": "स्पॉन्डिलायटिस, सायटिका, पाठ आणि सांधेदुखी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204761/trivaltor/products/herbs/amarkand.jpg"
+      },
+      {
+        "id": "hb-4",
+        "name": {
+          "en": "Safed Kuda",
+          "hi": "सफेद कुडा",
+          "mr": "सफेद कुडा"
+        },
+        "shortDescription": {
+          "en": "Kidney Stones, Diarrhea, Stomach Pain",
+          "hi": "गुर्दे की पथरी, दस्त, पेट दर्द",
+          "mr": "किडनी स्टोन, अतिसार (डायरिया), पोटदुखी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204785/trivaltor/products/herbs/safed_kuda.jpg"
+      },
+      {
+        "id": "hb-5",
+        "name": {
+          "en": "Rukhala Kanda",
+          "hi": "रुखला कांदा",
+          "mr": "रुखाला कांदा"
+        },
+        "shortDescription": {
+          "en": "Piles, Fistula",
+          "hi": "बवासीर, भगंदर (फिस्टुला)",
+          "mr": "मूळव्याध, भगंदर (फिस्टुला)"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204784/trivaltor/products/herbs/rukhala_kanda.webp"
+      },
+      {
+        "id": "hb-6",
+        "name": {
+          "en": "Udala, Ashwagandha, Safed Musli",
+          "hi": "उडाला, अश्वगंधा, सफेद मूसली",
+          "mr": "उडाला, अश्वगंधा, सफेद मुसळी"
+        },
+        "shortDescription": {
+          "en": "Strength & Stamina Booster, Energy Support",
+          "hi": "शक्ति और सहनशक्ति बूस्टर, ऊर्जा समर्थन",
+          "mr": "शारीरिक ताकद आणि स्टॅमिना वाढवणे, ऊर्जा समर्थन"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204764/trivaltor/products/herbs/ashwagandha.jpg"
+      },
+      {
+        "id": "hb-7",
+        "name": {
+          "en": "Sanjivani",
+          "hi": "संजीवनी",
+          "mr": "संजीवनी"
+        },
+        "shortDescription": {
+          "en": "Cough, Asthma, Cold",
+          "hi": "खांसी, अस्थमा, सर्दी",
+          "mr": "खोकला, दमा (अस्थमा), सर्दी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204788/trivaltor/products/herbs/sanjeevni.jpg"
+      },
+      {
+        "id": "hb-8",
+        "name": {
+          "en": "Hadsandhi",
+          "hi": "हड़सांधी",
+          "mr": "हडसंधी"
+        },
+        "shortDescription": {
+          "en": "Bone Fractures, Bone Health",
+          "hi": "हड्डी का फ्रैक्चर, हड्डी का स्वास्थ्य",
+          "mr": "हाडांचे फ्रॅक्चर, हाडांचे आरोग्य"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204770/trivaltor/products/herbs/hadsandi.jpg"
+      },
+      {
+        "id": "hb-9",
+        "name": {
+          "en": "Shatavari",
+          "hi": "शतावरी",
+          "mr": "शतावरी"
+        },
+        "shortDescription": {
+          "en": "Appetite, Blood Purification, Weakness",
+          "hi": "भूख, रक्त शोधन, कमजोरी",
+          "mr": "भूक वाढवणे, रक्त शुद्धीकरण, अशक्तपणा"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204790/trivaltor/products/herbs/shatavari.jpg"
+      },
+      {
+        "id": "hb-10",
+        "name": {
+          "en": "Gulvel",
+          "hi": "गुलवेल",
+          "mr": "गुळवेल"
+        },
+        "shortDescription": {
+          "en": "Heat, Fever, Jaundice, Indigestion",
+          "hi": "गर्मी, बुखार, पीलिया, अपच",
+          "mr": "शरीरातील उष्णता, ताप, कावीळ, अपचन"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204769/trivaltor/products/herbs/gulvel.webp"
+      },
+      {
+        "id": "hb-11",
+        "name": {
+          "en": "Ratanjyot",
+          "hi": "रतनजोत",
+          "mr": "रतनज्योत"
+        },
+        "shortDescription": {
+          "en": "Eye Disorders, Cataracts, Headaches",
+          "hi": "आंखों के विकार, मोतियाबिंद, सिरदर्द",
+          "mr": "डोळ्यांचे विकार, मोतीबिंदू, डोकेदुखी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204783/trivaltor/products/herbs/ratanjyot.jpg"
+      },
+      {
+        "id": "hb-12",
+        "name": {
+          "en": "Bivala",
+          "hi": "बीवला",
+          "mr": "बिवला"
+        },
+        "shortDescription": {
+          "en": "Tooth Health, Gum Support",
+          "hi": "दांतों का स्वास्थ्य, मसूड़ों का समर्थन",
+          "mr": "दातांचे आरोग्य, हिरड्यांचे आरोग्य"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204768/trivaltor/products/herbs/bivala.jpg"
+      },
+      {
+        "id": "hb-13",
+        "name": {
+          "en": "Ardh-Supari",
+          "hi": "अर्ध-सुपारी",
+          "mr": "अर्ध-सुपारी"
+        },
+        "shortDescription": {
+          "en": "Migraine, Headache Relief",
+          "hi": "माइग्रेन, सिरदर्द से राहत",
+          "mr": "मायग्रेन, डोकेदुखीपासून आराम"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204762/trivaltor/products/herbs/ardhi_supari.jpg"
+      },
+      {
+        "id": "hb-14",
+        "name": {
+          "en": "Kombadanakhi (Jatamansi)",
+          "hi": "कोम्बदानखी (जटामांसी)",
+          "mr": "कोंबडनखी (जटामांसी)"
+        },
+        "shortDescription": {
+          "en": "Tonsils, Goiter, Swelling",
+          "hi": "टॉन्सिल, घेंघा (गॉयटर), सूजन",
+          "mr": "टॉन्सिल्स, गलगंड (गॉयटर), सूज येणे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204774/trivaltor/products/herbs/kombadanakhi.webp"
+      },
+      {
+        "id": "hb-15",
+        "name": {
+          "en": "Lohatal",
+          "hi": "लोहाताल",
+          "mr": "लोहाताळ"
+        },
+        "shortDescription": {
+          "en": "Blood Pressure Support, Blood Purification",
+          "hi": "रक्तचाप समर्थन, रक्त शोधन",
+          "mr": "रक्तदाब नियंत्रण, रक्त शुद्धीकरण"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204775/trivaltor/products/herbs/lohatal.webp"
+      },
+      {
+        "id": "hb-16",
+        "name": {
+          "en": "Hirda-Behda, Kanti Akka",
+          "hi": "हरड़ा-बहेड़ा, कांति अक्का",
+          "mr": "हिरडा-बेहडा, कांती अक्का"
+        },
+        "shortDescription": {
+          "en": "Cough, Throat Pain, Cold",
+          "hi": "खांसी, गले में दर्द, सर्दी",
+          "mr": "खोकला, घसा दुखी, सर्दी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204771/trivaltor/products/herbs/hirda_behda.webp"
+      },
+      {
+        "id": "hb-17",
+        "name": {
+          "en": "Pachanguli",
+          "hi": "पंचांगुली",
+          "mr": "पाचंगुळी"
+        },
+        "shortDescription": {
+          "en": "Eczema, Ringworm, Skin Care",
+          "hi": "एक्जिमा, दाद, त्वचा की देखभाल",
+          "mr": "एक्झिमा, नायटा, त्वचेची काळजी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204777/trivaltor/products/herbs/pachanguli.jpg"
+      },
+      {
+        "id": "hb-18",
+        "name": {
+          "en": "Safed Sawar",
+          "hi": "सफेद सावर",
+          "mr": "सफेद सावर"
+        },
+        "shortDescription": {
+          "en": "Women's Wellness Support",
+          "hi": "महिला कल्याण सहायता",
+          "mr": "महिलांच्या आरोग्यासाठी आणि शक्तीसाठी"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204787/trivaltor/products/herbs/safed_sawar.jpg"
+      },
+      {
+        "id": "hb-19",
+        "name": {
+          "en": "Pandhri Kathi",
+          "hi": "पांढरी काठी",
+          "mr": "पांढरी काठी"
+        },
+        "shortDescription": {
+          "en": "Traditional Protection Use",
+          "hi": "पारंपरिक सुरक्षा उपयोग",
+          "mr": "पारंपरिक संरक्षण उपयोग"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204778/trivaltor/products/herbs/pandhri_kathi.jpg"
+      },
+      {
+        "id": "hb-20",
+        "name": {
+          "en": "Madanfal / Gelphal",
+          "hi": "मदनफल / गेलफल",
+          "mr": "मदनफळ / गेलफळ"
+        },
+        "shortDescription": {
+          "en": "Tonsils, Goiter, Swelling",
+          "hi": "टॉन्सिल, घेंघा (गॉयटर), सूजन",
+          "mr": "टॉन्सिल्स, गलगंड (गॉयटर), सूज येणे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204776/trivaltor/products/herbs/madanfal.jpg"
+      },
+      {
+        "id": "hb-21",
+        "name": {
+          "en": "Shikakai",
+          "hi": "शिकाकाई",
+          "mr": "शिकाकाई"
+        },
+        "shortDescription": {
+          "en": "Hair Care, Hair Fall Support",
+          "hi": "बालों की देखभाल, बाल झड़ने में सहायता",
+          "mr": "केसांची काळजी, केस गळती रोखणे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204791/trivaltor/products/herbs/shikakai.webp"
+      },
+      {
+        "id": "hb-22",
+        "name": {
+          "en": "Bhuikohala",
+          "hi": "भुईकोहला",
+          "mr": "भुईकोहळा"
+        },
+        "shortDescription": {
+          "en": "Strength, Weakness Support, Blood Health",
+          "hi": "ताकत, कमजोरी में सहायता, रक्त स्वास्थ्य",
+          "mr": "ताकद वाढवणे, अशक्तपणा दूर करणे, रक्ताचे आरोग्य"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204767/trivaltor/products/herbs/bhuikohala.jpg"
+      },
+      {
+        "id": "hb-23",
+        "name": {
+          "en": "Arjun Sadada",
+          "hi": "अर्जुन सादड़ा",
+          "mr": "अर्जुन सादडा"
+        },
+        "shortDescription": {
+          "en": "Heart Health Support",
+          "hi": "हृदय स्वास्थ्य सहायता",
+          "mr": "हृदय आरोग्य समर्थन"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204763/trivaltor/products/herbs/arjun_sadada.jpg"
+      },
+      {
+        "id": "hb-24",
+        "name": {
+          "en": "Ran Kokum",
+          "hi": "रान कोकम",
+          "mr": "रान कोकम"
+        },
+        "shortDescription": {
+          "en": "Heat, Acidity, Digestive Support",
+          "hi": "गर्मी, एसिडिटी, पाचन सहायता",
+          "mr": "उष्णता कमी करणे, पित्त (अ‍ॅसिडिटी), पचनक्रिया सुधारणे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204781/trivaltor/products/herbs/ran_kokum.webp"
+      },
+      {
+        "id": "hb-25",
+        "name": {
+          "en": "Jeshtha Madh",
+          "hi": "जेठमध",
+          "mr": "ज्येष्ठमध"
+        },
+        "shortDescription": {
+          "en": "Cough Support",
+          "hi": "खांसी में सहायता",
+          "mr": "खोकल्यापासून आराम"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204772/trivaltor/products/herbs/jestha_madh.jpg"
+      },
+      {
+        "id": "hb-26",
+        "name": {
+          "en": "Safed Malva",
+          "hi": "सफेद मालवा",
+          "mr": "सफेद माळवा"
+        },
+        "shortDescription": {
+          "en": "Energy Support",
+          "hi": "ऊर्जा समर्थन",
+          "mr": "ऊर्जा आणि ताकद वाढवणे"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204786/trivaltor/products/herbs/safed_malva.jpg"
+      },
+      {
+        "id": "hb-27",
+        "name": {
+          "en": "Ranvichoka (Garbi)",
+          "hi": "रानविचुका (गर्बी)",
+          "mr": "रानविंचू (गर्बी)"
+        },
+        "shortDescription": {
+          "en": "Traditional Medicinal Use",
+          "hi": "पारंपरिक औषधीय उपयोग",
+          "mr": "पारंपरिक औषधी उपयोग"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204782/trivaltor/products/herbs/ranvichoka.webp"
+      },
+      {
+        "id": "hb-28",
+        "name": {
+          "en": "Pankuti (Aadulsa)",
+          "hi": "पानकुटी (अडूसा)",
+          "mr": "पानकुटी (अडुळसा)"
+        },
+        "shortDescription": {
+          "en": "Eczema, Ringworm Support",
+          "hi": "एक्जिमा, दाद में सहायता",
+          "mr": "एक्झिमा, नायटा यापासून आराम"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204780/trivaltor/products/herbs/pankuti.jpg"
+      }
+    ]
+  },
+  {
+    "id": "export-produce",
+    "name": {
+      "en": "Export Quality Produce",
+      "hi": "निर्यात गुणवत्ता उत्पाद",
+      "mr": "निर्यात दर्जाचा कृषी माल"
+    },
+    "description": {
+      "en": "Premium export-grade agricultural produce selection sourced from certified farming clusters and packaged to meet international standards.",
+      "hi": "प्रमाणित कृषि समूहों से प्राप्त प्रीमियम निर्यात-ग्रेड कृषि उत्पाद चयन और अंतरराष्ट्रीय मानकों को पूरा करने के लिए पैक किया गया।",
+      "mr": "प्रमाणित शेतीमधून निवडलेला आणि आंतरराष्ट्रीय मानकांनुसार पॅक केलेला प्रीमियम निर्यात-योग्य कृषी माल."
+    },
+    "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782206979/trivaltor/banners/export_quality_new.png",
+    "bannerImage": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782206979/trivaltor/banners/export_quality_new.png",
+    "products": [
+      {
+        "id": "ex-1",
+        "name": {
+          "en": "Onion (Export Grade)",
+          "hi": "प्याज (निर्यात ग्रेड)",
+          "mr": "कांदा (निर्यात दर्जा)"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869565/trivaltor/products/vegetables/onion.jpg"
       }
     ]
   }

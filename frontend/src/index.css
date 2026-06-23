@@ -1136,38 +1136,86 @@ body.dark .leads-table tbody tr:hover {
 
   /* Grids & Cards Layout */
   .pillars-grid,
-  .divisions-grid,
   .credibility-grid,
   .contact-grid {
     grid-template-columns: 1fr !important;
     gap: 1.75rem !important;
   }
+  .divisions-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
   .premium-card {
     padding: 1.25rem !important;
   }
 
+  /* Pillars Grid adjustments */
+  .pillars-grid {
+    gap: 1rem !important;
+  }
+  .pillars-grid .premium-card {
+    padding: 1.25rem !important;
+  }
+  .pillars-grid .premium-card p {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 5 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .pillars-grid .premium-card > div:first-child {
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .pillars-grid .premium-card > div:first-child svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .pillars-grid .premium-card h3 {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Operational Scope (Divisions Grid) adjustments */
+  .divisions-grid .premium-card > div:first-child {
+    height: 120px !important;
+  }
+  .divisions-grid .premium-card > div:last-child {
+    padding: 1rem 1.25rem 1.25rem 1.25rem !important;
+  }
+  .divisions-grid .premium-card p {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
   /* Category Cards layout */
   .categories-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: 1.25rem !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
     margin-top: 1rem !important;
   }
   .category-card {
     height: auto !important; /* Compact container */
   }
   .category-image-container {
-    height: 130px !important; /* user requested 120-140px max */
+    height: 140px !important;
   }
   .category-card-content {
-    padding: 1.25rem !important;
-    gap: 0.75rem !important;
+    padding: 1rem !important;
+    gap: 0.5rem !important;
   }
   .category-card-title {
-    font-size: 1.25rem !important;
+    font-size: 1.2rem !important;
   }
   .category-card-desc {
     font-size: 0.85rem !important;
     line-height: 1.4 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
   /* Statistics Cards */
@@ -2543,6 +2591,57 @@ body.dark .trust-pill {
     .btn-primary.hero-cta-btn::after {
       animation: none !important;
     }
+  }
+}
+
+/* Premium Showcase and Badge styles for Export Quality Produce */
+.category-card.premium-showcase {
+  background-color: #0c2d1c !important;
+  border: 1.5px solid var(--accent-gold);
+  color: #eae5da;
+}
+.category-card.premium-showcase .category-image-container {
+  background-color: #0c2d1c !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.category-card.premium-showcase .category-image-container img {
+  background-color: #0c2d1c !important;
+  object-fit: contain !important;
+  padding: 1.25rem !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+.category-card.premium-showcase .category-card-title {
+  color: var(--accent-gold) !important;
+}
+.category-card.premium-showcase .category-card-desc {
+  color: #eae5da !important;
+  opacity: 0.95;
+}
+.premium-badge {
+  background-color: var(--accent-gold);
+  color: #0c2d1c;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--border-radius-sm);
+  align-self: flex-start;
+}
+@media (max-width: 768px) {
+  .category-card.premium-showcase {
+    grid-column: span 2 !important;
+    flex-direction: column !important;
+  }
+  .category-card.premium-showcase .category-image-container {
+    width: 100% !important;
+    height: 130px !important;
+  }
+  .category-card.premium-showcase .category-card-content {
+    width: 100% !important;
   }
 }
 

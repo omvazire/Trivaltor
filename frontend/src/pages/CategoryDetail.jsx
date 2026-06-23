@@ -81,6 +81,34 @@ export const CategoryDetail = () => {
           {t('productListTitle')}
         </h2>
 
+        {categoryId === 'export-produce' && (
+          <div className="premium-card" style={{ 
+            padding: '2.5rem', 
+            marginBottom: '3rem', 
+            borderLeft: '4px solid var(--accent-gold)',
+            backgroundColor: '#0c2d1c',
+            color: '#eae5da'
+          }}>
+            <p style={{ fontWeight: '700', fontSize: '1.2rem', marginBottom: '1.25rem', color: 'var(--accent-gold)' }}>
+              {language === 'mr' 
+                ? "आम्ही खरेदीदाराच्या गरजेनुसार निर्यात-योग्य कृषी मालाची व्यवस्था करू शकतो." 
+                : language === 'hi' 
+                  ? "हम खरीदार की आवश्यकताओं के आधार पर निर्यात-गुणवत्ता वाले कृषि उत्पाद की व्यवस्था कर सकते हैं।" 
+                  : "We can arrange export-quality agricultural produce based on buyer requirements."}
+            </p>
+            <p style={{ fontSize: '1.05rem', color: '#eae5da', opacity: '0.9', marginBottom: '0.75rem' }}>
+              <strong>{language === 'mr' ? "उदाहरणे:" : language === 'hi' ? "उदाहरण:" : "Examples:"}</strong>
+            </p>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', fontSize: '0.95rem', color: '#eae5da', opacity: '0.85', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <li>{language === 'mr' ? "द्राक्षे (Grapes)" : language === 'hi' ? "अंगूर (Grapes)" : "Grapes"}</li>
+              <li>{language === 'mr' ? "मशरूम (Mushrooms)" : language === 'hi' ? "मशरूम (Mushrooms)" : "Mushrooms"}</li>
+              <li>{language === 'mr' ? "शिमला मिरची (Bell Peppers)" : language === 'hi' ? "शिमला मिर्च (Bell Peppers)" : "Bell Peppers"}</li>
+              <li>{language === 'mr' ? "लसूण (Garlic)" : language === 'hi' ? "लहसुन (Garlic)" : "Garlic"}</li>
+              <li>{language === 'mr' ? "इतर मागणीनुसार उपलब्ध कृषी माल (Other produce on request)" : language === 'hi' ? "अनुरोध पर अन्य उत्पाद (Other produce on request)" : "Other produce on request"}</li>
+            </ul>
+          </div>
+        )}
+
         <div className="category-products-grid">
           {categoryProducts.map((product, index) => {
             const productName = typeof product.name === 'object' 
@@ -120,6 +148,17 @@ export const CategoryDetail = () => {
                       {typeof product.shortDescription === 'object'
                         ? (product.shortDescription[language] || product.shortDescription['en'])
                         : product.shortDescription}
+                    </p>
+                  )}
+
+                  {category.id === 'herbs' && product.shortDescription && (
+                    <p className="product-card-desc" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <span style={{ fontWeight: '700', color: 'var(--text-primary)' }}>{t('traditionalUses')}:</span>
+                      <span>
+                        {typeof product.shortDescription === 'object'
+                          ? (product.shortDescription[language] || product.shortDescription['en'])
+                          : product.shortDescription}
+                      </span>
                     </p>
                   )}
 

@@ -721,6 +721,56 @@ export const Home = () => {
         </div>
       </section>
 
+      {/* 4. Product Categories Section */}
+      <section id="categories" className="section categories-section" style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}>
+        <div className="container">
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <span className="section-tag">{t('categoriesTitle')}</span>
+            <h2 className="section-title">{t('categoriesTitle')}</h2>
+            <p className="section-desc">
+              {t('categoriesDesc')}
+            </p>
+          </div>
+
+          <div className="categories-grid">
+            {categoriesData.map((category, index) => {
+              const catName = category.name[language] || category.name['en'];
+              const catDesc = category.description[language] || category.description['en'];
+              const isPremium = category.id === 'export-produce';
+              
+              return (
+                <div 
+                  key={category.id} 
+                  ref={addScrollRevealRef} 
+                  className={`category-card scroll-reveal ${isPremium ? 'premium-showcase' : ''}`} 
+                  style={{ '--stagger-index': index }}
+                >
+                  <div className="category-image-container">
+                    <img src={category.image} alt={catName} />
+                  </div>
+                  <div className="category-card-content">
+                    {isPremium && (
+                      <span className="premium-badge">
+                        {language === 'mr' ? 'प्रीमियम निर्यात' : language === 'hi' ? 'प्रीमियम निर्यात' : 'Premium Export'}
+                      </span>
+                    )}
+                    <h3 className="category-card-title">{catName}</h3>
+                    <p className="category-card-desc">{catDesc}</p>
+                    <button 
+                      onClick={() => navigate(`/category/${category.id}`)}
+                      className="btn btn-primary btn-sm"
+                      style={{ alignSelf: 'flex-start', marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+                    >
+                      {t('exploreProducts')} <ArrowRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* 3. Business Overview */}
       <section className="section divisions-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
@@ -791,66 +841,6 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* 4. Product Categories Section (Replaces Mixed Catalog) */}
-      <section id="categories" className="section categories-section" style={{ backgroundColor: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}>
-        <div className="container">
-          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <span className="section-tag">{t('categoriesTitle')}</span>
-            <h2 className="section-title">{t('categoriesTitle')}</h2>
-            <p className="section-desc">
-              {t('categoriesDesc')}
-            </p>
-          </div>
-
-          <div className="categories-grid">
-            {categoriesData.map((category, index) => {
-              const catName = category.name[language] || category.name['en'];
-              const catDesc = category.description[language] || category.description['en'];
-              
-              return (
-                <div key={category.id} ref={addScrollRevealRef} className="category-card scroll-reveal" style={{ '--stagger-index': index }}>
-                  <div className="category-image-container">
-                    <img src={category.image} alt={catName} />
-                  </div>
-                  <div className="category-card-content">
-                    <h3 className="category-card-title">{catName}</h3>
-                    <p className="category-card-desc">{catDesc}</p>
-                    <button 
-                      onClick={() => navigate(`/category/${category.id}`)}
-                      className="btn btn-primary btn-sm"
-                      style={{ alignSelf: 'flex-start', marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
-                    >
-                      {t('exploreProducts')} <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Company Video Section */}
-      <section id="video" className="section video-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
-        <div className="container">
-          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3.5rem' }}>
-            <span className="section-tag">{t('videoTag')}</span>
-            <h2 className="section-title">{t('videoTitle')}</h2>
-            <p className="section-desc" style={{ marginBottom: '0' }}>
-              {t('videoDesc')}
-            </p>
-          </div>
-
-          <div ref={addScrollRevealRef} className="video-wrapper scroll-reveal">
-            <iframe
-              src={config.youtubeEmbedUrl}
-              title={t('videoTitle')}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      </section>
       {/* 7. Reviews Section */}
       <section id="testimonials" className="section reviews-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
@@ -924,6 +914,28 @@ export const Home = () => {
             >
               {t('leaveReviewBtn')}
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Company Video Section */}
+      <section id="video" className="section video-section" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
+        <div className="container">
+          <div ref={addScrollRevealRef} className="scroll-reveal-header" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3.5rem' }}>
+            <span className="section-tag">{t('videoTag')}</span>
+            <h2 className="section-title">{t('videoTitle')}</h2>
+            <p className="section-desc" style={{ marginBottom: '0' }}>
+              {t('videoDesc')}
+            </p>
+          </div>
+
+          <div ref={addScrollRevealRef} className="video-wrapper scroll-reveal">
+            <iframe
+              src={config.youtubeEmbedUrl}
+              title={t('videoTitle')}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </section>

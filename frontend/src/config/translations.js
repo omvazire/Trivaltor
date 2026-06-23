@@ -49,7 +49,7 @@ export const translations = {
 
     // Product Categories Section (Homepage)
     categoriesTitle: "Product Categories",
-    categoriesDesc: "We trade in three primary agricultural category grids. Click explore to view specific commodities and specifications.",
+    categoriesDesc: "Explore our diverse product categories. Click explore to view specific commodities and specifications.",
     exploreBtn: "Explore Category",
     exploreProducts: "Explore Products",
 
@@ -123,6 +123,7 @@ export const translations = {
     backToHome: "Back to Home Page",
     categoryBannerAlt: "Category Banner",
     productListTitle: "Product Listing",
+    traditionalUses: "Traditional Uses",
     productDetailTitle: "Product Details & Specs",
     specOrigin: "Origin",
     specPurity: "Purity Grade",
@@ -274,7 +275,7 @@ export const translations = {
 
     // Product Categories Section (Homepage)
     categoriesTitle: "उत्पादनांचे प्रकार",
-    categoriesDesc: "आम्ही तीन प्रमुख कृषी विभागांमध्ये व्यापार करतो. विशिष्ट उत्पादने आणि तपशील पाहण्यासाठी एक्सप्लोर करा वर क्लिक करा.",
+    categoriesDesc: "आमच्या विविध उत्पादन श्रेणी एक्सप्लोर करा. विशिष्ट उत्पादने आणि तपशील पाहण्यासाठी एक्सप्लोर करा वर क्लिक करा.",
     exploreBtn: "श्रेणी एक्सप्लोर करा",
     exploreProducts: "उत्पादने पहा",
 
@@ -348,6 +349,7 @@ export const translations = {
     backToHome: "मुख्यपृष्ठावर जा",
     categoryBannerAlt: "श्रेणीचे छायाचित्र",
     productListTitle: "उत्पादनांची यादी",
+    traditionalUses: "पारंपरिक उपयोग",
     productDetailTitle: "उत्पादन तपशील आणि वैशिष्ट्ये",
     specOrigin: "उत्पत्ती स्थान",
     specPurity: "शुद्धता श्रेणी",
@@ -499,7 +501,7 @@ export const translations = {
 
     // Product Categories Section (Homepage)
     categoriesTitle: "उत्पाद श्रेणियां",
-    categoriesDesc: "हम तीन प्राथमिक कृषि श्रेणियों में व्यापार करते हैं। विशिष्ट वस्तुओं और विशिष्टताओं को देखने के लिए एक्सप्लोर करें पर क्लिक करें।",
+    categoriesDesc: "हमारी विभिन्न उत्पाद श्रेणियों का अन्वेषण करें। विशिष्ट वस्तुओं और विशिष्टताओं को देखने के लिए एक्सप्लोर करें पर क्लिक करें।",
     exploreBtn: "श्रेणी एक्सप्लोर करें",
     exploreProducts: "उत्पाद एक्सप्लोर करें",
 
@@ -573,6 +575,7 @@ export const translations = {
     backToHome: "मुख्यपृष्ठ पर वापस जाएँ",
     categoryBannerAlt: "श्रेणी बैनर",
     productListTitle: "उत्पाद सूची",
+    traditionalUses: "पारंपरिक उपयोग",
     productDetailTitle: "उत्पाद विवरण और विशिष्टताएँ",
     specOrigin: "उत्पत्ति स्थान",
     specPurity: "शुद्धता ग्रेड",
