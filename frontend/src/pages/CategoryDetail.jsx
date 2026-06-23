@@ -144,22 +144,42 @@ export const CategoryDetail = () => {
                   </h3>
 
                   {category.id === 'spices' && product.shortDescription && (
-                    <p className="product-card-desc">
-                      {typeof product.shortDescription === 'object'
-                        ? (product.shortDescription[language] || product.shortDescription['en'])
-                        : product.shortDescription}
-                    </p>
-                  )}
-
-                  {category.id === 'herbs' && product.shortDescription && (
-                    <p className="product-card-desc" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                      <span style={{ fontWeight: '700', color: 'var(--text-primary)' }}>{t('traditionalUses')}:</span>
-                      <span>
+                    <>
+                      <p className="product-card-desc">
                         {typeof product.shortDescription === 'object'
                           ? (product.shortDescription[language] || product.shortDescription['en'])
                           : product.shortDescription}
-                      </span>
-                    </p>
+                      </p>
+                      <p className="product-card-desc-mobile">
+                        <span className="traditional-uses-label">{language === 'mr' ? 'उपयोग • ' : language === 'hi' ? 'उपयोग • ' : 'Uses • '}</span>
+                        <span className="traditional-uses-value">
+                          {typeof product.shortDescription === 'object'
+                            ? (product.shortDescription[language] || product.shortDescription['en'])
+                            : product.shortDescription}
+                        </span>
+                      </p>
+                    </>
+                  )}
+
+                  {category.id === 'herbs' && product.shortDescription && (
+                    <>
+                      <p className="product-card-desc" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <span style={{ fontWeight: '700', color: 'var(--text-primary)' }}>{t('traditionalUses')}:</span>
+                        <span>
+                          {typeof product.shortDescription === 'object'
+                            ? (product.shortDescription[language] || product.shortDescription['en'])
+                            : product.shortDescription}
+                        </span>
+                      </p>
+                      <p className="product-card-desc-mobile herbs-desc-mobile">
+                        <span className="traditional-uses-label">{language === 'mr' ? 'उपयोग • ' : language === 'hi' ? 'उपयोग • ' : 'Uses • '}</span>
+                        <span className="traditional-uses-value">
+                          {typeof product.shortDescription === 'object'
+                            ? (product.shortDescription[language] || product.shortDescription['en'])
+                            : product.shortDescription}
+                        </span>
+                      </p>
+                    </>
                   )}
 
                   {/* Single Enquire Button */}
