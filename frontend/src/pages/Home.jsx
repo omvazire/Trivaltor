@@ -758,10 +758,10 @@ export const Home = () => {
                     <p className="category-card-desc">{catDesc}</p>
                     <button 
                       onClick={() => navigate(`/category/${category.id}`)}
-                      className="btn btn-primary btn-sm"
+                      className={`btn btn-primary btn-sm ${isPremium ? '' : 'category-card-btn'}`}
                       style={{ alignSelf: 'flex-start', marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                     >
-                      {t('exploreProducts')} <ArrowRight size={16} />
+                      {t('exploreProducts')} <ArrowRight size={16} className={isPremium ? '' : 'category-card-btn-arrow'} />
                     </button>
                   </div>
                 </div>

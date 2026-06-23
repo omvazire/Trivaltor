@@ -1217,6 +1217,15 @@ body.dark .leads-table tbody tr:hover {
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
+  .category-card-btn {
+    align-self: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 0 !important;
+  }
+  .category-card-btn-arrow {
+    display: none !important;
+  }
 
   /* Statistics Cards */
   .credibility-stats {
