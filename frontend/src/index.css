@@ -506,7 +506,7 @@ body.dark .nav-header {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
   gap: 4rem;
   margin-bottom: 4rem;
 }
@@ -547,6 +547,23 @@ body.dark .nav-header {
 .footer-link:hover {
   color: var(--accent-gold);
   padding-left: 4px;
+}
+
+.footer-founder-list {
+  gap: 0.5rem !important;
+}
+
+.footer-founder-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.footer-founder-item svg {
+  color: var(--accent-gold);
+  flex-shrink: 0;
 }
 
 .footer-contact-item {

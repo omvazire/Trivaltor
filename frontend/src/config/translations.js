@@ -225,7 +225,8 @@ export const translations = {
     reviewSubmit: "Submit",
     reviewSuccess: "Thank you for your review. It will be published after verification.",
     quickLinks: "Quick Links",
-    businessPortals: "Business Portals"
+    businessPortals: "Business Portals",
+    foundingPartners: "Founding Partners"
   },
   mr: {
     // Navigation
@@ -453,7 +454,8 @@ export const translations = {
     reviewSubmit: "सबमिट करा",
     reviewSuccess: "समीक्षाबद्दल धन्यवाद. पडताळणीनंतर ते प्रकाशित केले जाईल.",
     quickLinks: "त्वरित लिंक्स",
-    businessPortals: "व्यावसायिक पोर्टल्स"
+    businessPortals: "व्यावसायिक पोर्टल्स",
+    foundingPartners: "संस्थापक भागीदार"
   },
   hi: {
     // Navigation
@@ -681,6 +683,7 @@ export const translations = {
     reviewSubmit: "समीक्षा सबमिट करें",
     reviewSuccess: "समीक्षा के लिए धन्यवाद। सत्यापन के बाद इसे प्रकाशित किया जाएगा।",
     quickLinks: "त्वरित कड़ियाँ",
-    businessPortals: "व्यापार पोर्टल"
+    businessPortals: "व्यापार पोर्टल",
+    foundingPartners: "संस्थापक भागीदार"
   }
 };

@@ -3,7 +3,7 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LeadPopup } from '../components/LeadPopup';
 import { VisitorTracker } from '../components/VisitorTracker';
-import { Globe2, Menu, X, Phone, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { Globe2, Menu, X, Phone, Mail, MapPin, MessageSquare, User } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import logoImg from '../assets/images/company-logo.png'; // company-logo.png is the logo
 
@@ -196,6 +196,28 @@ export const Layout = ({ children }) => {
               <li><Link to="/buyer" className="footer-link">{t('buyersPortal')}</Link></li>
               <li><Link to="/investor" className="footer-link">{t('investorsPortal')}</Link></li>
               <li><Link to="/admin" className="footer-link">{t('adminDashboard')}</Link></li>
+            </ul>
+          </div>
+
+          <div className="footer-column">
+            <h3>{t('foundingPartners') || 'Founding Partners'}</h3>
+            <ul className="footer-links footer-founder-list">
+              <li className="footer-founder-item">
+                <User size={15} />
+                <span>Pushpak Pravin Patil</span>
+              </li>
+              <li className="footer-founder-item">
+                <User size={15} />
+                <span>Nirankar Subhash Dhule</span>
+              </li>
+              <li className="footer-founder-item">
+                <User size={15} />
+                <span>Anirudha Ramchandra Pukale</span>
+              </li>
+              <li className="footer-founder-item">
+                <User size={15} />
+                <span>Harshal Bhikan More</span>
+              </li>
             </ul>
           </div>
 
