@@ -1291,6 +1291,24 @@ const EnquiryDetailsModal = ({
               </span>
             </div>
 
+            {selectedEnquiryType === 'buyer' && selectedEnquiry?.packingSize && (
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Packing Size</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                  {unescape(selectedEnquiry.packingSize)}
+                </span>
+              </div>
+            )}
+
+            {selectedEnquiryType === 'buyer' && selectedEnquiry?.targetBudget && (
+              <div>
+                <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Estimated Budget</label>
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                  {unescape(selectedEnquiry.targetBudget)} {unescape(selectedEnquiry.currency)}
+                </span>
+              </div>
+            )}
+
             <div>
               <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', fontWeight: 600 }}>Timestamp</label>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>

@@ -97,6 +97,15 @@ export const categoriesData = [
           "mr": "काळी द्राक्षे"
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204754/trivaltor/products/fruits/black_grapes.webp"
+      },
+      {
+        "id": "fr-10",
+        "name": {
+          "en": "Semi Husk Coconut",
+          "hi": "सेमी हस्क नारियल",
+          "mr": "अर्ध सोललेला नारळ"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782223877/trivaltor/products/fruits/semi_husk_coconut.jpg"
       }
     ]
   },
@@ -134,6 +143,33 @@ export const categoriesData = [
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869562/trivaltor/products/vegetables/button-mushroom.jpg"
       },
       {
+        "id": "vg-11",
+        "name": {
+          "en": "Oyster Mushroom",
+          "hi": "ऑयस्टर मशरूम",
+          "mr": "ऑयस्टर मशरूम"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204760/trivaltor/products/vegetables/oyster_mushroom.jpg"
+      },
+      {
+        "id": "vg-7",
+        "name": {
+          "en": "Red & Yellow Capsicum",
+          "hi": "लाल और पीली शिमला मिर्च",
+          "mr": "लाल आणि पिवळी ढोबळी मिरची"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204759/trivaltor/products/vegetables/bell_pepper_mixed.jpg"
+      },
+      {
+        "id": "vg-15",
+        "name": {
+          "en": "Green Capsicum",
+          "hi": "हरी शिमला मिर्च",
+          "mr": "हिरवी ढोबळी मिरची"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782223875/trivaltor/products/vegetables/green_capsicum.jpg"
+      },
+      {
         "id": "vg-3",
         "name": {
           "en": "Baby Corn",
@@ -141,15 +177,6 @@ export const categoriesData = [
           "mr": "बेबी कॉर्न"
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869560/trivaltor/products/vegetables/baby_corn.jpg"
-      },
-      {
-        "id": "vg-4",
-        "name": {
-          "en": "Sweet Corn",
-          "hi": "स्वीट कॉर्न",
-          "mr": "स्वीट कॉर्न"
-        },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869568/trivaltor/products/vegetables/sweet_corn.jpg"
       },
       {
         "id": "vg-5",
@@ -161,22 +188,13 @@ export const categoriesData = [
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869566/trivaltor/products/vegetables/open_corn.jpg"
       },
       {
-        "id": "vg-6",
+        "id": "vg-4",
         "name": {
-          "en": "Broccoli",
-          "hi": "ब्रोकोली",
-          "mr": "ब्रोकोली"
+          "en": "Sweet Corn",
+          "hi": "स्वीट कॉर्न",
+          "mr": "स्वीट कॉर्न"
         },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869561/trivaltor/products/vegetables/brocoli.jpg"
-      },
-      {
-        "id": "vg-7",
-        "name": {
-          "en": "Bell Pepper (Mixed Red & Yellow)",
-          "hi": "शिमला मिर्च (लाल और पीली मिश्रित)",
-          "mr": "ढोबळी मिरची (लाल आणि पिवळी मिश्रित)"
-        },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204759/trivaltor/products/vegetables/bell_pepper_mixed.jpg"
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869568/trivaltor/products/vegetables/sweet_corn.jpg"
       },
       {
         "id": "vg-9",
@@ -188,22 +206,13 @@ export const categoriesData = [
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869563/trivaltor/products/vegetables/garlic.jpg"
       },
       {
-        "id": "vg-10",
+        "id": "vg-14",
         "name": {
-          "en": "Lemon",
-          "hi": "नींबू",
-          "mr": "लिंबू"
+          "en": "Peeled Garlic",
+          "hi": "छिला हुआ लहसुन",
+          "mr": "सोललेला लसूण"
         },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869564/trivaltor/products/vegetables/lemons.jpg"
-      },
-      {
-        "id": "vg-11",
-        "name": {
-          "en": "Oyster Mushroom",
-          "hi": "ऑयस्टर मशरूम",
-          "mr": "ऑयस्टर मशरूम"
-        },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204760/trivaltor/products/vegetables/oyster_mushroom.jpg"
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204756/trivaltor/products/vegetables/peeled_garlic.jpg"
       },
       {
         "id": "vg-12",
@@ -215,6 +224,33 @@ export const categoriesData = [
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204757/trivaltor/products/vegetables/ginger.jpg"
       },
       {
+        "id": "vg-10",
+        "name": {
+          "en": "Lemon",
+          "hi": "नींबू",
+          "mr": "लिंबू"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869564/trivaltor/products/vegetables/lemons.jpg"
+      },
+      {
+        "id": "vg-16",
+        "name": {
+          "en": "Elephant Yam (Suran)",
+          "hi": "जिमीकंद (सूरन)",
+          "mr": "सुरण (Elephant Yam)"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782223876/trivaltor/products/vegetables/elephant_yarm.jpg"
+      },
+      {
+        "id": "vg-6",
+        "name": {
+          "en": "Broccoli",
+          "hi": "ब्रोकोली",
+          "mr": "ब्रोकोली"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869561/trivaltor/products/vegetables/brocoli.jpg"
+      },
+      {
         "id": "vg-13",
         "name": {
           "en": "Iceberg Lettuce",
@@ -222,15 +258,6 @@ export const categoriesData = [
           "mr": "आइसबर्ग लेट्यूस"
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204758/trivaltor/products/vegetables/iceberg_lettuce.jpg"
-      },
-      {
-        "id": "vg-14",
-        "name": {
-          "en": "Peeled Garlic",
-          "hi": "छिला हुआ लहसुन",
-          "mr": "सोललेला लसूण"
-        },
-        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204756/trivaltor/products/vegetables/peeled_garlic.jpg"
       }
     ]
   },
@@ -1551,6 +1578,42 @@ export const categoriesData = [
           "mr": "कांदा (निर्यात दर्जा)"
         },
         "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869565/trivaltor/products/vegetables/onion.jpg"
+      },
+      {
+        "id": "ex-2",
+        "name": {
+          "en": "Ginger",
+          "hi": "अदरक",
+          "mr": "आले"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782204757/trivaltor/products/vegetables/ginger.jpg"
+      },
+      {
+        "id": "ex-3",
+        "name": {
+          "en": "Elephant Yam (Suran)",
+          "hi": "जिमीकंद (सूरन)",
+          "mr": "सुरण (Elephant Yam)"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782223876/trivaltor/products/vegetables/elephant_yarm.jpg"
+      },
+      {
+        "id": "ex-4",
+        "name": {
+          "en": "Semi Husk Coconut",
+          "hi": "सेमी हस्क नारियल",
+          "mr": "अर्ध सोललेला नारळ"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1782223877/trivaltor/products/fruits/semi_husk_coconut.jpg"
+      },
+      {
+        "id": "ex-5",
+        "name": {
+          "en": "Alphonso Mango",
+          "hi": "अल्फांसो आम",
+          "mr": "हापूस आंबा"
+        },
+        "image": "https://res.cloudinary.com/dsfihnyiv/image/upload/v1781869553/trivaltor/products/fruits/alphonso_mango.jpg"
       }
     ]
   }

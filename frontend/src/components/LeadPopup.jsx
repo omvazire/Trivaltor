@@ -50,6 +50,12 @@ export const LeadPopup = () => {
       return;
     }
 
+    const shown = sessionStorage.getItem('trivaltor-lead-popup-shown') === 'true';
+    if (shown) {
+      setIsOpen(false);
+      return;
+    }
+
     if (location.pathname.startsWith('/category/')) {
       setIsProductAccessMode(true);
       setIsOpen(true);
@@ -97,13 +103,11 @@ export const LeadPopup = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={isProductAccessMode ? undefined : handleClose}>
+    <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        {!isProductAccessMode && (
-          <button className="modal-close" onClick={handleClose} aria-label="Close modal">
-            <X size={20} />
-          </button>
-        )}
+        <button className="modal-close" onClick={handleClose} aria-label="Close modal">
+          <X size={20} />
+        </button>
         
         <h2 style={{ fontSize: '1.75rem', color: 'var(--text-primary)', marginBottom: '0.75rem', fontFamily: 'var(--font-heading)' }}>
           {isProductAccessMode ? "Access Product Catalog" : t('popupTitle')}

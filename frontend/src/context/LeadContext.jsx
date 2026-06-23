@@ -31,23 +31,31 @@ const parseEnquiryMessage = (enquiry) => {
     }
   } else if (enquiryType === 'buyer') {
     parsed.productRequirement = category || 'N/A';
-    const match = msgStr.match(/Company:\s*(.*?)\.\s*Country:\s*(.*?)\.\s*Quantity:\s*(.*?)\.\s*Budget:\s*(.*?)\.\s*Message:\s*([\s\S]*)/i);
-    if (match) {
-      parsed.companyName = match[1];
-      parsed.country = match[2];
-      parsed.requiredQuantity = match[3];
-      const budgetStr = match[4];
-      const budgetParts = budgetStr.split(' ');
-      parsed.targetBudget = budgetParts[0];
-      parsed.currency = budgetParts[1] || 'USD';
-      parsed.message = match[5];
+    const matchPacking = msgStr.match(/Company:\s*(.*?)\.\s*Country:\s*(.*?)\.\s*Quantity:\s*(.*?)\.\s*Packing Size:\s*(.*?)\.\s*Message:\s*([\s\S]*)/i);
+    if (matchPacking) {
+      parsed.companyName = matchPacking[1];
+      parsed.country = matchPacking[2];
+      parsed.requiredQuantity = matchPacking[3];
+      parsed.packingSize = matchPacking[4];
+      parsed.message = matchPacking[5];
     } else {
-      parsed.companyName = 'N/A';
-      parsed.country = 'N/A';
-      parsed.requiredQuantity = 'N/A';
-      parsed.targetBudget = '';
-      parsed.currency = 'USD';
-      parsed.message = msgStr;
+      const matchBudget = msgStr.match(/Company:\s*(.*?)\.\s*Country:\s*(.*?)\.\s*Quantity:\s*(.*?)\.\s*Budget:\s*(.*?)\.\s*Message:\s*([\s\S]*)/i);
+      if (matchBudget) {
+        parsed.companyName = matchBudget[1];
+        parsed.country = matchBudget[2];
+        parsed.requiredQuantity = matchBudget[3];
+        const budgetStr = matchBudget[4];
+        const budgetParts = budgetStr.split(' ');
+        parsed.targetBudget = budgetParts[0];
+        parsed.currency = budgetParts[1] || 'USD';
+        parsed.message = matchBudget[5];
+      } else {
+        parsed.companyName = 'N/A';
+        parsed.country = 'N/A';
+        parsed.requiredQuantity = 'N/A';
+        parsed.packingSize = 'N/A';
+        parsed.message = msgStr;
+      }
     }
   } else if (enquiryType === 'investor') {
     parsed.investmentInterest = category || 'N/A';
@@ -178,7 +186,7 @@ export const LeadProvider = ({ children }) => {
         district: lead.district,
         cityVillage: lead.cityVillage || 'N/A',
         pincode: lead.pincode,
-        message: `Company: ${lead.companyName || 'N/A'}. Country: ${lead.country || 'N/A'}. Quantity: ${lead.requiredQuantity || 'N/A'}. Budget: ${lead.targetBudget || ''} ${lead.currency || 'USD'}. Message: ${lead.message || ''}`
+        message: `Company: ${lead.companyName || 'N/A'}. Country: ${lead.country || 'N/A'}. Quantity: ${lead.requiredQuantity || 'N/A'}. Packing Size: ${lead.packingSize || 'N/A'}. Message: ${lead.message || ''}`
       });
       setLoading(false);
       return { success: true };

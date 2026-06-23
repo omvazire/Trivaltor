@@ -17,8 +17,7 @@ export const BuyerLead = () => {
     phone: '',
     productRequirement: '',
     requiredQuantity: '',
-    targetBudget: '',
-    currency: 'USD', // Default to USD
+    packingSize: '',
     state: '',
     district: '',
     cityVillage: '',
@@ -62,8 +61,7 @@ export const BuyerLead = () => {
         phone: '',
         productRequirement: '',
         requiredQuantity: '',
-        targetBudget: '',
-        currency: 'USD',
+        packingSize: '',
         state: '',
         district: '',
         cityVillage: '',
@@ -229,60 +227,32 @@ export const BuyerLead = () => {
                 </div>
               </div>
 
-              {/* Currency & Target Budget Fields */}
+              {/* Required Quantity & Packing Size Fields */}
               <div className="form-grid">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="currency">{t('financialCurrency')}</label>
-                  <select 
-                    id="currency"
-                    name="currency" 
-                    value={form.currency} 
+                  <label className="form-label" htmlFor="requiredQuantity">{t('requiredQuantity')}</label>
+                  <input 
+                    type="text" 
+                    id="requiredQuantity"
+                    name="requiredQuantity" 
+                    value={form.requiredQuantity} 
                     onChange={handleChange} 
-                    className="form-select"
-                  >
-                    <option value="USD">USD ($)</option>
-                    <option value="INR">INR (₹)</option>
-                  </select>
+                    placeholder="e.g. 5 Tons, 2000 Kg, or 1 Container" 
+                    className="form-input"
+                  />
                 </div>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="targetBudget">{t('targetBudgetBuyer')}</label>
-                  <div style={{ position: 'relative' }}>
-                    <span style={{ 
-                      position: 'absolute', 
-                      left: '1rem', 
-                      top: '50%', 
-                      transform: 'translateY(-50%)', 
-                      fontWeight: '700',
-                      color: 'var(--text-secondary)'
-                    }}>
-                      {form.currency === 'USD' ? '$' : '₹'}
-                    </span>
-                    <input 
-                      type="number" 
-                      id="targetBudget"
-                      name="targetBudget" 
-                      value={form.targetBudget} 
-                      onChange={handleChange} 
-                      placeholder="e.g. 25000" 
-                      className="form-input"
-                      style={{ paddingLeft: '2rem' }}
-                    />
-                  </div>
+                  <label className="form-label" htmlFor="packingSize">{t('packingSize')}</label>
+                  <input 
+                    type="text" 
+                    id="packingSize"
+                    name="packingSize" 
+                    value={form.packingSize} 
+                    onChange={handleChange} 
+                    placeholder={t('packingSizePlaceholder')} 
+                    className="form-input"
+                  />
                 </div>
-              </div>
-
-              {/* Required Quantity Field */}
-              <div className="form-group">
-                <label className="form-label" htmlFor="requiredQuantity">{t('requiredQuantity')}</label>
-                <input 
-                  type="text" 
-                  id="requiredQuantity"
-                  name="requiredQuantity" 
-                  value={form.requiredQuantity} 
-                  onChange={handleChange} 
-                  placeholder="e.g. 5 Tons, 2000 Kg, or 1 Container" 
-                  className="form-input"
-                />
               </div>
 
               {/* Address Fields: State, District, City/Village, Pincode */}
